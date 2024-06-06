@@ -4,13 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JewelryProduction.BusinessObject.Models;
 
-public partial class JewelryproductionContext : DbContext
+public partial class JewelryProductionContext : DbContext
 {
-    public JewelryproductionContext()
+    public JewelryProductionContext()
     {
     }
 
-    public JewelryproductionContext(DbContextOptions<JewelryproductionContext> options)
+    public JewelryProductionContext(DbContextOptions<JewelryProductionContext> options)
         : base(options)
     {
     }
