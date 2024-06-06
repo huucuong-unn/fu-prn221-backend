@@ -86,5 +86,15 @@ namespace JewelryProduction.Service.Constant
             public const string UPDATE_PROMOTION = "api/v1/promotion/update";
             public const string CHANGE_STATUS_PROMOTION = "api/v1/promotion/change-status";
         }
+        
+        public static class Product
+        {
+            public const string GET_PRODUCT = "api/v1/product";
+            public const string GET_PRODUCT_BY_ID = "api/v1/product/";
+            public const string CREATE_PRODUCT = "api/v1/product/create";
+            public const string UPDATE_PRODUCT = "api/v1/product/update";
+            public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status";
+            public const string TOTAL_PRODUCTS = "api/v1/product/total";
+        }
     }
 }

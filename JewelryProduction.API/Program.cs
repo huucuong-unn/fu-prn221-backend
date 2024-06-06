@@ -2,9 +2,11 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using JewelryProduction.BusinessObject.Models;
+using JewelryProduction.Service;
 using JewelryProduction.Service.CustomerImpl;
 using JewelryProduction.Service.Service.Account;
 using JewelryProduction.Service.Service.Counter;
+using JewelryProduction.Service.Service.ProductsImpl;
 using JewelryProduction.Service.Service.UserCounter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -55,6 +57,9 @@ builder.Services.AddScoped<IWarrantyService, WarrantyService>();
 builder.Services.AddScoped<IPromotionService, PromotionService>();
 builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+
+
 // Add the dependent service( them service o day nha may anh iu)
 
 
