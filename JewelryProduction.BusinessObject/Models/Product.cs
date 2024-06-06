@@ -25,6 +25,8 @@ public partial class Product
 
     public string Status { get; set; } = null!;
 
+    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+
     public virtual ICollection<ProductStone> ProductStones { get; set; } = new List<ProductStone>();
 
     public virtual ProductType ProductType { get; set; } = null!;

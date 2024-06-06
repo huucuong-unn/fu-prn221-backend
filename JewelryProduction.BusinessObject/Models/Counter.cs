@@ -20,4 +20,6 @@ public partial class Counter
     public DateTime UpdateDate { get; set; }
 
     public string UpdateBy { get; set; } = null!;
+
+    public virtual ICollection<UserCounter> UserCounters { get; set; } = new List<UserCounter>();
 }

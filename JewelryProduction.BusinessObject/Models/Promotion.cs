@@ -24,4 +24,6 @@ public partial class Promotion
     public DateTime UpdateDate { get; set; }
 
     public string UpdateBy { get; set; } = null!;
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
