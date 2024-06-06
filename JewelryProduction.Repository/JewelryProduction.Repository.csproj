@@ -10,11 +10,4 @@
     <ProjectReference Include="..\JewelryProduction.DAO\JewelryProduction.DAO.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ProductFolder\ProductStone\" />
-    <Folder Include="ProductFolder\ProductType\" />
-    <Folder Include="ProductFolder\Product\" />
-    <Folder Include="ProductFolder\Stone\" />
-  </ItemGroup>
-
 </Project>
