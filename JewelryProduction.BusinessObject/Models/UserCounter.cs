@@ -11,7 +11,5 @@ public partial class UserCounter
 
     public string? Status { get; set; }
 
-    public virtual Counter Counter { get; set; } = null!;
-
     public virtual User Staff { get; set; } = null!;
 }

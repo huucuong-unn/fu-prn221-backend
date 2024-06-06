@@ -22,6 +22,4 @@ public partial class Warranty
     public DateTime? UpdateDate { get; set; }
 
     public string? UpdateBy { get; set; }
-
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 }

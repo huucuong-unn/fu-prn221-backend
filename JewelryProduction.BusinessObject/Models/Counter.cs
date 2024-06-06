@@ -7,19 +7,17 @@ public partial class Counter
 {
     public Guid Id { get; set; }
 
-    public string? Name { get; set; }
+    public string Name { get; set; } = null!;
 
-    public decimal? Income { get; set; }
+    public decimal Income { get; set; }
 
-    public string? Status { get; set; }
+    public string Status { get; set; } = null!;
 
-    public DateTime? CreateDate { get; set; }
+    public DateTime CreateDate { get; set; }
 
-    public string? CreateBy { get; set; }
+    public string CreateBy { get; set; } = null!;
 
-    public DateTime? UpdateDate { get; set; }
+    public DateTime UpdateDate { get; set; }
 
-    public string? UpdateBy { get; set; }
-
-    public virtual ICollection<UserCounter> UserCounters { get; set; } = new List<UserCounter>();
+    public string UpdateBy { get; set; } = null!;
 }

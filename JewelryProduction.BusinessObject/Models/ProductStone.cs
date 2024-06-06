@@ -1,13 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace JewelryProduction.BusinessObject.Models
+namespace JewelryProduction.BusinessObject.Models;
+
+public partial class ProductStone
 {
-    public class ProductStone
-    {
-        public Guid ProductId { get; set; }
-        public Guid StoneId { get; set; }
+    public Guid ProductId { get; set; }
 
-        public virtual Product Product { get; set; } 
-        public virtual Stone Stone { get; set; } 
-    }
+    public Guid StoneId { get; set; }
+
+    public string CreateBy { get; set; } = null!;
+
+    public string UpdateBy { get; set; } = null!;
+
+    public DateTime CreateDate { get; set; }
+
+    public DateTime UpdateDate { get; set; }
+
+    public virtual Product Product { get; set; } = null!;
+
+    public virtual Stone Stone { get; set; } = null!;
 }

@@ -25,8 +25,9 @@ public partial class JewelryProductionContext : DbContext
 
     public virtual DbSet<Product> Products { get; set; }
 
+    public virtual DbSet<ProductStone> ProductStones { get; set; }
+
     public virtual DbSet<ProductType> ProductTypes { get; set; }
-    
 
     public virtual DbSet<Promotion> Promotions { get; set; }
 
@@ -161,10 +162,6 @@ public partial class JewelryProductionContext : DbContext
             entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.CustomerId)
                 .HasConstraintName("FK__Order__customer___4E88ABD4");
-
-            entity.HasOne(d => d.Promotion).WithMany(p => p.Orders)
-                .HasForeignKey(d => d.PromotionId)
-                .HasConstraintName("FK__Order__promotion__4F7CD00D");
         });
 
         modelBuilder.Entity<OrderItem>(entity =>
@@ -208,14 +205,6 @@ public partial class JewelryProductionContext : DbContext
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
                 .HasConstraintName("FK__Order_Ite__order__52593CB8");
-
-            entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
-                .HasForeignKey(d => d.ProductId)
-                .HasConstraintName("FK__Order_Ite__produ__534D60F1");
-
-            entity.HasOne(d => d.Warranty).WithMany(p => p.OrderItems)
-                .HasForeignKey(d => d.WarrantyId)
-                .HasConstraintName("FK__Order_Ite__warra__5441852A");
         });
 
         modelBuilder.Entity<Product>(entity =>
@@ -258,26 +247,40 @@ public partial class JewelryProductionContext : DbContext
 
             entity.HasOne(d => d.ProductType).WithMany(p => p.Products)
                 .HasForeignKey(d => d.ProductTypeId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Product__product__403A8C7D");
+        });
 
-            entity.HasMany(d => d.Stones).WithMany(p => p.Products)
-                .UsingEntity<Dictionary<string, object>>(
-                    "ProductStone",
-                    r => r.HasOne<Stone>().WithMany()
-                        .HasForeignKey("StoneId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Product_S__stone__45F365D3"),
-                    l => l.HasOne<Product>().WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__Product_S__produ__44FF419A"),
-                    j =>
-                    {
-                        j.HasKey("ProductId", "StoneId").HasName("PK__Product___AB017D997A1CE528");
-                        j.ToTable("Product_Stone");
-                        j.IndexerProperty<Guid>("ProductId").HasColumnName("product_id");
-                        j.IndexerProperty<Guid>("StoneId").HasColumnName("stone_id");
-                    });
+        modelBuilder.Entity<ProductStone>(entity =>
+        {
+            entity.HasKey(e => new { e.ProductId, e.StoneId }).HasName("PK__Product___AB017D997A1CE528");
+
+            entity.ToTable("Product_Stone");
+
+            entity.Property(e => e.ProductId).HasColumnName("product_id");
+            entity.Property(e => e.StoneId).HasColumnName("stone_id");
+            entity.Property(e => e.CreateBy)
+                .HasMaxLength(255)
+                .HasColumnName("create_by");
+            entity.Property(e => e.CreateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("create_date");
+            entity.Property(e => e.UpdateBy)
+                .HasMaxLength(255)
+                .HasColumnName("update_by");
+            entity.Property(e => e.UpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("update_date");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.ProductStones)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Product_S__produ__44FF419A");
+
+            entity.HasOne(d => d.Stone).WithMany(p => p.ProductStones)
+                .HasForeignKey(d => d.StoneId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Product_S__stone__45F365D3");
         });
 
         modelBuilder.Entity<ProductType>(entity =>
@@ -454,11 +457,6 @@ public partial class JewelryProductionContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false)
                 .HasColumnName("status");
-
-            entity.HasOne(d => d.Counter).WithMany(p => p.UserCounters)
-                .HasForeignKey(d => d.CounterId)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__User_Coun__count__3B75D760");
 
             entity.HasOne(d => d.Staff).WithMany(p => p.UserCounters)
                 .HasForeignKey(d => d.StaffId)
