@@ -17,6 +17,8 @@ public partial class ProductStone
 
     public DateTime UpdateDate { get; set; }
 
+    public string Status { get; set; } = null!;
+
     public virtual Product Product { get; set; } = null!;
 
     public virtual Stone Stone { get; set; } = null!;
