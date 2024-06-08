@@ -9,6 +9,7 @@ using JewelryProduction.Service.Service.Stone;
 using JewelryProduction.Service.Service.UserCounter;
 using JewelryProduction.Service.Service.WarrantyImpl;
 using Microsoft.EntityFrameworkCore;
+using JewelryProduction.Service.Service.ProductStoneImpl;
 
 var builder = WebApplication.CreateBuilder(args);
 /*#region Authentication
@@ -54,7 +55,7 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IStoneService, StoneService>();
 builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
-
+builder.Services.AddScoped<IProductStoneService, ProductStoneService>();
 
 // Add the dependent service( them service o day nha may anh iu)
 

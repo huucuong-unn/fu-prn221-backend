@@ -88,6 +88,7 @@
             public const string CREATE_STONE = "api/v1/stone/create";
             public const string UPDATE_STONE = "api/v1/stone/update/";
             public const string CHANGE_STATUS_STONE = "api/v1/stone/change-status/";
+
         }
 
         public static class Product
@@ -98,6 +99,17 @@
             public const string UPDATE_PRODUCT = "api/v1/product/update/";
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
+
+        }
+
+        public static class ProductStone
+        {
+            public const string GET_PRODUCT_STONE = "api/v1/product-stone";
+            public const string GET_PRODUCT_STONE_BY_PRODUCTID_AND_STONEID = "api/v1/product-stone/";
+            public const string CREATE_PRODUCT_STONE = "api/v1/product-stone/create";
+            public const string UPDATE_PRODUCT_STONE = "api/v1/product-stone/update/";
+            public const string DELETE_PRODUCT_STONE = "api/v1/product-stone/delete/";
+            public const string TOTAL_PRODUCT_STONE = "api/v1/product-stone/total";
         }
 
         public static class ProductType

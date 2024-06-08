@@ -1,8 +1,5 @@
-﻿/*
+﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace JewelryProduction.DAO
 {
@@ -10,11 +7,16 @@ namespace JewelryProduction.DAO
     {
         public ProductStoneDAO() { }
 
-        public List<ProductStone> GetAllProductStone()
+        public List<ProductStone> GetAll(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.ProductStone.ToList();
+                return context.ProductStones
+                    .Where(p => p.Status == "ACTIVE")
+                    .OrderByDescending(p => p.CreateDate)
+                    .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
+                    .Take(filterModel.PageSize)
+                    .ToList();
             }
         }
 
@@ -22,7 +24,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.ProductStone.FirstOrDefault(ps => ps.ProductId == productId && ps.StoneId == stoneId);
+                return context.ProductStones.FirstOrDefault(ps => ps.ProductId == productId && ps.StoneId == stoneId);
             }
         }
 
@@ -30,7 +32,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.ProductStone.Where(ps => ps.ProductId == productId).ToList();
+                return context.ProductStones.Where(ps => ps.ProductId == productId).ToList();
             }
         }
 
@@ -38,7 +40,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.ProductStone.Where(ps => ps.StoneId == stoneId).ToList();
+                return context.ProductStones.Where(ps => ps.StoneId == stoneId).ToList();
             }
         }
 
@@ -46,7 +48,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                context.ProductStone.Add(productStone);
+                context.ProductStones.Add(productStone);
                 context.SaveChanges();
                 return productStone;
             }
@@ -56,14 +58,14 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                var existingProductStone = context.ProductStone.FirstOrDefault(ps => ps.ProductId == productStone.ProductId && ps.StoneId == productStone.StoneId);
+                var existingProductStone = context.ProductStones.FirstOrDefault(ps => ps.ProductId == productStone.ProductId && ps.StoneId == productStone.StoneId);
                 if (existingProductStone == null)
                 {
                     return false;
                 }
 
                 // Update properties here if there are any to update
-                context.ProductStone.Update(existingProductStone);
+                context.ProductStones.Update(existingProductStone);
                 context.SaveChanges();
                 return true;
             }
@@ -73,13 +75,13 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                var productStone = context.ProductStone.FirstOrDefault(ps => ps.ProductId == productId && ps.StoneId == stoneId);
+                var productStone = context.ProductStones.FirstOrDefault(ps => ps.ProductId == productId && ps.StoneId == stoneId);
                 if (productStone == null)
                 {
                     return false;
                 }
 
-                context.ProductStone.Remove(productStone);
+                context.ProductStones.Remove(productStone);
                 context.SaveChanges();
                 return true;
             }
@@ -89,9 +91,8 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.ProductStone.Count();
+                return context.ProductStones.Count();
             }
         }
     }
 }
-*/
