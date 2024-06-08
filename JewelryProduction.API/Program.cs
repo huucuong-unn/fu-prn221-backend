@@ -3,11 +3,12 @@ using JewelryProduction.Service.CustomerImpl;
 using JewelryProduction.Service.Service.Account;
 using JewelryProduction.Service.Service.Counter;
 using JewelryProduction.Service.Service.ProductsImpl;
-using JewelryProduction.Service.Service.UserCounter;
-using Microsoft.EntityFrameworkCore;
-using JewelryProduction.Service.Service.WarrantyImpl;
+using JewelryProduction.Service.Service.ProductTypeImpl;
 using JewelryProduction.Service.Service.PromotionImpl;
 using JewelryProduction.Service.Service.Stone;
+using JewelryProduction.Service.Service.UserCounter;
+using JewelryProduction.Service.Service.WarrantyImpl;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 /*#region Authentication
@@ -52,6 +53,8 @@ builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IStoneService, StoneService>();
+builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
+
 
 // Add the dependent service( them service o day nha may anh iu)
 

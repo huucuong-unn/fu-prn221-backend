@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JewelryProduction.Service.Constant
+﻿namespace JewelryProduction.Service.Constant
 {
     public static class ApiEndPointConstant
     {
@@ -58,12 +52,12 @@ namespace JewelryProduction.Service.Constant
             public const string CHANGE_STATUS_COUNTER = "api/v1/counter/change-status/";
 
         }
-        
-        
+
+
         public static class UserCounter
         {
             public const string GET_USER_COUNTER = "api/v1/user-counter";
-            public const string GET_USER_COUNTER_BY_ID = "api/v1/user-counter/"; 
+            public const string GET_USER_COUNTER_BY_ID = "api/v1/user-counter/";
             public const string CREATE_USER_COUNTER = "api/v1/user-counter/create";
             public const string UPDATE_USER_COUNTER = "api/v1/user-counter/update/";
             public const string CHANGE_STATUS_USER_COUNTER = "api/v1/user-counter/change-status/";
@@ -95,7 +89,7 @@ namespace JewelryProduction.Service.Constant
             public const string UPDATE_STONE = "api/v1/stone/update/";
             public const string CHANGE_STATUS_STONE = "api/v1/stone/change-status/";
         }
-        
+
         public static class Product
         {
             public const string GET_PRODUCT = "api/v1/product";
@@ -104,6 +98,16 @@ namespace JewelryProduction.Service.Constant
             public const string UPDATE_PRODUCT = "api/v1/product/update/";
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
+        }
+
+        public static class ProductType
+        {
+            public const string GET_PRODUCT_TYPE = "api/v1/product-type";
+            public const string GET_PRODUCT_TYPE_BY_ID = "api/v1/product-type/";
+            public const string CREATE_PRODUCT_TYPE = "api/v1/product-type/create";
+            public const string UPDATE_PRODUCT_TYPE = "api/v1/product-type/update/";
+            public const string CHANGE_STATUS_PRODUCT_TYPE = "api/v1/product-type/change-status/";
+            public const string TOTAL_PRODUCT_TYPES = "api/v1/product-type/total";
         }
     }
 }
