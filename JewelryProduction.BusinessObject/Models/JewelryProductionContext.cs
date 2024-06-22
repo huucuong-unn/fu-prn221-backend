@@ -83,7 +83,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Customer__3213E83F41E9E9F1");
+            entity.HasKey(e => e.Id).HasName("PK__Customer__3213E83F77A7E50C");
 
             entity.ToTable("Customer");
 
@@ -124,13 +124,14 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F7FF5BD59");
+            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F2FEF9E23");
 
             entity.ToTable("Order");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
+            entity.Property(e => e.CounterId).HasColumnName("counter_id");
             entity.Property(e => e.CreateBy)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -170,7 +171,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order_It__3213E83FDCD536E3");
+            entity.HasKey(e => e.Id).HasName("PK__Order_It__3213E83F8C5A518B");
 
             entity.ToTable("Order_Item");
 
@@ -208,7 +209,7 @@ public partial class JewelryProductionContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__Order_Ite__order__3A81B327");
+                .HasConstraintName("FK__Order_Ite__order__3B75D760");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.ProductId)
@@ -228,6 +229,7 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
+            entity.Property(e => e.CounterId).HasColumnName("counter_id");
             entity.Property(e => e.CreateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("createDate");
@@ -277,10 +279,6 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.CreateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("create_date");
-            entity.Property(e => e.Status)
-                .HasMaxLength(50)
-                .IsUnicode(false)
-                .HasColumnName("status");
             entity.Property(e => e.UpdateBy)
                 .HasMaxLength(255)
                 .HasColumnName("update_by");
@@ -415,7 +413,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F2C5C5AE5");
+            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F81500CBC");
 
             entity.ToTable("User");
 
@@ -463,7 +461,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<UserCounter>(entity =>
         {
-            entity.HasKey(e => new { e.StaffId, e.CounterId }).HasName("PK__User_Cou__74EA83E188FBB4FB");
+            entity.HasKey(e => new { e.StaffId, e.CounterId }).HasName("PK__User_Cou__74EA83E164C008D6");
 
             entity.ToTable("User_Counter");
 
@@ -482,12 +480,12 @@ public partial class JewelryProductionContext : DbContext
             entity.HasOne(d => d.Staff).WithMany(p => p.UserCounters)
                 .HasForeignKey(d => d.StaffId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__User_Coun__staff__3E52440B");
+                .HasConstraintName("FK__User_Coun__staff__412EB0B6");
         });
 
         modelBuilder.Entity<Warranty>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Warranty__3213E83F8F35309E");
+            entity.HasKey(e => e.Id).HasName("PK__Warranty__3213E83F9A4C9C73");
 
             entity.ToTable("Warranty");
 
