@@ -279,6 +279,10 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.CreateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("create_date");
+            entity.Property(e => e.Status)
+                .HasMaxLength(60)
+                .IsUnicode(false)
+                .HasColumnName("status");
             entity.Property(e => e.UpdateBy)
                 .HasMaxLength(255)
                 .HasColumnName("update_by");

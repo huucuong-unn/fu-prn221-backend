@@ -11,11 +11,13 @@ public partial class ProductStone
 
     public string CreateBy { get; set; } = null!;
 
-    public string UpdateBy { get; set; } = null!;
+    public string? UpdateBy { get; set; }
 
     public DateTime CreateDate { get; set; }
 
-    public DateTime UpdateDate { get; set; }
+    public DateTime? UpdateDate { get; set; }
+
+    public string? Status { get; set; }
 
     public virtual Product Product { get; set; } = null!;
 
