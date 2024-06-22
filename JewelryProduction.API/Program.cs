@@ -10,6 +10,7 @@ using JewelryProduction.Service.Service.UserCounter;
 using JewelryProduction.Service.Service.WarrantyImpl;
 using Microsoft.EntityFrameworkCore;
 using JewelryProduction.Service.Service.ProductStoneImpl;
+using JewelryProduction.Service.Service.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 /*#region Authentication
@@ -39,7 +40,7 @@ builder.Services.AddHttpContextAccessor();
 #endregion*/
 
 // Add services to the container.
-
+builder.Services.AddCors();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -58,7 +59,7 @@ builder.Services.AddScoped<IProductTypeService, ProductTypeService>();
 builder.Services.AddScoped<IProductStoneService, ProductStoneService>();
 
 // Add the dependent service( them service o day nha may anh iu)
-
+builder.Services.AddScoped<JwtService>();
 
 /*
 // Add services to the container
@@ -107,6 +108,13 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors(options => options
+.WithOrigins(new[] {"https://jewellry.vercel.app", "http://localhost:3001"})
+.AllowCredentials()
+.AllowAnyHeader()
+.AllowAnyMethod()
+);
 
 app.UseAuthentication();
 app.UseAuthorization();

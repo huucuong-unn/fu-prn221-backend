@@ -19,6 +19,7 @@ namespace JewelryProduction.Service.Converters
             getUsersReponse.Password = user.Password;
             getUsersReponse.Email = user.Email;
             getUsersReponse.Role = user.Role;
+            getUsersReponse.Income = user.Income;
             getUsersReponse.CreatedDate = (DateTime) user.CreatedDate;
             getUsersReponse.UpdatedDate = (DateTime) user.UpdatedDate;
             getUsersReponse.CreateBy = user.CreateBy;
@@ -34,6 +35,7 @@ namespace JewelryProduction.Service.Converters
             user.Password = createUserRequest.Password;
             user.Email = createUserRequest.Email;
             user.Role = createUserRequest.Role;
+            user.Income = createUserRequest.Income;
             user.CreatedDate = (DateTime)createUserRequest.CreatedDate;
             user.UpdatedDate = (DateTime)createUserRequest.UpdatedDate;
             user.CreateBy = createUserRequest.CreateBy;
@@ -48,6 +50,7 @@ namespace JewelryProduction.Service.Converters
             user.Password = updateUserRequest.Password;
             user.Email = updateUserRequest.Email;
             user.Role = updateUserRequest.Role;
+            user.Income = updateUserRequest.Income;
             user.Status = updateUserRequest.Status;
             user.CreatedDate = (DateTime)updateUserRequest.CreatedDate;
             user.UpdatedDate = (DateTime)updateUserRequest.UpdatedDate;

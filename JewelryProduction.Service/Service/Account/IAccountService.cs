@@ -17,5 +17,7 @@ namespace JewelryProduction.Service.Service.Account
         public GetUsersReponse Create(CreateUserRequest user);
 
         public bool Update(Guid id, UpdateUserRequest user);
+
+        public User GetByEmail(string email);
     }
 }

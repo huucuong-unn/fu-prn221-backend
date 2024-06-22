@@ -94,5 +94,11 @@ namespace JewelryProduction.DAO
             JewelryProductionContext context = new JewelryProductionContext();
             return context.Users.Count();
         }
+
+        public User GetByEmail(string email)
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+            return context.Users.FirstOrDefault(user => user.Email == email);
+        }
     }
 }

@@ -72,5 +72,9 @@ namespace JewelryProduction.Service.Service.Account
             return userRepository.Update(id, user);
         }
 
+        public User GetByEmail(string email)
+        {
+            return userRepository.GetByEmail(email);
+        }
     }
 }

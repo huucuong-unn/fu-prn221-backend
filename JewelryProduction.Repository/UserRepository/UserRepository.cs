@@ -49,5 +49,10 @@ namespace JewelryProduction.Repository.UserRepository
         {
             return userDAO.TotalItem();
         }
+
+        public User GetByEmail(string email)
+        {
+            return userDAO.GetByEmail(email);
+        }
     }
 }
