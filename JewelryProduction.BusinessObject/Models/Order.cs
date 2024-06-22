@@ -25,6 +25,8 @@ public partial class Order
 
     public string? Status { get; set; }
 
+    public Guid? CounterId { get; set; }
+
     public virtual Customer? Customer { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
