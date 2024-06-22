@@ -369,6 +369,9 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.UpdateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("updateDate");
+            entity.Property(e => e.Value)
+                .HasColumnType("decimal(38, 0)")
+                .HasColumnName("value");
         });
 
         modelBuilder.Entity<Stone>(entity =>
