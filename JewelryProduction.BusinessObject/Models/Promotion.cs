@@ -25,5 +25,7 @@ public partial class Promotion
 
     public string UpdateBy { get; set; } = null!;
 
+    public decimal Value { get; set; }
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
