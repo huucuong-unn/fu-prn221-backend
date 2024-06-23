@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Worker">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>dotnet-JewelryProduction.WorkerServices-d6c48cd5-efa1-4022-896a-867a1623a549</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\JewelryProduction.BusinessObject\JewelryProduction.BusinessObject.csproj" />
+    <ProjectReference Include="..\JewelryProduction.Service\JewelryProduction.Service.csproj" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,28 @@
+﻿using JewelryProduction.BusinessObject.Models;
+using JewelryProduction.DAO;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace JewelryProduction.Repository.MaterialRepository
+{
+    public class MaterialRepository : IMaterialRepository
+    {
+        private readonly MaterialDAO materialDAO;
+
+        public MaterialRepository()
+        {
+            if (materialDAO == null)
+            {
+                materialDAO = new MaterialDAO();
+            }
+        }
+
+        public bool UpdateByName(string name, Material material)
+        {
+            return materialDAO.UpdateByName(name, material);
+        }
+    }
+}

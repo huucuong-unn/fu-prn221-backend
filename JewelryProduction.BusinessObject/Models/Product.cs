@@ -15,8 +15,6 @@ public partial class Product
 
     public decimal Weight { get; set; }
 
-    public string Material { get; set; } = null!;
-
     public decimal Price { get; set; }
 
     public DateTime CreateDate { get; set; }
@@ -26,6 +24,10 @@ public partial class Product
     public string Status { get; set; } = null!;
 
     public Guid? CounterId { get; set; }
+
+    public string? ProductCode { get; set; }
+
+    public Guid? MaterialId { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
