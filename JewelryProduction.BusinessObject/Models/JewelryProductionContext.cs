@@ -19,6 +19,8 @@ public partial class JewelryProductionContext : DbContext
 
     public virtual DbSet<Customer> Customers { get; set; }
 
+    public virtual DbSet<Material> Materials { get; set; }
+
     public virtual DbSet<Order> Orders { get; set; }
 
     public virtual DbSet<OrderItem> OrderItems { get; set; }
@@ -117,6 +119,33 @@ public partial class JewelryProductionContext : DbContext
                 .HasMaxLength(255)
                 .IsUnicode(false)
                 .HasColumnName("updateBy");
+            entity.Property(e => e.UpdateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("updateDate");
+        });
+
+        modelBuilder.Entity<Material>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("Material_PK");
+
+            entity.ToTable("Material");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.BuyingPrice)
+                .HasColumnType("decimal(38, 0)")
+                .HasColumnName("buyingPrice");
+            entity.Property(e => e.CreateDate)
+                .HasColumnType("datetime")
+                .HasColumnName("createDate");
+            entity.Property(e => e.Name)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("name");
+            entity.Property(e => e.SalePrice)
+                .HasColumnType("decimal(38, 0)")
+                .HasColumnName("salePrice");
             entity.Property(e => e.UpdateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("updateDate");
@@ -236,10 +265,7 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.Description)
                 .HasColumnType("text")
                 .HasColumnName("description");
-            entity.Property(e => e.Material)
-                .HasMaxLength(255)
-                .IsUnicode(false)
-                .HasColumnName("material");
+            entity.Property(e => e.MaterialId).HasColumnName("material_id");
             entity.Property(e => e.Name)
                 .HasMaxLength(255)
                 .IsUnicode(false)
@@ -247,6 +273,10 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.Price)
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("price");
+            entity.Property(e => e.ProductCode)
+                .HasMaxLength(60)
+                .IsUnicode(false)
+                .HasColumnName("product_code");
             entity.Property(e => e.ProductTypeId).HasColumnName("product_type_id");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)

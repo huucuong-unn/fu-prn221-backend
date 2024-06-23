@@ -73,7 +73,7 @@ namespace JewelryProduction.DAO
                 product.Name = updatedProduct.Name;
                 product.Description = updatedProduct.Description;
                 product.Weight = updatedProduct.Weight;
-                product.Material = updatedProduct.Material;
+                /*product.Material = updatedProduct.Material;*/
                 product.Price = updatedProduct.Price;
                 product.CreateDate = updatedProduct.CreateDate;
                 product.UpdateDate = updatedProduct.UpdateDate;

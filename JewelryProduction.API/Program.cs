@@ -11,6 +11,8 @@ using JewelryProduction.Service.Service.WarrantyImpl;
 using Microsoft.EntityFrameworkCore;
 using JewelryProduction.Service.Service.ProductStoneImpl;
 using JewelryProduction.Service.Service.Authentication;
+using JewelryProduction.WorkerServices;
+using JewelryProduction.Service.Service.MaterialImpl;
 
 var builder = WebApplication.CreateBuilder(args);
 /*#region Authentication
@@ -95,6 +97,9 @@ builder.Services.AddSwaggerGen(c =>
 
 // Sua database iu dau
 builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IMaterialService, MaterialService>();
+
+builder.Services.AddHostedService<Worker>();
 
 builder.Services.AddDbContext<JewelryProductionContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionStringDB")));
 
