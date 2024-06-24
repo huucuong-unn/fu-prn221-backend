@@ -18,8 +18,11 @@ namespace JewelryProduction.Service.Converters
             getProductResponse.ProductTypeId = product.ProductTypeId;
             getProductResponse.Price = product.Price;
             getProductResponse.Status = product.Status;
-            getProductResponse.CreateDate = (DateTime)product.CreateDate;
-            getProductResponse.UpdateDate = (DateTime)product.UpdateDate;
+            getProductResponse.CreateDate = product.CreateDate;
+            getProductResponse.UpdateDate = product.UpdateDate;
+            getProductResponse.CounterId = product.CounterId;
+            getProductResponse.ProductTypeId = product.ProductTypeId;
+            getProductResponse.ProductCode = product.ProductCode;
             return getProductResponse;
         }
 
@@ -34,6 +37,10 @@ namespace JewelryProduction.Service.Converters
             product.Status = "ACTIVE";
             product.CreateDate = DateTime.Now;
             product.UpdateDate = DateTime.Now;
+            product.CounterId = createProductRequest.CounterId;
+            product.ProductTypeId = createProductRequest.ProductTypeId;
+            product.ProductCode = createProductRequest.ProductCode;
+
             return product;
         }
 
@@ -48,6 +55,9 @@ namespace JewelryProduction.Service.Converters
             product.Status = updateProductRequest.Status;
             product.CreateDate = updateProductRequest.CreateDate;
             product.UpdateDate = DateTime.Now;
+            product.CounterId = updateProductRequest.CounterId;
+            product.ProductTypeId = updateProductRequest.ProductTypeId;
+            product.ProductCode = updateProductRequest.ProductCode;
             return product;
         }
     }

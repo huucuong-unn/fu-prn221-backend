@@ -18,5 +18,7 @@ namespace JewelryProduction.Repository.UserCounterRepository
         bool ChangeStatus(Guid staffId, Guid counterId);
 
         int TotalUserCounter();
+
+        Guid GetCounterIdByStaffId(Guid staffId);
     }
 }

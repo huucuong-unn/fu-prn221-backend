@@ -74,5 +74,11 @@ namespace JewelryProduction.API.Controllers
 
             return NoContent();
         }
+
+        [HttpGet(ApiEndPointConstant.Product.GET_PRODUCTS_ACTIVE)]
+        public IActionResult GetProductsActive()
+        {
+            return Ok(_productService.GetProductsActive());
+        }
     }
 }

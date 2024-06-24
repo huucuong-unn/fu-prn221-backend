@@ -123,5 +123,24 @@ namespace JewelryProduction.DAO
                 return context.Products.Count();
             }
         }
+
+        public Product GetProductByProductCode(string productCode)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products.FirstOrDefault(p => p.ProductCode.Equals(productCode));
+            }
+        }
+
+        public List<Product> GetProductsActiveWithoutPaging()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Where(p => p.Status == "ACTIVE")
+                    .OrderByDescending(p => p.CreateDate)
+                    .ToList();
+            }
+        }
     }
 }

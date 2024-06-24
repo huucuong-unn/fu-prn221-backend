@@ -19,7 +19,7 @@ namespace JewelryProduction.Service.CustomerImpl
 
         public GetOrderReponse GetById(Guid id);
 
-        public GetOrderReponse Create(CreateOrderRequest createOrderRequest);
+        public Dictionary<string, object> Create(CreateOrderRequest createOrderRequest);
 
         public bool Update(Guid id, UpdateOrderRequest updateOrderRequest);
 

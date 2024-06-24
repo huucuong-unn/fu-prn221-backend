@@ -47,5 +47,10 @@ namespace JewelryProduction.Repository.UserCounterRepository
         {
             return userCounterDAO.TotalUserCounter();
         }
+
+        public Guid GetCounterIdByStaffId(Guid staffId)
+        {
+            return userCounterDAO.GetCounterIdByStaffId(staffId);
+        }
     }
 }

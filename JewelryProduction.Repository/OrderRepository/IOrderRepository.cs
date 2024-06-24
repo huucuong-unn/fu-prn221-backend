@@ -13,21 +13,13 @@ namespace JewelryProduction.Repository.OrderRepository
     {
         public List<Order> GetOrders(FilterModel filterModel);
 
-
-
         public Order GetById(Guid id);
-
 
         public Order Create(Order order);
 
-
-
         public bool Delete(Guid id);
 
-
-
         public bool Update(Guid id, Order order);
-
 
         public int TotalItem();
         

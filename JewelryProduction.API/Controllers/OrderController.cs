@@ -36,7 +36,7 @@ namespace JewelryProduction.API.Controllers
             }
 
             [HttpPost(ApiEndPointConstant.Order.CREATE_ORDER)]
-            public GetOrderReponse Create(CreateOrderRequest createOrderRequest)
+            public Dictionary<string, object> Create(CreateOrderRequest createOrderRequest)
             {
                 return orderService.Create(createOrderRequest);
             }

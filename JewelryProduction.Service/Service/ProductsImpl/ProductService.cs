@@ -94,4 +94,14 @@ namespace JewelryProduction.Service.Service.ProductsImpl;
 
         return getProductStoneResponses;
     }
+
+    public List<GetProductResponse> GetProductsActive()
+    {
+        List<BusinessObject.Models.Product> products = _productRepository.GetProductsActiveWithoutPaging();
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
+        return getProductResponses;
+    }
 }

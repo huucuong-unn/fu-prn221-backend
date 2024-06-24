@@ -77,7 +77,8 @@ namespace JewelryProduction.DAO
             orderById.UpdatedDate = order.UpdatedDate;
             orderById.CreateBy = order.CreateBy;
             orderById.UpdateBy = order.UpdateBy;
-            orderById.Status = order.Status;          
+            orderById.Status = order.Status;    
+            orderById.CounterId = order.CounterId;
 
             context.Orders.Update(orderById);
             context.SaveChanges();

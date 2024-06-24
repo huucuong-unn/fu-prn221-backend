@@ -99,7 +99,7 @@
             public const string UPDATE_PRODUCT = "api/v1/product/update/";
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
-
+            public const string GET_PRODUCTS_ACTIVE = "api/v1/product/product-active";
         }
 
         public static class ProductStone

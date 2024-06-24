@@ -50,5 +50,10 @@ namespace JewelryProduction.Repository.CustomerRepository
         {
             return customerDAO.Update(id, customer);
         }
+
+        public Customer GetByPhone(string phone)
+        {
+            return customerDAO.GetByPhone(phone);
+        }
     }
 }

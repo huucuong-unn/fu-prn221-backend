@@ -46,6 +46,21 @@ public class ProductRepository : IProductRepository
         return _productDao.TotalItem();
     }
 
+    public Product ProductByProductCode(string productCode)
+    {
+        return _productDao.GetProductByProductCode(productCode);
+    }
+
+    public List<Product> GetProductsActiveWithoutPaging()
+    {
+        return _productDao.GetProductsActiveWithoutPaging();
+    }
+
+    public Product GetProductByProductCode(string productCode)
+    {
+        return _productDao.GetProductByProductCode(productCode) ;
+    }
+
     public List<Product> GetProductsByMaterialId(Guid materialId)
     {
         return _productDao.GetProductsByMaterialId(materialId);
@@ -60,5 +75,6 @@ public class ProductRepository : IProductRepository
     {
         return _productDao.GetProductStones(productId);
     }
+
 }
 

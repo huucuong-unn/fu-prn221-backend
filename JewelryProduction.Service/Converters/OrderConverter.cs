@@ -1,11 +1,4 @@
-﻿using JewelryProduction.Service.Response.User;
-using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using JewelryProduction.Service.Request.User;
+﻿using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.Service.Response.Order;
 using JewelryProduction.Service.Request.Customer;
 
@@ -17,15 +10,38 @@ namespace JewelryProduction.Service.Converters
         {
             GetOrderReponse getOrdersReponse = new GetOrderReponse();
             getOrdersReponse.Id = order.Id;
-            getOrdersReponse.CustomerId = (Guid)order.CustomerId;
-            getOrdersReponse.PromotionId = (Guid)order.PromotionId;
-            getOrdersReponse.TotalAmount = (decimal)order.TotalAmount;
+            getOrdersReponse.CustomerId = order.CustomerId;
+            getOrdersReponse.PromotionId = order.PromotionId;
+            getOrdersReponse.TotalAmount = order.TotalAmount;
             getOrdersReponse.OrderType = order.OrderType;
-            getOrdersReponse.CreatedDate = (DateTime)order.CreatedDate;
-            getOrdersReponse.UpdatedDate = (DateTime)order.UpdatedDate;
+            getOrdersReponse.CreatedDate = order.CreatedDate;
+            getOrdersReponse.UpdatedDate = order.UpdatedDate;
             getOrdersReponse.CreateBy = order.CreateBy;
             getOrdersReponse.UpdateBy = order.UpdateBy;
             getOrdersReponse.Status = order.Status;
+            getOrdersReponse.CounterId = order.CounterId;
+
+            return getOrdersReponse;
+        }
+
+        public static GetOrderReponse toResponse(Order order, List<OrderItem> list)
+        {
+            GetOrderReponse getOrdersReponse = new GetOrderReponse();
+            getOrdersReponse.Id = order.Id;
+            getOrdersReponse.CustomerId = order.CustomerId;
+            getOrdersReponse.PromotionId = order.PromotionId;
+            getOrdersReponse.TotalAmount = order.TotalAmount;
+            getOrdersReponse.OrderType = order.OrderType;
+            getOrdersReponse.CreatedDate =  order.CreatedDate;
+            getOrdersReponse.UpdatedDate =  order.UpdatedDate;
+            getOrdersReponse.CreateBy = order.CreateBy;
+            getOrdersReponse.UpdateBy = order.UpdateBy;
+            getOrdersReponse.Status = order.Status;
+            foreach (var item in list)
+            {
+                getOrdersReponse.orderItems.Add(item);
+            };
+            getOrdersReponse.CounterId = order.CounterId;
             return getOrdersReponse;
         }
 
@@ -36,8 +52,8 @@ namespace JewelryProduction.Service.Converters
             order.PromotionId = createOrderRequest.PromotionId; 
             order.TotalAmount = createOrderRequest.TotalAmount;
             order.OrderType = createOrderRequest.OrderType;
-            order.CreatedDate = (DateTime)createOrderRequest.CreatedDate;
-            order.UpdatedDate = (DateTime)createOrderRequest.UpdatedDate;
+            order.CreatedDate = createOrderRequest.CreatedDate;
+            order.UpdatedDate = createOrderRequest.UpdatedDate;
             order.CreateBy = createOrderRequest.CreateBy;
             order.UpdateBy = createOrderRequest.UpdateBy;
             return order;
@@ -50,8 +66,8 @@ namespace JewelryProduction.Service.Converters
             order.PromotionId = updateOrderRequest.PromotionId;
             order.TotalAmount = updateOrderRequest.TotalAmount;
             order.OrderType = updateOrderRequest.OrderType;
-            order.CreatedDate = (DateTime)updateOrderRequest.CreatedDate;
-            order.UpdatedDate = (DateTime)updateOrderRequest.UpdatedDate;
+            order.CreatedDate = updateOrderRequest.CreatedDate;
+            order.UpdatedDate = updateOrderRequest.UpdatedDate;
             order.CreateBy = updateOrderRequest.CreateBy;
             order.UpdateBy = updateOrderRequest.UpdateBy;
             order.Status = updateOrderRequest.Status;

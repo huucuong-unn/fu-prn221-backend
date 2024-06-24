@@ -22,4 +22,9 @@ public interface IProductRepository
     bool Update(Guid id, Product product);
         
     int TotalProducts();
+
+    Product GetProductByProductCode(string productCode);
+
+    public List<Product> GetProductsActiveWithoutPaging();
+
 }

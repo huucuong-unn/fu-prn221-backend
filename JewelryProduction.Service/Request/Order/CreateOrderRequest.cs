@@ -9,5 +9,11 @@ namespace JewelryProduction.Service.Request.Customer
 {
     public class CreateOrderRequest : BaseOrderRequest
     {
+        public string? CustomerName { get; set; }
+
+        public string? CustomerPhone { get; set;}
+
+        public List<string>? ListProductCode { get; set; }
+
     }
 }

@@ -2,6 +2,7 @@
 using JewelryProduction.BusinessObject.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 using System.Linq;
 
 namespace JewelryProduction.DAO
@@ -80,6 +81,16 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 return context.UserCounters.Count();
+            }
+        }
+
+        public Guid GetCounterIdByStaffId(Guid staffId)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var counterUser = context.UserCounters.FirstOrDefault(uc => uc.StaffId == staffId && uc.Status == "ACTIVE");
+                if (counterUser == null) return Guid.Empty;
+                return counterUser.CounterId;
             }
         }
     }

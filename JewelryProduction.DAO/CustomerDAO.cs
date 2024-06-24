@@ -93,5 +93,14 @@ namespace JewelryProduction.DAO
             JewelryProductionContext context = new JewelryProductionContext();
             return context.Customers.Count();
         }
+
+        public Customer GetByPhone(string phone)
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+            var customer = context.Customers.FirstOrDefault(u => u.Phone.Equals(phone));
+            if (customer == null) { return null; }
+            return customer;
+
+        }
     }
 }

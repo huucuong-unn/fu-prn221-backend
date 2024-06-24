@@ -14,5 +14,9 @@ namespace JewelryProduction.Service.Request.Product
         public string CreateBy { get; set; }
         public DateTime UpdateDate { get; set; } 
         public string UpdateBy { get; set; }
+        public Guid? CounterId { get; set; }
+        public Guid ProductTypeId { get; set; }
+        public string ProductCode { get; set; }
+
     }
 }

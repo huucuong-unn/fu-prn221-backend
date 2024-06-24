@@ -18,4 +18,5 @@ public interface IProductService
     List<GetProductStoneResponse> GetProductStones(Guid productId);
     bool UpdateProduct(Guid id, GetProductRequest request);
     int GetTotalProducts();
+    List<GetProductResponse> GetProductsActive();
 }

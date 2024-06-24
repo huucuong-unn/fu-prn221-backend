@@ -21,5 +21,7 @@ namespace JewelryProduction.Repository.CustomerRepository
         public bool ChangeStatus(Guid id);
 
         public int TotalItem();
+
+        public Customer GetByPhone(string phone);
     }
 }

@@ -126,19 +126,17 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<Material>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("Material_PK");
+            entity
+                .HasNoKey()
+                .ToTable("Material");
 
-            entity.ToTable("Material");
-
-            entity.Property(e => e.Id)
-                .ValueGeneratedNever()
-                .HasColumnName("id");
             entity.Property(e => e.BuyingPrice)
                 .HasColumnType("decimal(38, 0)")
                 .HasColumnName("buyingPrice");
             entity.Property(e => e.CreateDate)
                 .HasColumnType("datetime")
                 .HasColumnName("createDate");
+            entity.Property(e => e.Id).HasColumnName("id");
             entity.Property(e => e.Name)
                 .HasMaxLength(100)
                 .IsUnicode(false)
