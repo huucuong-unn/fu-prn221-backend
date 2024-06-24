@@ -11,6 +11,7 @@ namespace JewelryProduction.Service.Response.Product
         public string Material { get; set; }
         public decimal Price { get; set; }
         public string Status { get; set; }
+        public Guid ProductTypeId { get; set; }
         public DateTime CreateDate { get; set; }
         public string CreateBy { get; set; }
         public DateTime UpdateDate { get; set; }

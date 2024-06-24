@@ -1,5 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,35 @@ namespace JewelryProduction.DAO
                     .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
                     .Take(filterModel.PageSize)
                     .ToList();
+            }
+        }
+
+        public List<Product> GetProductsByMaterialId(Guid materialId)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Where(p => p.MaterialId == materialId)
+                    .ToList();
+            }
+        }
+
+        public ProductType GetProductTypeById(Guid productTypeId)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.ProductTypes
+                .FirstOrDefault(pt => pt.Id == productTypeId);
+            }
+        }
+
+        public List<ProductStone> GetProductStones(Guid productId)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.ProductStones
+                .Where(ps => ps.ProductId == productId)
+                .ToList();
             }
         }
 

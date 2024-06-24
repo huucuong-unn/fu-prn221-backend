@@ -12,7 +12,13 @@ public interface IProductRepository
     Product GetProductById(Guid id);
         
     List<Product> GetProducts(FilterModel filterModel);
-        
+
+    List<Product> GetProductsByMaterialId(Guid materialId);
+
+    public ProductType GetProductTypeById(Guid productTypeId);
+
+    public List<ProductStone> GetProductStones(Guid productId);
+
     bool Update(Guid id, Product product);
         
     int TotalProducts();

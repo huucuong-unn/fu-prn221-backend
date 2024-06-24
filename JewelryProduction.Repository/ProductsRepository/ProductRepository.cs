@@ -45,5 +45,20 @@ public class ProductRepository : IProductRepository
     {
         return _productDao.TotalItem();
     }
+
+    public List<Product> GetProductsByMaterialId(Guid materialId)
+    {
+        return _productDao.GetProductsByMaterialId(materialId);
+    }
+
+    public ProductType GetProductTypeById(Guid productTypeId)
+    {
+        return _productDao.GetProductTypeById(productTypeId);
+    }
+
+    public List<ProductStone> GetProductStones(Guid productId)
+    {
+        return _productDao.GetProductStones(productId);
+    }
 }
 

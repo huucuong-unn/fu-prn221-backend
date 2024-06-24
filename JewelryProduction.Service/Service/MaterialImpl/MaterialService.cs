@@ -1,7 +1,11 @@
-﻿using JewelryProduction.BusinessObject.Models;
+﻿using JewelryProduction.BusinessObject.Filter;
+using JewelryProduction.BusinessObject.Models;
+using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.MaterialRepository;
+using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Material;
+using JewelryProduction.Service.Response.Material;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +24,28 @@ namespace JewelryProduction.Service.Service.MaterialImpl
             {
                 materialRepository = new MaterialRepository();
             }
+        }
+
+        public bool ChangeStatus(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public PagingModel<GetMaterialResponse> GetAll(FilterModel filterModel)
+        {
+            throw new NotImplementedException();
+        }
+
+        public GetMaterialResponse GetById(Guid id)
+        {
+            Material material = materialRepository.GetById(id);
+
+            return MaterialConverter.toDto(material);
+        }
+
+        public int TotalItem()
+        {
+            throw new NotImplementedException();
         }
 
         public bool UpdateByName(BaseMaterialRequest request)

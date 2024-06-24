@@ -10,5 +10,7 @@ namespace JewelryProduction.Repository.MaterialRepository
     public interface IMaterialRepository
     {
         public bool UpdateByName(string name, Material material);
+
+        public Material GetById(Guid id);
     }
 }
