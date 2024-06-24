@@ -20,6 +20,11 @@ namespace JewelryProduction.Repository.MaterialRepository
             }
         }
 
+        public Material GetById(Guid id)
+        {
+            return materialDAO.GetById(id);
+        }
+
         public bool UpdateByName(string name, Material material)
         {
             return materialDAO.UpdateByName(name, material);

@@ -18,6 +18,13 @@ namespace JewelryProduction.DAO
             return material;
         }
 
+        public Material GetById(Guid id)
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+            var material = context.Materials.FirstOrDefault(m => m.Id.Equals(id));
+            return material;
+        }
+
         public bool UpdateByName(string name, Material material)
         {
             JewelryProductionContext context = new JewelryProductionContext();

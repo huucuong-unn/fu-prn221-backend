@@ -1,9 +1,12 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
+using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.Repository.ProductsRepository;
 using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Product;
 using JewelryProduction.Service.Response.Product;
+using JewelryProduction.Service.Response.ProductStone;
+using JewelryProduction.Service.Response.ProductType;
 
 namespace JewelryProduction.Service.Service.ProductsImpl;
 
@@ -63,4 +66,32 @@ namespace JewelryProduction.Service.Service.ProductsImpl;
             BusinessObject.Models.Product product = ProductConverter.toEntityForCreate(updateProductRequest);
             return _productRepository.Update(id, product);
         }
+
+    public List<GetProductResponse> GetProductsByMaterialId(Guid id)
+    {
+        List<Product> products = _productRepository.GetProductsByMaterialId(id);
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
+
+        return getProductResponses;
     }
+
+    public GetProductTypeResponse GetProductTypeById(Guid productTypeId)
+    {
+        ProductType productType = _productRepository.GetProductTypeById(productTypeId);
+        return ProductTypeConverter.ToDto(productType);
+    }
+
+    public List<GetProductStoneResponse> GetProductStones(Guid productId)
+    {
+        List<ProductStone> productStones = _productRepository.GetProductStones(productId);
+        List<GetProductStoneResponse> getProductStoneResponses = productStones.Select(product =>
+        {
+            return ProductStoneConverter.toDto(product);
+        }).ToList();
+
+        return getProductStoneResponses;
+    }
+}

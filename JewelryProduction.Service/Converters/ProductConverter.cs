@@ -15,6 +15,7 @@ namespace JewelryProduction.Service.Converters
             getProductResponse.Description = product.Description;
             getProductResponse.Weight = product.Weight;
             /*getProductResponse.Material = product.Material;*/
+            getProductResponse.ProductTypeId = product.ProductTypeId;
             getProductResponse.Price = product.Price;
             getProductResponse.Status = product.Status;
             getProductResponse.CreateDate = (DateTime)product.CreateDate;
