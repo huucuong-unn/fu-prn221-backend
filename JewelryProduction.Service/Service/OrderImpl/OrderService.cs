@@ -94,7 +94,6 @@ namespace JewelryProduction.Service.CustomerImpl
 
             Order newOrder = orderRepository.Create(order);
 
-            List<OrderItem> items = new List<OrderItem>();
             var counterId = userCounterRepository.GetCounterIdByStaffId(Guid.Parse(createOrderRequest.CreateBy));
             if (!createOrderRequest.ListProductCode.IsNullOrEmpty())
             {
@@ -126,7 +125,7 @@ namespace JewelryProduction.Service.CustomerImpl
                         Status = "ACTIVE"
                     });
 
-                    items.Add(orderItem);
+                    order.OrderItems.Add(orderItem);    
                     newOrder.TotalAmount += orderItem.TotalAmount;
                     product.Status = "INACTIVE";
                     var updatedProduct = product;
@@ -142,8 +141,6 @@ namespace JewelryProduction.Service.CustomerImpl
             counterRepository.Update(counterForUpdate.Id, counterForUpdate);
 
             response.Add("order", newOrder);
-            response.Add("orderItems", items);
-
             return response;
         }
 
@@ -157,6 +154,14 @@ namespace JewelryProduction.Service.CustomerImpl
             PagingModel<GetOrderReponse> result = new PagingModel<GetOrderReponse>();
             result.Page = filterModel.PageIndex;
             List<Order> orders = orderRepository.GetOrders(filterModel);
+            foreach (Order order in orders)
+            {
+                List<OrderItem> items = new List<OrderItem>();
+                items = orderItemRepository.GetOrderItemsByOrderId(order.Id);
+                order.OrderItems = items;
+
+            }
+
             List<GetOrderReponse> getOrderResponses = orders.Select(orders =>
             {
                 return OrderConverter.toDto(orders);

@@ -49,5 +49,10 @@ namespace JewelryProduction.Repository.UserRepository
         {
             return orderitemDAO.TotalItem();
         }
+        public List<OrderItem> GetOrderItemsByOrderId(Guid orderId)
+        {
+            return orderitemDAO.GetOrderItemsByOrderId(orderId);
+        }
+
     }
 }

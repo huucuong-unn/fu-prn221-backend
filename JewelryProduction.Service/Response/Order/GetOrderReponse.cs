@@ -29,7 +29,7 @@ namespace JewelryProduction.Service.Response.Order
 
         public string? Status { get; set; }
 
-        public List<OrderItem>? orderItems { get; set; }
+        public List<OrderItem>? OrderItems { get; set; }
 
        public Guid? CounterId { get; set; }
     }

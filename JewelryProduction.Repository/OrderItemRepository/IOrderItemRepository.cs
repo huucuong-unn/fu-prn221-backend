@@ -21,5 +21,7 @@ namespace JewelryProduction.Repository.UserRepository
         public bool ChangeStatus(Guid id);
 
         public int TotalItem();
+
+        public List<OrderItem> GetOrderItemsByOrderId(Guid orderId);
     }
 }

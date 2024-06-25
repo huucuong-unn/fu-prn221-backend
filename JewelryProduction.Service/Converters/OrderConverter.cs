@@ -20,6 +20,7 @@ namespace JewelryProduction.Service.Converters
             getOrdersReponse.UpdateBy = order.UpdateBy;
             getOrdersReponse.Status = order.Status;
             getOrdersReponse.CounterId = order.CounterId;
+            getOrdersReponse.OrderItems = (List<OrderItem>?)order.OrderItems;
 
             return getOrdersReponse;
         }
@@ -39,7 +40,7 @@ namespace JewelryProduction.Service.Converters
             getOrdersReponse.Status = order.Status;
             foreach (var item in list)
             {
-                getOrdersReponse.orderItems.Add(item);
+                getOrdersReponse.OrderItems.Add(item);
             };
             getOrdersReponse.CounterId = order.CounterId;
             return getOrdersReponse;

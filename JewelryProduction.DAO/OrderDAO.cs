@@ -17,7 +17,6 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 return context.Orders
-                    .Where(u => u.Status == "ACTIVE")
                     .OrderByDescending(u => u.CreatedDate)
                     .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
                     .Take(filterModel.PageSize)

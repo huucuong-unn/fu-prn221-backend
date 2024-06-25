@@ -88,5 +88,11 @@ namespace JewelryProduction.DAO
             JewelryProductionContext context = new JewelryProductionContext();
             return context.OrderItems.Count();
         }
+
+        public List<OrderItem> GetOrderItemsByOrderId(Guid orderId)
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+            return context.OrderItems.Where(o => o.OrderId == orderId).ToList();
+        }
     }
 }
