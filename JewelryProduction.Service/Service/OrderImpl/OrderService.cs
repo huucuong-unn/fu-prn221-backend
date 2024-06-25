@@ -5,6 +5,7 @@ using JewelryProduction.Repository.CounterRepository;
 using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.OrderRepository;
 using JewelryProduction.Repository.ProductsRepository;
+using JewelryProduction.Repository.ProductTypeRepository;
 using JewelryProduction.Repository.UserCounterRepository;
 using JewelryProduction.Repository.UserRepository;
 using JewelryProduction.Repository.WarrantyRepository;
@@ -30,6 +31,8 @@ namespace JewelryProduction.Service.CustomerImpl
         private readonly IUserCounterRepository userCounterRepository;
 
         private readonly ICounterRepository counterRepository;
+
+        private readonly IProductTypeRepository productTypeRepository;
 
         public OrderService()
         {
@@ -67,6 +70,11 @@ namespace JewelryProduction.Service.CustomerImpl
             {
                 counterRepository = new CounterRepository();
             }
+
+            if (productTypeRepository == null)
+            {
+                productTypeRepository = new ProductTypeRepository();    
+            }
         }
 
         public Dictionary<string, object> Create(CreateOrderRequest createOrderRequest)
@@ -91,6 +99,7 @@ namespace JewelryProduction.Service.CustomerImpl
 
             createOrderRequest.CustomerId = customer.Id;
             Order order = OrderConverter.toEntityForCreate(createOrderRequest);
+            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
 
             Order newOrder = orderRepository.Create(order);
 
@@ -158,9 +167,28 @@ namespace JewelryProduction.Service.CustomerImpl
             {
                 List<OrderItem> items = new List<OrderItem>();
                 items = orderItemRepository.GetOrderItemsByOrderId(order.Id);
+                foreach (var item in items)
+                {
+                    var appendProduct = productRepository.GetProductById((Guid)item.ProductId);
+                    var productTypeId = appendProduct.ProductTypeId;
+                    if(!productTypeId.Equals(Guid.Empty))
+                    {
+                        var productType = productTypeRepository.GetProductTypeById(productTypeId);
+                        if (productType != null)
+                        {
+                            appendProduct.ProductType = productType;
+                        }
+                    }
+                   
+
+                    item.Product = appendProduct;
+                }
                 order.OrderItems = items;
 
+                order.Customer = customerRepository.GetById((Guid)order.CustomerId);
+
             }
+
 
             List<GetOrderReponse> getOrderResponses = orders.Select(orders =>
             {

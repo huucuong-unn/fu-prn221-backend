@@ -1,9 +1,4 @@
 ﻿using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.Service.Response.Order
 {
@@ -31,6 +26,9 @@ namespace JewelryProduction.Service.Response.Order
 
         public List<OrderItem>? OrderItems { get; set; }
 
-       public Guid? CounterId { get; set; }
+        public Guid? CounterId { get; set; }
+
+        public BusinessObject.Models.Customer? Customer { get; set; }
+        
     }
 }

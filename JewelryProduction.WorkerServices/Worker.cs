@@ -205,7 +205,7 @@ namespace JewelryProduction.WorkerServices
                         }
                     }
 
-                    await Task.Delay(3000, stoppingToken);
+                    await Task.Delay(86400000, stoppingToken);
                 }
             }
         }

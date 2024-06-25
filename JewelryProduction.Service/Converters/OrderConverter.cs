@@ -21,6 +21,7 @@ namespace JewelryProduction.Service.Converters
             getOrdersReponse.Status = order.Status;
             getOrdersReponse.CounterId = order.CounterId;
             getOrdersReponse.OrderItems = (List<OrderItem>?)order.OrderItems;
+            getOrdersReponse.Customer = order.Customer;
 
             return getOrdersReponse;
         }
@@ -43,6 +44,7 @@ namespace JewelryProduction.Service.Converters
                 getOrdersReponse.OrderItems.Add(item);
             };
             getOrdersReponse.CounterId = order.CounterId;
+            getOrdersReponse.Customer = order.Customer;
             return getOrdersReponse;
         }
 
