@@ -20,7 +20,9 @@ public interface IProductService
     bool UpdateProduct(Guid id, GetProductRequest request);
     int GetTotalProducts();
     List<GetProductResponse> GetProductsActive();
-    List<GetProductResponse> SearchProductByName(string name);
-
-
+    List<GetProductResponse> SearchProductByProductTypeName(string product_type_name);
+    List<GetProductResponse> SearchProductByProductCode(string product_code);
+    List<GetProductResponse> SearchProductByMaterialName(string material_name);
+    List<GetProductResponse> SearchProductByCounterName(string counter_name);
+    List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
 }

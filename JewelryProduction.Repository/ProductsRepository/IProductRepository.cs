@@ -28,8 +28,11 @@ public interface IProductRepository
 
     public List<Product> GetProductsActiveWithoutPaging();
 
-    public List<Product> SearchProductsByName(string name);
-   
+    public List<Product> SearchProductByProductTypeName(string product_type_name);
 
+    public List<Product> SearchProductByProductCode(string product_code);
+    public List<Product> SearchProductByMaterialName(string material_name);
+    public List<Product> SearchProductByCounterName(string counter_name);
+    public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
 
 }

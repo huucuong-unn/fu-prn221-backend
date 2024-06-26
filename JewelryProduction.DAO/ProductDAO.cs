@@ -171,16 +171,68 @@ namespace JewelryProduction.DAO
         }
 
 
-        public List<Product> SearchProductByName(string name)
+        public List<Product> SearchProductByProductTypeName(string product_type_name)
         {
             using (var context = new JewelryProductionContext())
             {
                 return context.Products
                     .Include(p => p.Material)
-                    .Include(p => p.ProductType) // Include bảng ProductType
-                    .Include(p => p.Counter) // Include bảng Counter
-                    .Where(p => p.Name.Contains(name))
+                    .Include(p => p.ProductType)
+                    .Include(p => p.Counter) 
+                    .Where(p => p.ProductType.Name.Contains(product_type_name))
                     .ToList();
+            }
+        }
+
+        public List<Product> SearchProductByProductCode(string product_code)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType)
+                    .Include(p => p.Counter)
+                    .Where(p => p.ProductCode.Contains(product_code))
+                    .ToList();
+            }
+        }
+
+        public List<Product> SearchProductByMaterialName(string material_name)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType)
+                    .Include(p => p.Counter)
+                    .Where(p => p.Material.Name.Contains(material_name))
+                    .ToList();
+            }
+        }
+
+        public List<Product> SearchProductByCounterName(string counter_name)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType)
+                    .Include(p => p.Counter)
+                    .Where(p => p.Counter.Name.Contains(counter_name))
+                    .ToList();
+            }
+        }
+
+        public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                .Include(p => p.Material)
+                .Include(p => p.ProductType)
+                .Include(p => p.Counter)
+                .Where(p => p.Price >= priceFrom && p.Price <= priceTo)
+                .ToList();
             }
         }
     }
