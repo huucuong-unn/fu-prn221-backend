@@ -80,5 +80,15 @@ namespace JewelryProduction.API.Controllers
         {
             return Ok(_productService.GetProductsActive());
         }
+
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_PRODUCTS_BY_NAME+ "{name}")]
+        public IActionResult SearchProductByName(string name)
+        {
+                       
+
+            
+            return Ok(_productService.SearchProductByName(name));
+        }
     }
 }

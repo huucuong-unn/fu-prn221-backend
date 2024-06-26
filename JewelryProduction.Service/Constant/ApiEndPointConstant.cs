@@ -100,6 +100,7 @@
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
             public const string GET_PRODUCTS_ACTIVE = "api/v1/product/product-active";
+            public const string SEARCH_PRODUCTS_BY_NAME = "api/v1/product/search";
         }
 
         public static class ProductStone

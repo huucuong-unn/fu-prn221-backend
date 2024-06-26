@@ -1,6 +1,7 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
+using JewelryProduction.DAO;
 using JewelryProduction.Repository.ProductsRepository;
 using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Product;
@@ -104,4 +105,16 @@ namespace JewelryProduction.Service.Service.ProductsImpl;
         }).ToList();
         return getProductResponses;
     }
+
+    public List<GetProductResponse> SearchProductByName(string name)
+    {
+        List<Product> products = _productRepository.SearchProductsByName(name);
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
+
+        return getProductResponses;
+    }
+
 }

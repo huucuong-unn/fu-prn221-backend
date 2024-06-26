@@ -1,5 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
+using JewelryProduction.DAO;
 
 namespace JewelryProduction.Repository.ProductsRepository;
 
@@ -26,5 +27,9 @@ public interface IProductRepository
     Product GetProductByProductCode(string productCode);
 
     public List<Product> GetProductsActiveWithoutPaging();
+
+    public List<Product> SearchProductsByName(string name);
+   
+
 
 }

@@ -169,5 +169,19 @@ namespace JewelryProduction.DAO
                     .ToList();
             }
         }
+
+
+        public List<Product> SearchProductByName(string name)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType) // Include bảng ProductType
+                    .Include(p => p.Counter) // Include bảng Counter
+                    .Where(p => p.Name.Contains(name))
+                    .ToList();
+            }
+        }
     }
 }
