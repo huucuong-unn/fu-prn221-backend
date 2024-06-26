@@ -14,7 +14,7 @@ namespace JewelryProduction.Service.Converters
             getProductResponse.Name = product.Name;
             getProductResponse.Description = product.Description;
             getProductResponse.Weight = product.Weight;
-            /*getProductResponse.Material = product.Material;*/
+            getProductResponse.MaterialId = (Guid)product.MaterialId;
             getProductResponse.ProductTypeId = product.ProductTypeId;
             getProductResponse.Price = product.Price;
             getProductResponse.Status = product.Status;
@@ -23,6 +23,9 @@ namespace JewelryProduction.Service.Converters
             getProductResponse.CounterId = product.CounterId;
             getProductResponse.ProductTypeId = product.ProductTypeId;
             getProductResponse.ProductCode = product.ProductCode;
+            getProductResponse.MaterialName = product.Material.Name;
+            getProductResponse.ProductType = product.ProductType.Name;
+            getProductResponse.CounterName = product.Counter.Name;
             return getProductResponse;
         }
 

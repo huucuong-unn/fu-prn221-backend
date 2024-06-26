@@ -11,11 +11,28 @@ namespace JewelryProduction.DAO
     {
         public ProductDAO() { }
 
+       /* public List<Product> GetProducts(FilterModel filterModel)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products                      
+                    .Where(p => p.Status == "ACTIVE")
+                    .OrderByDescending(p => p.CreateDate)
+                    .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
+                    .Take(filterModel.PageSize)
+                    .ToList();
+            }
+        }
+       */
+
         public List<Product> GetProducts(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
             {
                 return context.Products
+                    .Include(p => p.Material) // Include bảng Material
+                    .Include(p => p.ProductType) // Include bảng ProductType
+                    .Include(p => p.Counter) // Include bảng Counter
                     .Where(p => p.Status == "ACTIVE")
                     .OrderByDescending(p => p.CreateDate)
                     .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
@@ -24,11 +41,16 @@ namespace JewelryProduction.DAO
             }
         }
 
+
+
         public List<Product> GetProductsByMaterialId(Guid materialId)
         {
             using (var context = new JewelryProductionContext())
             {
                 return context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType) // Include bảng ProductType
+                    .Include(p => p.Counter) // Include bảng Counter
                     .Where(p => p.MaterialId == materialId)
                     .ToList();
             }
@@ -39,6 +61,7 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 return context.ProductTypes
+
                 .FirstOrDefault(pt => pt.Id == productTypeId);
             }
         }
@@ -57,7 +80,11 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.Products.FirstOrDefault(p => p.Id.Equals(id));
+                return context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType) // Include bảng ProductType
+                    .Include(p => p.Counter) // Include bảng Counter
+                    .FirstOrDefault(p => p.Id.Equals(id));
             }
         }
 
