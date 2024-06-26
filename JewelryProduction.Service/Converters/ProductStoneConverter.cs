@@ -22,6 +22,8 @@ namespace JewelryProduction.Service.Converters
         public static ProductStone toEntityForCreate(GetProductStoneRequest createproductStoneRequest)
         {
             ProductStone productStone = new ProductStone();
+            productStone.ProductId = createproductStoneRequest.ProductId;
+            productStone.StoneId =(Guid)createproductStoneRequest.StoneId;
             productStone.Status = "ACTIVE";
             productStone.CreateDate = DateTime.Now;
             productStone.CreateBy = createproductStoneRequest.CreateBy;
