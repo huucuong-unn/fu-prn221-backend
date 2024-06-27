@@ -1,6 +1,7 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.DAO;
+using Microsoft.EntityFrameworkCore;
 
 namespace JewelryProduction.Repository.ProductsRepository;
 
@@ -76,5 +77,25 @@ public class ProductRepository : IProductRepository
         return _productDao.GetProductStones(productId);
     }
 
+    public List<Product> SearchProductByProductTypeName(string product_type_name)
+    {
+        return _productDao.SearchProductByProductTypeName(product_type_name);
+    }
+    public List<Product> SearchProductByProductCode(string product_code)
+    {
+        return _productDao.SearchProductByProductCode(product_code);
+    }
+    public List<Product> SearchProductByMaterialName(string material_name)
+    {
+        return _productDao.SearchProductByMaterialName(material_name);
+    }
+    public List<Product> SearchProductByCounterName(string counter_name)
+    {
+        return _productDao.SearchProductByCounterName(counter_name);
+    }
+    public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo)
+    {
+        return _productDao.SearchProductsByPrice(priceFrom, priceTo);
+    }
 }
 

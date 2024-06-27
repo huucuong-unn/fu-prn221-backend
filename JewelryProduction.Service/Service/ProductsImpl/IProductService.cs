@@ -1,4 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
+using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.Service.Request.Product;
 using JewelryProduction.Service.Response.Product;
@@ -19,4 +20,9 @@ public interface IProductService
     bool UpdateProduct(Guid id, GetProductRequest request);
     int GetTotalProducts();
     List<GetProductResponse> GetProductsActive();
+    List<GetProductResponse> SearchProductByProductTypeName(string product_type_name);
+    List<GetProductResponse> SearchProductByProductCode(string product_code);
+    List<GetProductResponse> SearchProductByMaterialName(string material_name);
+    List<GetProductResponse> SearchProductByCounterName(string counter_name);
+    List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
 }

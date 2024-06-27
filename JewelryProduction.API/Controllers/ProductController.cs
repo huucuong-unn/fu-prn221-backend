@@ -80,5 +80,55 @@ namespace JewelryProduction.API.Controllers
         {
             return Ok(_productService.GetProductsActive());
         }
+
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_PRODUCTS_BY_PRODUCT_TYPE_NAME)]
+        public IActionResult SearchProductByProductTypeName(string product_type_name)
+        {                      
+
+            
+            return Ok(_productService.SearchProductByProductTypeName(product_type_name));
+        }
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_PRODUCTS_BY_PRODUCT_CODE)]
+        public IActionResult SearchProductByProductCode(string product_code)
+        {
+
+
+            return Ok(_productService.SearchProductByProductCode(product_code));
+        }
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_PRODUCTS_BY_MATERIAL_NAME)]
+        public IActionResult SearchProductByMaterialName(string material_name)
+        {
+
+
+            return Ok(_productService.SearchProductByMaterialName(material_name));
+        }
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_PRODUCTS_BY_COUNTER_NAME)]
+        public IActionResult SearchProductByCounterName(string counter_name)
+        {
+
+
+            return Ok(_productService.SearchProductByCounterName(counter_name));
+        }
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_PRODUCTS_BY_PRODUCT_PRICE)]
+        public IActionResult SearchProductsByPrice([FromQuery] decimal priceFrom, [FromQuery] decimal priceTo)
+        {
+            if (priceFrom <= 0 || priceFrom >= 100000000 || priceTo <= 0 || priceTo >= 100000000)
+            {
+                return BadRequest(new { message = "Price phải lớn hơn 0 và nhỏ hơn 100,000,000" });
+            }
+
+            var products = _productService.SearchProductsByPrice(priceFrom, priceTo);
+            if (products == null || products.Count == 0)
+            {
+                return NotFound(new { message = "Không tìm thấy sản phẩm nào trong khoảng giá này." });
+            }
+
+            return Ok(products);
+        }
     }
 }

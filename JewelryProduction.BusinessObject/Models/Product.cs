@@ -32,6 +32,8 @@ public partial class Product
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
 
     public virtual ICollection<ProductStone> ProductStones { get; set; } = new List<ProductStone>();
-
+   
     public virtual ProductType ProductType { get; set; } = null!;
+    public virtual Material Material { get; set; } 
+    public virtual Counter Counter { get; set; } 
 }

@@ -100,6 +100,11 @@
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
             public const string GET_PRODUCTS_ACTIVE = "api/v1/product/product-active";
+            public const string SEARCH_PRODUCTS_BY_PRODUCT_TYPE_NAME = "api/v1/product/search/product-type-name/";
+            public const string SEARCH_PRODUCTS_BY_PRODUCT_CODE = "api/v1/product/search/product-code/";
+            public const string SEARCH_PRODUCTS_BY_MATERIAL_NAME = "api/v1/product/search/material-name/";
+            public const string SEARCH_PRODUCTS_BY_COUNTER_NAME = "api/v1/product/search/counter-name/";
+            public const string SEARCH_PRODUCTS_BY_PRODUCT_PRICE = "api/v1/product/search/product-price/";
         }
 
         public static class ProductStone
