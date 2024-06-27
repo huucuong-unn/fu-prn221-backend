@@ -32,6 +32,8 @@
             public const string CREATE_ORDER = "api/v1/order/create";
             public const string UPDATE_ORDER = "api/v1/order/update";
             public const string DELETE_ORDER = "api/v1/order/delete";
+            public const string GET_ORDER_SEARCH = "api/v1/order-search";
+
         }
 
         public static class OrderItem

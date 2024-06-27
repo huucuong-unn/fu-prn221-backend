@@ -50,7 +50,7 @@ namespace JewelryProduction.Repository.OrderRepository
             return orderDAO.Update(id, order);
         }
 
-        public List<Order> SearchOrders(int page, int size, string orderCode, DateTime? startDate, DateTime? endDate)
+        public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
         {
             return orderDAO.SearchOrders(page, size, orderCode, startDate, endDate);
         }

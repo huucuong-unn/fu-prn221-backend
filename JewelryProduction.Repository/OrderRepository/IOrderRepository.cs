@@ -23,7 +23,7 @@ namespace JewelryProduction.Repository.OrderRepository
 
         public int TotalItem();
 
-        public List<Order> SearchOrders(int page, int size, string orderCode, DateTime? startDate, DateTime? endDate);
+        public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate);
 
     }
 }

@@ -165,6 +165,9 @@ namespace JewelryProduction.DAO
             {
                 return context.Products
                     .Where(p => p.Status == "ACTIVE")
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType)
+                    .Include(p => p.Counter)
                     .OrderByDescending(p => p.CreateDate)
                     .ToList();
             }

@@ -238,7 +238,7 @@ namespace JewelryProduction.Service.CustomerImpl
             return orderRepository.Update(id, order);
         }
 
-        public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string orderCode = null, DateTime? startDate = null, DateTime? endDate = null)
+        public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
         {
             PagingModel<GetOrderReponse> result = new PagingModel<GetOrderReponse>();
             result.Page = page;

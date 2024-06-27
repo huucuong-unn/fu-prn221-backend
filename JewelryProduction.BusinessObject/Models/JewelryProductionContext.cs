@@ -85,7 +85,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<Customer>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Customer__3213E83F77A7E50C");
+            entity.HasKey(e => e.Id).HasName("PK__Customer__3213E83F3E7C4716");
 
             entity.ToTable("Customer");
 
@@ -153,7 +153,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<Order>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F2FEF9E23");
+            entity.HasKey(e => e.Id).HasName("PK__Order__3213E83F57294EF9");
 
             entity.ToTable("Order");
 
@@ -191,7 +191,7 @@ public partial class JewelryProductionContext : DbContext
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.CustomerId)
-                .HasConstraintName("FK__Order__customer___398D8EEE");
+                .HasConstraintName("FK__Order__customer___3B75D760");
 
             entity.HasOne(d => d.Promotion).WithMany(p => p.Orders)
                 .HasForeignKey(d => d.PromotionId)
@@ -200,7 +200,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<OrderItem>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Order_It__3213E83F8C5A518B");
+            entity.HasKey(e => e.Id).HasName("PK__Order_It__3213E83FA4EBA9F7");
 
             entity.ToTable("Order_Item");
 
@@ -238,7 +238,7 @@ public partial class JewelryProductionContext : DbContext
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.OrderId)
-                .HasConstraintName("FK__Order_Ite__order__3B75D760");
+                .HasConstraintName("FK__Order_Ite__order__3D5E1FD2");
 
             entity.HasOne(d => d.Product).WithMany(p => p.OrderItems)
                 .HasForeignKey(d => d.ProductId)
@@ -450,7 +450,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F81500CBC");
+            entity.HasKey(e => e.Id).HasName("PK__User__3213E83F90F627FB");
 
             entity.ToTable("User");
 
@@ -498,7 +498,7 @@ public partial class JewelryProductionContext : DbContext
 
         modelBuilder.Entity<UserCounter>(entity =>
         {
-            entity.HasKey(e => new { e.StaffId, e.CounterId }).HasName("PK__User_Cou__74EA83E164C008D6");
+            entity.HasKey(e => new { e.StaffId, e.CounterId }).HasName("PK__User_Cou__74EA83E101A1D0E5");
 
             entity.ToTable("User_Counter");
 
@@ -517,12 +517,12 @@ public partial class JewelryProductionContext : DbContext
             entity.HasOne(d => d.Staff).WithMany(p => p.UserCounters)
                 .HasForeignKey(d => d.StaffId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__User_Coun__staff__412EB0B6");
+                .HasConstraintName("FK__User_Coun__staff__4316F928");
         });
 
         modelBuilder.Entity<Warranty>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Warranty__3213E83F9A4C9C73");
+            entity.HasKey(e => e.Id).HasName("PK__Warranty__3213E83FAAF05001");
 
             entity.ToTable("Warranty");
 
