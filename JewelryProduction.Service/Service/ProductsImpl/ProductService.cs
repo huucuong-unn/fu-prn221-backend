@@ -161,4 +161,16 @@ public class ProductService : IProductService
         return getProductResponses;
     }
 
+    public List<GetProductResponse> SearchSort(string counter_name, string product_code, string product_type, string material)
+    {
+
+        List<Product> products = _productRepository.SearchSort(counter_name, product_code, product_type, material);
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
+
+        return getProductResponses;
+    }
+
 }

@@ -130,5 +130,17 @@ namespace JewelryProduction.API.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet(ApiEndPointConstant.Product.SEARCH_SORT_PRODUCT)]
+        public IActionResult SearchSort(string? counter_name, string? product_code, string? product_type, string? material)
+        {
+            if (string.IsNullOrEmpty(counter_name) && string.IsNullOrEmpty(product_code) && string.IsNullOrEmpty(product_type) && string.IsNullOrEmpty(material))
+            {
+                return BadRequest("Bạn phải nhập ít nhất một giá trị.");
+            }
+            var products = _productService.SearchSort(counter_name, product_code, product_type, material);           
+
+            return Ok(products);
+        }
     }
 }
