@@ -7,11 +7,11 @@ namespace JewelryProduction.Repository.ProductsRepository;
 public interface IProductRepository
 {
     Product Create(Product product);
-        
+
     bool ChangeStatus(Guid id);
-        
+
     Product GetProductById(Guid id);
-        
+
     List<Product> GetProducts(FilterModel filterModel);
 
     List<Product> GetProductsByMaterialId(Guid materialId);
@@ -21,7 +21,7 @@ public interface IProductRepository
     public List<ProductStone> GetProductStones(Guid productId);
 
     bool Update(Guid id, Product product);
-        
+
     int TotalProducts();
 
     Product GetProductByProductCode(string productCode);
@@ -34,5 +34,8 @@ public interface IProductRepository
     public List<Product> SearchProductByMaterialName(string material_name);
     public List<Product> SearchProductByCounterName(string counter_name);
     public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
+    public List<Product> SearchSort(string counter_name, string product_code, string product_type, string material);
+
+
 
 }

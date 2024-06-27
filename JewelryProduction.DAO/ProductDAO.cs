@@ -235,5 +235,41 @@ namespace JewelryProduction.DAO
                 .ToList();
             }
         }
+
+        public List<Product> SearchSort(string counter_name, string product_code, string product_type, string material)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var products = context.Products
+                    .Include(p => p.Material)
+                    .Include(p => p.ProductType)
+                    .Include(p => p.Counter)
+                    .AsQueryable();
+
+                if (!string.IsNullOrEmpty(counter_name))
+                {
+                    products = products.Where(p => p.Counter.Name.Contains(counter_name));
+                }
+
+                if (!string.IsNullOrEmpty(product_code))
+                {
+                    products = products.Where(p => p.Name.Contains(product_code));
+                }
+
+                if (!string.IsNullOrEmpty(product_type))
+                {
+                    products = products.Where(p => p.ProductType.Name.Contains(product_type));
+                }
+
+                if (!string.IsNullOrEmpty(material))
+                {
+                    products = products.Where(p => p.Material.Name.Contains(material));
+                }
+
+                return products.OrderBy(p => p.Name).ToList();
+            }
+        }
     }
 }
+
+

@@ -105,6 +105,7 @@
             public const string SEARCH_PRODUCTS_BY_MATERIAL_NAME = "api/v1/product/search/material-name/";
             public const string SEARCH_PRODUCTS_BY_COUNTER_NAME = "api/v1/product/search/counter-name/";
             public const string SEARCH_PRODUCTS_BY_PRODUCT_PRICE = "api/v1/product/search/product-price/";
+            public const string SEARCH_SORT_PRODUCT= "api/v1/product/searchsort/product/";
         }
 
         public static class ProductStone

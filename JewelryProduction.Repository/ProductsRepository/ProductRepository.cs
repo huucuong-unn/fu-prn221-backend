@@ -59,7 +59,7 @@ public class ProductRepository : IProductRepository
 
     public Product GetProductByProductCode(string productCode)
     {
-        return _productDao.GetProductByProductCode(productCode) ;
+        return _productDao.GetProductByProductCode(productCode);
     }
 
     public List<Product> GetProductsByMaterialId(Guid materialId)
@@ -97,5 +97,13 @@ public class ProductRepository : IProductRepository
     {
         return _productDao.SearchProductsByPrice(priceFrom, priceTo);
     }
+
+    public List<Product> SearchSort(string counter_name, string product_code, string product_type, string material)
+    {
+        return _productDao.SearchSort(counter_name, product_code, product_type, material);
+    }
+
+
+
 }
 
