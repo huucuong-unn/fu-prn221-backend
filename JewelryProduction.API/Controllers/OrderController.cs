@@ -52,7 +52,15 @@ namespace JewelryProduction.API.Controllers
             {
                 return orderService.Delete(id);
             }
-        }
+
+            [HttpGet("search")]
+            public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string orderCode = null, DateTime? startDate = null, DateTime? endDate = null)
+            {
+                return orderService.SearchOrders(page, size, orderCode, startDate, endDate);
+            }
+
+
+    }
     
 
 }

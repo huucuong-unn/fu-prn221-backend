@@ -26,5 +26,7 @@ namespace JewelryProduction.Service.CustomerImpl
         public bool Delete(Guid id);
 
         public int TotalItem();
+
+        public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string orderCode = null, DateTime? startDate = null, DateTime? endDate = null);
     }
 }

@@ -22,6 +22,8 @@ namespace JewelryProduction.Repository.OrderRepository
         public bool Update(Guid id, Order order);
 
         public int TotalItem();
-        
+
+        public List<Order> SearchOrders(int page, int size, string orderCode, DateTime? startDate, DateTime? endDate);
+
     }
 }

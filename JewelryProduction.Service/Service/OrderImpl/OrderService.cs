@@ -203,6 +203,27 @@ namespace JewelryProduction.Service.CustomerImpl
         public GetOrderReponse GetById(Guid id)
         {
             Order order = orderRepository.GetById(id);
+            List<OrderItem> items = new List<OrderItem>();
+            items = orderItemRepository.GetOrderItemsByOrderId(order.Id);
+            foreach (var item in items)
+            {
+                var appendProduct = productRepository.GetProductById((Guid)item.ProductId);
+                var productTypeId = appendProduct.ProductTypeId;
+                if (!productTypeId.Equals(Guid.Empty))
+                {
+                    var productType = productTypeRepository.GetProductTypeById(productTypeId);
+                    if (productType != null)
+                    {
+                        appendProduct.ProductType = productType;
+                    }
+                }
+
+
+                item.Product = appendProduct;
+            }
+            order.OrderItems = items;
+
+            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
             return OrderConverter.toDto(order);
         }
 
@@ -216,5 +237,42 @@ namespace JewelryProduction.Service.CustomerImpl
             Order order = OrderConverter.toEntityForUpdate(updateOrderRequest);
             return orderRepository.Update(id, order);
         }
+
+        public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string orderCode = null, DateTime? startDate = null, DateTime? endDate = null)
+        {
+            PagingModel<GetOrderReponse> result = new PagingModel<GetOrderReponse>();
+            result.Page = page;
+
+            List<Order> orders = orderRepository.SearchOrders(page, size, orderCode, startDate, endDate);
+
+            foreach (Order order in orders)
+            {
+                List<OrderItem> items = new List<OrderItem>();
+                items = orderItemRepository.GetOrderItemsByOrderId(order.Id);
+                foreach (var item in items)
+                {
+                    var appendProduct = productRepository.GetProductById((Guid)item.ProductId);
+                    var productTypeId = appendProduct.ProductTypeId;
+                    if (!productTypeId.Equals(Guid.Empty))
+                    {
+                        var productType = productTypeRepository.GetProductTypeById(productTypeId);
+                        if (productType != null)
+                        {
+                            appendProduct.ProductType = productType;
+                        }
+                    }
+                    item.Product = appendProduct;
+                }
+                order.OrderItems = items;
+                order.Customer = customerRepository.GetById((Guid)order.CustomerId);
+            }
+
+            List<GetOrderReponse> getOrderResponses = orders.Select(order => OrderConverter.toDto(order)).ToList();
+
+            result.ListResult = getOrderResponses;
+            result.Size = size;
+            return result;
+        }
     }
+
 }

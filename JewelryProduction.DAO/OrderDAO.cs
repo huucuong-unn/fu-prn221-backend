@@ -1,5 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -88,6 +89,32 @@ namespace JewelryProduction.DAO
         {
             JewelryProductionContext context = new JewelryProductionContext();
             return context.Orders.Count();
+        }
+
+        public List<Order> SearchOrders(int page, int size, string orderCode, DateTime? startDate, DateTime? endDate)
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+
+            var query = context.Orders.AsQueryable();
+
+            if (!string.IsNullOrEmpty(orderCode))
+            {
+                query = query.Where(o => o.Id.ToString() == orderCode);
+            }
+
+            if (startDate.HasValue)
+            {
+                query = query.Where(o => o.CreatedDate >= startDate.Value);
+            }
+
+            if (endDate.HasValue)
+            {
+                query = query.Where(o => o.CreatedDate <= endDate.Value);
+            }
+
+            return query.Skip((page - 1) * size)
+                        .Take(size)
+                        .ToList();
         }
     }
 }

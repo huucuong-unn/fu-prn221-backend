@@ -43,7 +43,7 @@ public partial class JewelryProductionContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("server =34.172.203.236; database =JewelryProduction;uid=sqlserver;pwd=Huucuong27062003;TrustServerCertificate=true");
+        => optionsBuilder.UseSqlServer("server =34.142.208.160; database =JewelryProduction;uid=sqlserver;pwd=Huucuong27062003;TrustServerCertificate=true");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
