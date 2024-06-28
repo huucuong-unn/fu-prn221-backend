@@ -4,6 +4,7 @@ using JewelryProduction.Service.Constant;
 using JewelryProduction.Service.CustomerImpl;
 using JewelryProduction.Service.Request.Customer;
 using JewelryProduction.Service.Response.Order;
+using JewelryProduction.Service.Response.ProductType;
 using JewelryProduction.Service.Response.User;
 using Microsoft.AspNetCore.Mvc;
 
@@ -47,11 +48,23 @@ namespace JewelryProduction.API.Controllers
                 return orderService.GetMonthlyOrderCount();
             }
 
-        [HttpGet(ApiEndPointConstant.Order.ORDER_DASHBOARD_FOR_LINE_CHART)]
+            [HttpGet(ApiEndPointConstant.Order.ORDER_DASHBOARD_FOR_LINE_CHART)]
             public Dictionary<string, decimal> OrderDashboardForLineChart()
             {
                 return orderService.GetMonthlyRevenue();
             }
+
+            [HttpGet(ApiEndPointConstant.Order.ORDER_TOP_5_CUSTOMER)]
+            public List<Top5CustomerResponse> GetTop5Customers()
+            {
+                return orderService.GetTop5Customers();
+            }
+
+        [HttpGet(ApiEndPointConstant.Order.ORDER_DASHBOARD_FOR_PIE_CHART)]
+        public List<GetProductTypeWithTotalOrder> GetProductTypeWithTotalOrder()
+        {
+            return orderService.GetProductTypeWithTotalOrder();
+        }
 
         [HttpPost(ApiEndPointConstant.Order.CREATE_ORDER)]
             public Dictionary<string, object> Create(CreateOrderRequest createOrderRequest)
@@ -70,7 +83,15 @@ namespace JewelryProduction.API.Controllers
             {
                 return orderService.Delete(id);
             }
-        }
+
+            [HttpGet(ApiEndPointConstant.Order.GET_ORDER_SEARCH)]
+            public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
+            {
+                return orderService.SearchOrders(page, size, orderCode, startDate, endDate);
+            }
+
+
+    }
     
 
 }

@@ -1,6 +1,7 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
+using JewelryProduction.DAO;
 using JewelryProduction.Repository.CounterRepository;
 using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.OrderRepository;
@@ -12,6 +13,7 @@ using JewelryProduction.Repository.WarrantyRepository;
 using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Customer;
 using JewelryProduction.Service.Response.Order;
+using JewelryProduction.Service.Response.ProductType;
 using Microsoft.IdentityModel.Tokens;
 
 namespace JewelryProduction.Service.CustomerImpl
@@ -99,8 +101,8 @@ namespace JewelryProduction.Service.CustomerImpl
 
             createOrderRequest.CustomerId = customer.Id;
             Order order = OrderConverter.toEntityForCreate(createOrderRequest);
-            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
-
+/*            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
+*/
             Order newOrder = orderRepository.Create(order);
 
             var counterId = userCounterRepository.GetCounterIdByStaffId(Guid.Parse(createOrderRequest.CreateBy));
@@ -144,6 +146,9 @@ namespace JewelryProduction.Service.CustomerImpl
 
             newOrder.CounterId = counterId;
             orderRepository.Update(newOrder.Id, newOrder);
+            customer.Point = (int?)(newOrder.TotalAmount / 100);
+            var updatedCustomer = customer;
+            customerRepository.Update(updatedCustomer.Id, updatedCustomer);   
 
             var counterForUpdate = counterRepository.GetCounterById(counterId);
             counterForUpdate.Income = (decimal)(counterForUpdate.Income + newOrder.TotalAmount);
@@ -203,6 +208,27 @@ namespace JewelryProduction.Service.CustomerImpl
         public GetOrderReponse GetById(Guid id)
         {
             Order order = orderRepository.GetById(id);
+            List<OrderItem> items = new List<OrderItem>();
+            items = orderItemRepository.GetOrderItemsByOrderId(order.Id);
+            foreach (var item in items)
+            {
+                var appendProduct = productRepository.GetProductById((Guid)item.ProductId);
+                var productTypeId = appendProduct.ProductTypeId;
+                if (!productTypeId.Equals(Guid.Empty))
+                {
+                    var productType = productTypeRepository.GetProductTypeById(productTypeId);
+                    if (productType != null)
+                    {
+                        appendProduct.ProductType = productType;
+                    }
+                }
+
+
+                item.Product = appendProduct;
+            }
+            order.OrderItems = items;
+
+            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
             return OrderConverter.toDto(order);
         }
 
@@ -242,70 +268,79 @@ namespace JewelryProduction.Service.CustomerImpl
             {
                 OrderDashboardBarChartResponse order = new OrderDashboardBarChartResponse();
                 order.TotalOrder = item.Value;
-                if (item.Key.Equals("1"))
-                {
-                    order.Month = "Jan";
-                }
 
-                else if (item.Key.Equals("2"))
-                {
-                    order.Month = "Fev";
-                }
-
-                else if (item.Key.Equals("3"))
-                {
-                    order.Month = "Mar";
-                }
-
-                else if (item.Key.Equals("4"))
-                {
-                    order.Month = "Apr";
-                }
-
-                else if (item.Key.Equals("5"))
-                {
-                    order.Month = "May";
-                }
-
-                else if (item.Key.Equals("6"))
-                {
-                    order.Month = "June";
-                }
-
-                else if (item.Key.Equals("7"))
-                {
-                    order.Month = "July";
-                }
-
-                else if (item.Key.Equals("8"))
-                {
-                    order.Month = "Aug";
-                }
-
-                else if (item.Key.Equals("9"))
-                {
-                    order.Month = "Sept";
-                }
-
-                else if (item.Key.Equals("10"))
-                {
-                    order.Month = "Oct";
-                }
-
-                else if (item.Key.Equals("11"))
-                {
-                    order.Month = "Nov";
-                }
-
-                else if (item.Key.Equals("12"))
-                {
-                    order.Month = "Dec";
-                }
+                order.Month = item.Key;
 
                 orderDashboardBarChartResponses.Add(order);
             }
 
             return orderDashboardBarChartResponses;
         }
+
+        public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
+        {
+            PagingModel<GetOrderReponse> result = new PagingModel<GetOrderReponse>();
+            result.Page = page;
+
+            List<Order> orders = orderRepository.SearchOrders(page, size, orderCode, startDate, endDate);
+
+            foreach (Order order in orders)
+            {
+                List<OrderItem> items = new List<OrderItem>();
+                items = orderItemRepository.GetOrderItemsByOrderId(order.Id);
+                foreach (var item in items)
+                {
+                    var appendProduct = productRepository.GetProductById((Guid)item.ProductId);
+                    var productTypeId = appendProduct.ProductTypeId;
+                    if (!productTypeId.Equals(Guid.Empty))
+                    {
+                        var productType = productTypeRepository.GetProductTypeById(productTypeId);
+                        if (productType != null)
+                        {
+                            appendProduct.ProductType = productType;
+                        }
+                    }
+                    item.Product = appendProduct;
+                }
+                order.OrderItems = items;
+                order.Customer = customerRepository.GetById((Guid)order.CustomerId);
+            }
+
+            List<GetOrderReponse> getOrderResponses = orders.Select(order => OrderConverter.toDto(order)).ToList();
+
+            result.ListResult = getOrderResponses;
+            result.Size = size;
+            return result;
+        }
+
+        public List<Top5CustomerResponse> GetTop5Customers()
+        {
+            var top5Customers = customerRepository.GetTop5CustomersWithMostOrders();
+
+            
+            return top5Customers.Select(c => new Top5CustomerResponse
+            {
+                Name = c.Name,
+                PhoneNumber = c.Phone,
+                TotalOrder = orderRepository.GetOrdersByCustomerId(c.Id).Count(o => o.Status == "ACTIVE")
+            }).OrderByDescending(g => g.TotalOrder).ToList();
+        }
+
+        public List<GetProductTypeWithTotalOrder> GetProductTypeWithTotalOrder()
+        {
+            var productTypes = productTypeRepository.GetAllProductTypes();
+            var orderItems = orderItemRepository.GetAllOrderItems();
+
+            var result = productTypes.Select(pt => new GetProductTypeWithTotalOrder
+            {
+                ProductTypeName = pt.Name,
+                TotalOrder = orderItems
+                .Where(oi => oi.Product.ProductTypeId == pt.Id)
+                .Sum(oi => (int) oi.Quantity)
+            }).ToList();
+
+            return result;
+        }
     }
+
 }

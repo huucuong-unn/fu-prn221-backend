@@ -23,6 +23,17 @@ namespace JewelryProduction.DAO
             }
         }
 
+        public List<ProductType> GetAllProductTypes()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.ProductTypes
+                    .Where(pt => pt.Status == "ACTIVE")
+                    .OrderByDescending(pt => pt.CreateDate)
+                    .ToList();
+            }
+        }
+
         public ProductType GetProductTypeById(Guid id)
         {
             using (var context = new JewelryProductionContext())

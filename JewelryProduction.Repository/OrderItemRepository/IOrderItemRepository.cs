@@ -12,6 +12,8 @@ namespace JewelryProduction.Repository.UserRepository
     {
         public List<OrderItem> GetOrderItems(FilterModel filterModel);
 
+        public List<OrderItem> GetAllOrderItems();
+
         public OrderItem GetOrderItemById(Guid id);
 
         public OrderItem Create(OrderItem orderitem);

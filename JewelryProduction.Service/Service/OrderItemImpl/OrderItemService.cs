@@ -74,5 +74,10 @@ namespace JewelryProduction.Service.CustomerImpl
             OrderItem orderitem = OrderItemConverter.toEntityForUpdate(baseOrderItemRequest);
             return orderitemRepository.Update(id, orderitem);
         }
+
+        public List<OrderItem> GetAllOrderItems()
+        {
+            return orderitemRepository.GetAllOrderItems();
+        }
     }
 }

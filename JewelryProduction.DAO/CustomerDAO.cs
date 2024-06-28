@@ -102,5 +102,22 @@ namespace JewelryProduction.DAO
             return customer;
 
         }
+
+        public List<Customer> GetTop5CustomersWithMostOrders()
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+            var top5CustomerIds = context.Orders
+                .Where(o => o.Status == "ACTIVE")
+                .GroupBy(o => o.CustomerId)
+                .OrderByDescending(g => g.Count())
+                .Select(g => g.Key)
+                .ToList();
+
+            List<Customer> customers =  context.Customers
+            .Where(c => top5CustomerIds.Contains(c.Id))
+            .ToList();
+
+            return customers;
+        }
     }
 }

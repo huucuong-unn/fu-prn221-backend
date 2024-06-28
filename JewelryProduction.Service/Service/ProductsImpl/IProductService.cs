@@ -5,6 +5,7 @@ using JewelryProduction.Service.Request.Product;
 using JewelryProduction.Service.Response.Product;
 using JewelryProduction.Service.Response.ProductStone;
 using JewelryProduction.Service.Response.ProductType;
+using static JewelryProduction.Service.Constant.ApiEndPointConstant;
 
 namespace JewelryProduction.Service.Service.ProductsImpl;
 
@@ -25,4 +26,5 @@ public interface IProductService
     List<GetProductResponse> SearchProductByMaterialName(string material_name);
     List<GetProductResponse> SearchProductByCounterName(string counter_name);
     List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
+    List<GetProductResponse> SearchSort(string counter_name, string product_code, string product_type, string material);
 }

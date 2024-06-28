@@ -1,4 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
+using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.Service.Request.Customer;
 using JewelryProduction.Service.Request.User;
@@ -20,6 +21,8 @@ namespace JewelryProduction.Service.CustomerImpl
         public GetOrderItemResponse Create(BaseOrderItemRequest baseOrderItemRequest);
 
         public bool Update(Guid id, BaseOrderItemRequest baseOrderItemRequest);
+
+        public List<OrderItem> GetAllOrderItems();
 
     }
 }

@@ -64,5 +64,15 @@ namespace JewelryProduction.Repository.OrderRepository
         {
             return orderDAO.GetMonthlyOrderCount();
         }
+
+        public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
+        {
+            return orderDAO.SearchOrders(page, size, orderCode, startDate, endDate);
+        }
+
+        public List<Order> GetOrdersByCustomerId(Guid customerID)
+        {
+            return orderDAO.GetOrdersByCustomerId(customerID);
+        }
     }
 }
