@@ -114,6 +114,7 @@ namespace JewelryProduction.DAO
 
             return query.Skip((page - 1) * size)
                         .Take(size)
+                        .OrderByDescending(o => o.CreatedDate)
                         .ToList();
         }
     }

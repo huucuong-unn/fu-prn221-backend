@@ -98,6 +98,9 @@ namespace JewelryProduction.Service.CustomerImpl
             } 
 
             createOrderRequest.CustomerId = customer.Id;
+            createOrderRequest.CreatedDate = DateTime.Now;
+            createOrderRequest.UpdatedDate = DateTime.Now;
+
             Order order = OrderConverter.toEntityForCreate(createOrderRequest);
 /*            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
 */
@@ -144,7 +147,7 @@ namespace JewelryProduction.Service.CustomerImpl
 
             newOrder.CounterId = counterId;
             orderRepository.Update(newOrder.Id, newOrder);
-            customer.Point = (int?)(newOrder.TotalAmount / 100);
+            customer.Point += (int?)(newOrder.TotalAmount / 100);
             var updatedCustomer = customer;
             customerRepository.Update(updatedCustomer.Id, updatedCustomer);   
 
