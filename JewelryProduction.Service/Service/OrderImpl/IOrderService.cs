@@ -26,5 +26,11 @@ namespace JewelryProduction.Service.CustomerImpl
         public bool Delete(Guid id);
 
         public int TotalItem();
+
+        public OrderDashboardResponse StatisticalOrderAndSalesAndProduct();
+
+        public Dictionary<string, decimal> GetMonthlyRevenue();
+
+        public List<OrderDashboardBarChartResponse> GetMonthlyOrderCount();
     }
 }

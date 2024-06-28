@@ -216,5 +216,96 @@ namespace JewelryProduction.Service.CustomerImpl
             Order order = OrderConverter.toEntityForUpdate(updateOrderRequest);
             return orderRepository.Update(id, order);
         }
+
+        public OrderDashboardResponse StatisticalOrderAndSalesAndProduct()
+        {
+            OrderDashboardResponse orderDashboardResponse = new OrderDashboardResponse();
+
+            orderDashboardResponse.NumberOfOrders = orderRepository.TotalItem();
+            orderDashboardResponse.Sales = orderRepository.GetTotalRevenue();
+            orderDashboardResponse.NumberOfProduct = productRepository.TotalProducts();
+
+            return orderDashboardResponse;
+        }
+
+        public Dictionary<string, decimal> GetMonthlyRevenue()
+        {
+            return orderRepository.GetMonthlyRevenue();
+        }
+
+        public List<OrderDashboardBarChartResponse> GetMonthlyOrderCount()
+        {
+            List<OrderDashboardBarChartResponse> orderDashboardBarChartResponses = new List<OrderDashboardBarChartResponse>();
+            var totalOrderByMonth = orderRepository.GetMonthlyOrderCount();
+
+            foreach (var item in totalOrderByMonth)
+            {
+                OrderDashboardBarChartResponse order = new OrderDashboardBarChartResponse();
+                order.TotalOrder = item.Value;
+                if (item.Key.Equals("1"))
+                {
+                    order.Month = "Jan";
+                }
+
+                else if (item.Key.Equals("2"))
+                {
+                    order.Month = "Fev";
+                }
+
+                else if (item.Key.Equals("3"))
+                {
+                    order.Month = "Mar";
+                }
+
+                else if (item.Key.Equals("4"))
+                {
+                    order.Month = "Apr";
+                }
+
+                else if (item.Key.Equals("5"))
+                {
+                    order.Month = "May";
+                }
+
+                else if (item.Key.Equals("6"))
+                {
+                    order.Month = "June";
+                }
+
+                else if (item.Key.Equals("7"))
+                {
+                    order.Month = "July";
+                }
+
+                else if (item.Key.Equals("8"))
+                {
+                    order.Month = "Aug";
+                }
+
+                else if (item.Key.Equals("9"))
+                {
+                    order.Month = "Sept";
+                }
+
+                else if (item.Key.Equals("10"))
+                {
+                    order.Month = "Oct";
+                }
+
+                else if (item.Key.Equals("11"))
+                {
+                    order.Month = "Nov";
+                }
+
+                else if (item.Key.Equals("12"))
+                {
+                    order.Month = "Dec";
+                }
+
+                orderDashboardBarChartResponses.Add(order);
+            }
+
+            return orderDashboardBarChartResponses;
+        }
     }
 }

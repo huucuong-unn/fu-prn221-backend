@@ -49,5 +49,20 @@ namespace JewelryProduction.Repository.OrderRepository
         {
             return orderDAO.Update(id, order);
         }
+
+        public decimal GetTotalRevenue()
+        {
+            return orderDAO.GetTotalRevenue();
+        }
+
+        public Dictionary<string, decimal> GetMonthlyRevenue()
+        {
+            return orderDAO.GetMonthlyRevenue();
+        }
+
+        public Dictionary<string, int> GetMonthlyOrderCount()
+        {
+            return orderDAO.GetMonthlyOrderCount();
+        }
     }
 }

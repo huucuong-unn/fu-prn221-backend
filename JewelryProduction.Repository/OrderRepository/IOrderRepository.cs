@@ -22,6 +22,11 @@ namespace JewelryProduction.Repository.OrderRepository
         public bool Update(Guid id, Order order);
 
         public int TotalItem();
-        
+
+        public decimal GetTotalRevenue();
+
+        public Dictionary<string, decimal> GetMonthlyRevenue();
+
+        public Dictionary<string, int> GetMonthlyOrderCount();
     }
 }

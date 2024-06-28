@@ -89,5 +89,62 @@ namespace JewelryProduction.DAO
             JewelryProductionContext context = new JewelryProductionContext();
             return context.Orders.Count();
         }
+
+        public decimal GetTotalRevenue()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return (decimal)context.Orders
+                    .Where(o => o.Status == "ACTIVE")
+                    .Sum(o => o.TotalAmount);
+            }
+        }
+
+        public Dictionary<string, decimal> GetMonthlyRevenue()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var currentYear = DateTime.Now.Year;
+                var monthlyRevenue = context.Orders
+                    .Where(o => o.Status == "ACTIVE" && o.CreatedDate.Value.Year == currentYear)
+                    .GroupBy(o => new { o.CreatedDate.Value.Month })
+                    .Select(g => new
+                    {
+                        Month = g.Key.Month,
+                        TotalAmount = g.Sum(o => o.TotalAmount)
+                    })
+                    .ToDictionary(x => x.Month, x => x.TotalAmount ?? 0);
+
+                // Tạo danh sách đầy đủ 12 tháng 
+                var allMonths = Enumerable.Range(1, 12).Select(month => new
+                {
+                    Month = month,
+                    TotalAmount = monthlyRevenue.ContainsKey(month) ? monthlyRevenue[month] : 0m
+                }).ToDictionary(x => $"{x.Month}/{currentYear}", x => x.TotalAmount);
+
+                return allMonths;
+            }
+        }
+
+        public Dictionary<string, int> GetMonthlyOrderCount()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var currentYear = DateTime.Now.Year;
+
+                var monthlyOrderCount = context.Orders
+                    .Where(o => o.Status == "ACTIVE" && o.CreatedDate.Value.Year == currentYear)
+                    .GroupBy(o => o.CreatedDate.Value.Month)
+                    .Select(g => new
+                    {
+                        Month = g.Key,
+                        OrderCount = g.Count()
+                    })
+                    .ToDictionary(x => $"{x.Month}", x => x.OrderCount);
+
+                return monthlyOrderCount;
+            }
+        }
+
     }
 }
