@@ -50,9 +50,29 @@ namespace JewelryProduction.Repository.OrderRepository
             return orderDAO.Update(id, order);
         }
 
+        public decimal GetTotalRevenue()
+        {
+            return orderDAO.GetTotalRevenue();
+        }
+
+        public Dictionary<string, decimal> GetMonthlyRevenue()
+        {
+            return orderDAO.GetMonthlyRevenue();
+        }
+
+        public Dictionary<string, int> GetMonthlyOrderCount()
+        {
+            return orderDAO.GetMonthlyOrderCount();
+        }
+
         public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
         {
             return orderDAO.SearchOrders(page, size, orderCode, startDate, endDate);
+        }
+
+        public List<Order> GetOrdersByCustomerId(Guid customerID)
+        {
+            return orderDAO.GetOrdersByCustomerId(customerID);
         }
     }
 }

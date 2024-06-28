@@ -28,6 +28,11 @@
         public static class Order
         {
             public const string GET_ORDER = "api/v1/order";
+            public const string STATISTICAL_ORDER_SALES_PRODUCT = "api/v1/order/statistical-order-sales-product";
+            public const string ORDER_DASHBOARD_FOR_LINE_CHART = "api/v1/order/dashboard-line-chart";
+            public const string ORDER_DASHBOARD_FOR_BAR_CHART = "api/v1/order/dashboard-bar-chart";
+            public const string ORDER_DASHBOARD_FOR_PIE_CHART = "api/v1/order/dashboard-pie-chart";
+            public const string ORDER_TOP_5_CUSTOMER = "api/v1/order/top-5-customer";
             public const string GET_ORDER_BY_ID = "api/v1/order/";
             public const string CREATE_ORDER = "api/v1/order/create";
             public const string UPDATE_ORDER = "api/v1/order/update";

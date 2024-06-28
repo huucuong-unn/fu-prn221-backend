@@ -13,6 +13,8 @@ public interface IProductTypeRepository
 
     List<ProductType> GetProductTypes(FilterModel filterModel);
 
+    public List<ProductType> GetAllProductTypes();
+
     bool Update(Guid id, ProductType productType);
 
     int TotalProductTypes();

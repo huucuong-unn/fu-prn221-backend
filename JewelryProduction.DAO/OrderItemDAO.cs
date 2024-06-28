@@ -1,5 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,6 +22,17 @@ namespace JewelryProduction.DAO
                     .OrderByDescending(u => u.CreatedDate)
                     .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
                     .Take(filterModel.PageSize)
+                    .ToList();
+            }
+        }
+
+        public List<OrderItem> GetAllOrderItems()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.OrderItems
+                    .Where(u => u.Status == "ACTIVE").Include(oi => oi.Product).ThenInclude(p => p.ProductType)
+                    .OrderByDescending(u => u.CreatedDate)
                     .ToList();
             }
         }

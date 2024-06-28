@@ -40,6 +40,11 @@ namespace JewelryProduction.Repository.UserRepository
             return orderitemDAO.GetOrderItems(filterModel);
         }
 
+        public List<OrderItem> GetAllOrderItems()
+        {
+            return orderitemDAO.GetAllOrderItems();
+        }
+
         public bool Update(Guid id, OrderItem orderitem)
         {
             return orderitemDAO.Update(id, orderitem);

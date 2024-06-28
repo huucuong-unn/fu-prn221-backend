@@ -91,6 +91,79 @@ namespace JewelryProduction.DAO
             return context.Orders.Count();
         }
 
+        public decimal GetTotalRevenue()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return (decimal)context.Orders
+                    .Where(o => o.Status == "ACTIVE")
+                    .Sum(o => o.TotalAmount);
+            }
+        }
+
+        public Dictionary<string, decimal> GetMonthlyRevenue()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var currentYear = DateTime.Now.Year;
+                var monthlyRevenue = context.Orders
+                    .Where(o => o.Status == "ACTIVE" && o.CreatedDate.Value.Year == currentYear)
+                    .GroupBy(o => new { o.CreatedDate.Value.Month })
+                    .Select(g => new
+                    {
+                        Month = g.Key.Month,
+                        TotalAmount = g.Sum(o => o.TotalAmount)
+                    })
+                    .ToDictionary(x => x.Month, x => x.TotalAmount ?? 0);
+
+                // Tạo danh sách đầy đủ 12 tháng 
+                var allMonths = Enumerable.Range(1, 12).Select(month => new
+                {
+                    Month = month,
+                    TotalAmount = monthlyRevenue.ContainsKey(month) ? monthlyRevenue[month] : 0m
+                }).ToDictionary(x => $"{x.Month}/{currentYear}", x => x.TotalAmount);
+
+                return allMonths;
+            }
+        }
+
+        public Dictionary<string, int> GetMonthlyOrderCount()
+        {
+            var monthlyOrderCount = new Dictionary<string, int>();
+            var monthNames = new[] { "Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept", "Oct", "Nov", "Dec" };
+
+            using (var context = new JewelryProductionContext())
+            {
+                var currentYear = DateTime.Now.Year;
+
+                // Lấy danh sách tháng và số lượng đơn hàng tương ứng
+                var orders = context.Orders
+                    .Where(o => o.Status == "ACTIVE" && o.CreatedDate.Value.Year == currentYear)
+                    .GroupBy(o => o.CreatedDate.Value.Month)
+                    .Select(g => new { Month = g.Key, TotalOrder = g.Count() })
+                    .ToList();
+
+                // Duyệt qua từng tháng trong năm
+                for (int month = 1; month <= 12; month++)
+                {
+                    var monthName = monthNames[month - 1]; 
+
+                    var orderData = orders.FirstOrDefault(o => o.Month == month);
+
+                    if (orderData != null)
+                    {
+                        monthlyOrderCount[monthName] = orderData.TotalOrder;
+                    }
+                    else
+                    {
+                        monthlyOrderCount[monthName] = 0;
+                    }
+                }
+            }
+
+            return monthlyOrderCount;
+        }
+
         public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -116,6 +189,12 @@ namespace JewelryProduction.DAO
                         .Take(size)
                         .OrderByDescending(o => o.CreatedDate)
                         .ToList();
+        }
+
+        public List<Order> GetOrdersByCustomerId(Guid customerID)
+        {
+            JewelryProductionContext context = new JewelryProductionContext();
+            return context.Orders.Where(o => o.CustomerId == customerID).ToList();
         }
     }
 }

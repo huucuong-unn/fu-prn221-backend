@@ -3,6 +3,7 @@ using JewelryProduction.Service.Request.Material;
 using JewelryProduction.Service.Request.Product;
 using JewelryProduction.Service.Service.MaterialImpl;
 using JewelryProduction.Service.Service.ProductsImpl;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using static JewelryProduction.Service.Constant.ApiEndPointConstant;
 using static System.Formats.Asn1.AsnWriter;
@@ -75,14 +76,19 @@ namespace JewelryProduction.WorkerServices
 
                                             JewelryProductionContext context = new JewelryProductionContext();
                                             var materialByname = context.Materials.FirstOrDefault(m => m.Name.Equals("BTMC"));
-                                            List<BusinessObject.Models.Product> productsByMaterialId = context.Products
-                                                                            .Where(p => p.MaterialId == materialByname.Id)
-                                                                            .ToList();
+                                            List<BusinessObject.Models.Product> productsByMaterialId = context.Products.Include(p => p.ProductStones)
+                                                                                                                        .ThenInclude(ps => ps.Stone)
+                                                                                                                        .Where(p => p.MaterialId == materialByname.Id)
+                                                                                                                        .ToList();
 
                                             foreach (var product in productsByMaterialId)
                                             {
                                                 var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);
+                                                /*var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);*/
+                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId.Equals(product.Id))
+                                                                                        .ToList()
+                                                                                        .Sum(ps => ps.Stone != null ? ps.Stone.Price : 0);
+
 
                                                 product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
                                                 product.UpdateDate = DateTime.Now;
@@ -173,7 +179,7 @@ namespace JewelryProduction.WorkerServices
                                                 var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
                                                 var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);
 
-                                                product.Price = (material.BuyingPrice * (product.Weight/1000)) + productType.Wages + stonePrices;
+                                                product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
                                                 product.UpdateDate = DateTime.Now;
 
                                                 GetProductRequest productRequest = new GetProductRequest();

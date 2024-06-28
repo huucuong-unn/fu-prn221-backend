@@ -1,6 +1,7 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
+using JewelryProduction.DAO;
 using JewelryProduction.Repository.CounterRepository;
 using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.OrderRepository;
@@ -12,6 +13,7 @@ using JewelryProduction.Repository.WarrantyRepository;
 using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Customer;
 using JewelryProduction.Service.Response.Order;
+using JewelryProduction.Service.Response.ProductType;
 using Microsoft.IdentityModel.Tokens;
 
 namespace JewelryProduction.Service.CustomerImpl
@@ -244,6 +246,40 @@ namespace JewelryProduction.Service.CustomerImpl
             return orderRepository.Update(id, order);
         }
 
+        public OrderDashboardResponse StatisticalOrderAndSalesAndProduct()
+        {
+            OrderDashboardResponse orderDashboardResponse = new OrderDashboardResponse();
+
+            orderDashboardResponse.NumberOfOrders = orderRepository.TotalItem();
+            orderDashboardResponse.Sales = orderRepository.GetTotalRevenue();
+            orderDashboardResponse.NumberOfProduct = productRepository.TotalProducts();
+
+            return orderDashboardResponse;
+        }
+
+        public Dictionary<string, decimal> GetMonthlyRevenue()
+        {
+            return orderRepository.GetMonthlyRevenue();
+        }
+
+        public List<OrderDashboardBarChartResponse> GetMonthlyOrderCount()
+        {
+            List<OrderDashboardBarChartResponse> orderDashboardBarChartResponses = new List<OrderDashboardBarChartResponse>();
+            var totalOrderByMonth = orderRepository.GetMonthlyOrderCount();
+
+            foreach (var item in totalOrderByMonth)
+            {
+                OrderDashboardBarChartResponse order = new OrderDashboardBarChartResponse();
+                order.TotalOrder = item.Value;
+
+                order.Month = item.Key;
+
+                orderDashboardBarChartResponses.Add(order);
+            }
+
+            return orderDashboardBarChartResponses;
+        }
+
         public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
         {
             PagingModel<GetOrderReponse> result = new PagingModel<GetOrderReponse>();
@@ -277,6 +313,35 @@ namespace JewelryProduction.Service.CustomerImpl
 
             result.ListResult = getOrderResponses;
             result.Size = size;
+            return result;
+        }
+
+        public List<Top5CustomerResponse> GetTop5Customers()
+        {
+            var top5Customers = customerRepository.GetTop5CustomersWithMostOrders();
+
+            
+            return top5Customers.Select(c => new Top5CustomerResponse
+            {
+                Name = c.Name,
+                PhoneNumber = c.Phone,
+                TotalOrder = orderRepository.GetOrdersByCustomerId(c.Id).Count(o => o.Status == "ACTIVE")
+            }).OrderByDescending(g => g.TotalOrder).ToList();
+        }
+
+        public List<GetProductTypeWithTotalOrder> GetProductTypeWithTotalOrder()
+        {
+            var productTypes = productTypeRepository.GetAllProductTypes();
+            var orderItems = orderItemRepository.GetAllOrderItems();
+
+            var result = productTypes.Select(pt => new GetProductTypeWithTotalOrder
+            {
+                ProductTypeName = pt.Name,
+                TotalOrder = orderItems
+                .Where(oi => oi.Product.ProductTypeId == pt.Id)
+                .Sum(oi => (int) oi.Quantity)
+            }).ToList();
+
             return result;
         }
     }

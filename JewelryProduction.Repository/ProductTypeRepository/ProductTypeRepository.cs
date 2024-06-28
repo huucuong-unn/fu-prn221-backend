@@ -36,6 +36,11 @@ namespace JewelryProduction.Repository.ProductTypeRepository
             return _productTypeDao.GetProductTypes(filterModel);
         }
 
+        public List<ProductType> GetAllProductTypes()
+        {
+            return _productTypeDao.GetAllProductTypes();
+        }
+
         public bool Update(Guid id, ProductType productType)
         {
             return _productTypeDao.Update(id, productType);

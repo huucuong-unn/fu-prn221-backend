@@ -55,5 +55,10 @@ namespace JewelryProduction.Repository.CustomerRepository
         {
             return customerDAO.GetByPhone(phone);
         }
+
+        public List<Customer> GetTop5CustomersWithMostOrders()
+        {
+            return customerDAO.GetTop5CustomersWithMostOrders();
+        }
     }
 }

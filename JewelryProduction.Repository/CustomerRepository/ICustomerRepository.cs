@@ -23,5 +23,7 @@ namespace JewelryProduction.Repository.CustomerRepository
         public int TotalItem();
 
         public Customer GetByPhone(string phone);
+
+        public List<Customer> GetTop5CustomersWithMostOrders();
     }
 }

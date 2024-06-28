@@ -23,6 +23,14 @@ namespace JewelryProduction.Repository.OrderRepository
 
         public int TotalItem();
 
+        public decimal GetTotalRevenue();
+
+        public Dictionary<string, decimal> GetMonthlyRevenue();
+
+        public Dictionary<string, int> GetMonthlyOrderCount();
+
+        public List<Order> GetOrdersByCustomerId(Guid customerID);
+
         public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate);
 
     }

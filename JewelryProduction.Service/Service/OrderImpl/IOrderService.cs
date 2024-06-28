@@ -4,6 +4,7 @@ using JewelryProduction.Service.Request.Customer;
 using JewelryProduction.Service.Request.User;
 using JewelryProduction.Service.Response.Customer;
 using JewelryProduction.Service.Response.Order;
+using JewelryProduction.Service.Response.ProductType;
 using JewelryProduction.Service.Response.User;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,16 @@ namespace JewelryProduction.Service.CustomerImpl
         public bool Delete(Guid id);
 
         public int TotalItem();
+
+        public OrderDashboardResponse StatisticalOrderAndSalesAndProduct();
+
+        public Dictionary<string, decimal> GetMonthlyRevenue();
+
+        public List<OrderDashboardBarChartResponse> GetMonthlyOrderCount();
+
+        public List<Top5CustomerResponse> GetTop5Customers();
+
+        public List<GetProductTypeWithTotalOrder> GetProductTypeWithTotalOrder();
 
         public PagingModel<GetOrderReponse> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate);
     }
