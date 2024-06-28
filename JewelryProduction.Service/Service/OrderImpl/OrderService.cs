@@ -99,8 +99,8 @@ namespace JewelryProduction.Service.CustomerImpl
 
             createOrderRequest.CustomerId = customer.Id;
             Order order = OrderConverter.toEntityForCreate(createOrderRequest);
-            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
-
+/*            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
+*/
             Order newOrder = orderRepository.Create(order);
 
             var counterId = userCounterRepository.GetCounterIdByStaffId(Guid.Parse(createOrderRequest.CreateBy));
@@ -144,6 +144,9 @@ namespace JewelryProduction.Service.CustomerImpl
 
             newOrder.CounterId = counterId;
             orderRepository.Update(newOrder.Id, newOrder);
+            customer.Point = (int?)(newOrder.TotalAmount / 100);
+            var updatedCustomer = customer;
+            customerRepository.Update(updatedCustomer.Id, updatedCustomer);   
 
             var counterForUpdate = counterRepository.GetCounterById(counterId);
             counterForUpdate.Income = (decimal)(counterForUpdate.Income + newOrder.TotalAmount);
