@@ -107,55 +107,101 @@ namespace JewelryProduction.Service.CustomerImpl
 /*            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
 */
             Order newOrder = orderRepository.Create(order);
-
             var counterId = userCounterRepository.GetCounterIdByStaffId(Guid.Parse(createOrderRequest.CreateBy));
-            if (!createOrderRequest.ListProductCode.IsNullOrEmpty())
+
+            if (newOrder.OrderType.Equals("CustomerBuy"))
             {
-                foreach (string productCode in createOrderRequest.ListProductCode)
+                if (!createOrderRequest.ListProductCode.IsNullOrEmpty())
                 {
-                    var warranty = warrantyRepository.Create(new Warranty()
+                    foreach (string productCode in createOrderRequest.ListProductCode)
                     {
-                        StartDate = DateOnly.FromDateTime(DateTime.Now),
-                        EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
-                        Description = "Expired after 3 months",
-                        Status = "ACTIVE",
-                        CreateBy = createOrderRequest.CreateBy,
-                        CreateDate = DateTime.Now
+                        var warranty = warrantyRepository.Create(new Warranty()
+                        {
+                            StartDate = DateOnly.FromDateTime(DateTime.Now),
+                            EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
+                            Description = "Expired after 3 months",
+                            Status = "ACTIVE",
+                            CreateBy = createOrderRequest.CreateBy,
+                            CreateDate = DateTime.Now
 
-                    });
+                        });
 
-                    var product = productRepository.GetProductByProductCode(productCode);
+                        var product = productRepository.GetProductByProductCode(productCode);
 
-                    var orderItem = orderItemRepository.Create(new OrderItem
+                        var orderItem = orderItemRepository.Create(new OrderItem
+                        {
+                            ProductId = product.Id,
+                            WarrantyId = warranty.Id,
+                            OrderId = newOrder.Id,
+                            TotalAmount = product.Price,
+                            Quantity = 1,
+                            UnitPrice = product.Price,
+                            CreateBy = createOrderRequest.CreateBy,
+                            CreatedDate = DateTime.Now,
+                            Status = "ACTIVE"
+                        });
+
+                        order.OrderItems.Add(orderItem);
+                        newOrder.TotalAmount += orderItem.TotalAmount;
+                        product.Status = "SALED";
+                        var updatedProduct = product;
+                        productRepository.Update(updatedProduct.Id, updatedProduct);
+                    }
+                }
+
+                newOrder.CounterId = counterId;
+                orderRepository.Update(newOrder.Id, newOrder);
+                customer.Point += (int?)(newOrder.TotalAmount / 100);
+                var updatedCustomer = customer;
+                customerRepository.Update(updatedCustomer.Id, updatedCustomer);
+
+                var counterForUpdate = counterRepository.GetCounterById(counterId);
+                counterForUpdate.Income = (decimal)(counterForUpdate.Income + newOrder.TotalAmount);
+                counterRepository.Update(counterForUpdate.Id, counterForUpdate);
+            } else if (newOrder.OrderType.Equals("StoreBuy"))
+            {
+
+                if (!createOrderRequest.ListProductCode.IsNullOrEmpty())
+                {
+                    foreach (string productCode in createOrderRequest.ListProductCode)
                     {
-                        ProductId = product.Id,
-                        WarrantyId = warranty.Id,
-                        OrderId = newOrder.Id,
-                        TotalAmount = product.Price,
-                        Quantity = 1,
-                        UnitPrice = product.Price,
-                        CreateBy = createOrderRequest.CreateBy,
-                        CreatedDate = DateTime.Now,
-                        Status = "ACTIVE"
-                    });
+                        var warranty = warrantyRepository.Create(new Warranty()
+                        {
+                            StartDate = DateOnly.FromDateTime(DateTime.Now),
+                            EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
+                            Description = "Expired after 3 months",
+                            Status = "BUYBACK",
+                            CreateBy = createOrderRequest.CreateBy,
+                            CreateDate = DateTime.Now
 
-                    order.OrderItems.Add(orderItem);    
-                    newOrder.TotalAmount += orderItem.TotalAmount;
-                    product.Status = "INACTIVE";
-                    var updatedProduct = product;
-                    productRepository.Update(updatedProduct.Id, updatedProduct);
+                        });
+
+                        var reCalProduct = productRepository.ReCalProduct(productCode);
+
+                        var orderItem = orderItemRepository.Create(new OrderItem
+                        {
+                            ProductId = reCalProduct.Id,
+                            WarrantyId = warranty.Id,
+                            OrderId = newOrder.Id,
+                            TotalAmount = reCalProduct.Price,
+                            Quantity = 1,
+                            UnitPrice = reCalProduct.Price,
+                            CreateBy = createOrderRequest.CreateBy,
+                            CreatedDate = DateTime.Now,
+                            Status = "ACTIVE"
+                        });
+
+                        order.OrderItems.Add(orderItem);
+                        newOrder.TotalAmount += orderItem.TotalAmount;
+                        reCalProduct.Status = "BUYBACK";
+                        var updatedProduct = reCalProduct;
+                        productRepository.Update(updatedProduct.Id, updatedProduct);
+                    }
+                    newOrder.CounterId = counterId;
+                    orderRepository.Update(newOrder.Id, newOrder);
                 }
             }
-
-            newOrder.CounterId = counterId;
-            orderRepository.Update(newOrder.Id, newOrder);
-            customer.Point += (int?)(newOrder.TotalAmount / 100);
-            var updatedCustomer = customer;
-            customerRepository.Update(updatedCustomer.Id, updatedCustomer);   
-
-            var counterForUpdate = counterRepository.GetCounterById(counterId);
-            counterForUpdate.Income = (decimal)(counterForUpdate.Income + newOrder.TotalAmount);
-            counterRepository.Update(counterForUpdate.Id, counterForUpdate);
+            
 
             response.Add("order", newOrder);
             return response;
@@ -313,6 +359,9 @@ namespace JewelryProduction.Service.CustomerImpl
 
             result.ListResult = getOrderResponses;
             result.Size = size;
+            var concu = orderRepository.TotalItem();
+            var concac = ((double)orderRepository.TotalItem() / size);
+            result.TotalPages = (int)Math.Ceiling((double)orderRepository.TotalItem() / size);
             return result;
         }
 
@@ -344,6 +393,14 @@ namespace JewelryProduction.Service.CustomerImpl
 
             return result;
         }
+
+        private Product ReCalProduct(Product product)
+        {
+
+
+            return null;
+        }
+
     }
 
 }

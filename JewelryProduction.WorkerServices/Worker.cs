@@ -86,6 +86,7 @@ namespace JewelryProduction.WorkerServices
                                                 var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
                                                 /*var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);*/
                                                 var stonePrices = context.ProductStones.Where(ps => ps.ProductId.Equals(product.Id))
+                                                                                        .Include(ps => ps.Stone)
                                                                                         .ToList()
                                                                                         .Sum(ps => ps.Stone != null ? ps.Stone.Price : 0);
 
@@ -133,7 +134,10 @@ namespace JewelryProduction.WorkerServices
                                             foreach (var product in productsByMaterialId)
                                             {
                                                 var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);
+                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id)
+                                                                                        .Include(ps => ps.Stone)
+                                                                                        .ToList()
+                                                                                        .Sum(ps => ps.Stone.Price);
 
                                                 product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
                                                 product.UpdateDate = DateTime.Now;
@@ -177,7 +181,7 @@ namespace JewelryProduction.WorkerServices
                                             foreach (var product in productsByMaterialId)
                                             {
                                                 var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);
+                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).Include(ps => ps.Stone).ToList().Sum(ps => ps.Stone.Price);
 
                                                 product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
                                                 product.UpdateDate = DateTime.Now;
@@ -211,7 +215,7 @@ namespace JewelryProduction.WorkerServices
                         }
                     }
 
-                    await Task.Delay(86400000, stoppingToken);
+                    await Task.Delay(86400000, stoppingToken); //1ngay: 86400000
                 }
             }
         }

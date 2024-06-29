@@ -33,7 +33,6 @@ namespace JewelryProduction.DAO
                     .Include(p => p.Material) // Include bảng Material
                     .Include(p => p.ProductType) // Include bảng ProductType
                     .Include(p => p.Counter) // Include bảng Counter
-                    .Where(p => p.Status == "ACTIVE")
                     .OrderByDescending(p => p.CreateDate)
                     .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
                     .Take(filterModel.PageSize)
@@ -41,7 +40,20 @@ namespace JewelryProduction.DAO
             }
         }
 
-
+        public List<Product> GetProductsForCustomerBuyAndStoreBuy()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Products
+                    .Include(p => p.Material) // Include bảng Material
+                    .Include(p => p.ProductType) // Include bảng ProductType
+                    .Include(p => p.Counter) // Include bảng Counter
+                    .Where(p => p.Status == "AVAILABLE" || p.Status == "SALED")
+                    .OrderByDescending(p => p.CreateDate)
+                    .ToList();
+            }
+        }
+      
 
         public List<Product> GetProductsByMaterialId(Guid materialId)
         {
@@ -93,7 +105,7 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 product.Id = Guid.NewGuid();
-                product.Status = "ACTIVE";
+                product.Status = "AVAILABLE";
                 context.Products.Add(product);
                 context.SaveChanges();
                 return product;
@@ -110,7 +122,7 @@ namespace JewelryProduction.DAO
                     return false;
                 }
 
-                product.Status = product.Status == "ACTIVE" ? "INACTIVE" : "ACTIVE";
+                product.Status = product.Status == "AVAILABLE" ? "INACTIVE" : "AVAILABLE";
                 context.Products.Update(product);
                 context.SaveChanges();
                 return true;
@@ -155,7 +167,12 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.Products.FirstOrDefault(p => p.ProductCode.Equals(productCode));
+                return context.Products
+                       .Where(p => p.ProductCode == productCode)
+                       .Include(p => p.Material)
+                       .Include(p => p.ProductType)
+                       .Include(p => p.Counter)
+                       .FirstOrDefault();
             }
         }
 
@@ -164,7 +181,7 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 return context.Products
-                    .Where(p => p.Status == "ACTIVE")
+                    .Where(p => p.Status == "AVAILABLE")
                     .Include(p => p.Material)
                     .Include(p => p.ProductType)
                     .Include(p => p.Counter)
@@ -270,6 +287,33 @@ namespace JewelryProduction.DAO
                 }
 
                 return products.OrderBy(p => p.Name).ToList();
+            }
+        }
+
+        public Product ReCalProduct(string productCode)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var oldProduct = GetProductByProductCode(productCode);
+
+                var newProduct = oldProduct;
+                newProduct.Price = 0; //reset value
+                var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == newProduct.ProductTypeId);
+                var material = context.Materials.FirstOrDefault(m => m.Id == newProduct.MaterialId);
+                /*var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);*/
+                var stonePrices = context.ProductStones
+                                         .Where(ps => ps.ProductId == newProduct.Id)
+                                         .Include(ps => ps.Stone) // Ensure Stone entity is included
+                                         .ToList()
+                                         .Sum(ps => ps.Stone != null && ps.Stone.StoneType == "Precious" ? ps.Stone.Price * 0.7m : 0);
+
+
+                newProduct.Price = (material.BuyingPrice * (newProduct.Weight / 1000)) + productType.Wages + stonePrices;
+                newProduct.UpdateDate = DateTime.Now;
+
+
+
+                return newProduct;
             }
         }
     }

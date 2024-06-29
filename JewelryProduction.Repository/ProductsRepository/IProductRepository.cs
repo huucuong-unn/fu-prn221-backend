@@ -35,7 +35,7 @@ public interface IProductRepository
     public List<Product> SearchProductByCounterName(string counter_name);
     public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
     public List<Product> SearchSort(string counter_name, string product_code, string product_type, string material);
-
-
+    public List<Product> GetProductsForCustomerBuyAndStoreBuy();
+    public Product ReCalProduct(string productCode);
 
 }

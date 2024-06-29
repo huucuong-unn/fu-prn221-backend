@@ -1,6 +1,7 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
+using JewelryProduction.DAO;
 using JewelryProduction.Service.Request.Product;
 using JewelryProduction.Service.Response.Product;
 using JewelryProduction.Service.Response.ProductStone;
@@ -27,4 +28,8 @@ public interface IProductService
     List<GetProductResponse> SearchProductByCounterName(string counter_name);
     List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
     List<GetProductResponse> SearchSort(string counter_name, string product_code, string product_type, string material);
+    List<GetProductResponse> GetProductsForCustomerBuyAndStoreBuy();
+    public GetProductResponse ReCalProduct(string productCode);
+
+
 }

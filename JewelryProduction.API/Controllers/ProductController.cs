@@ -142,5 +142,17 @@ namespace JewelryProduction.API.Controllers
 
             return Ok(products);
         }
+
+        [HttpGet(ApiEndPointConstant.Product.GET_PRODUCTS_FOR_MAKE_ORDER)]
+        public IActionResult GetProductsForCustomerBuyAndStoreBuy()
+        {
+            return Ok(_productService.GetProductsForCustomerBuyAndStoreBuy());
+        }
+
+        [HttpGet(ApiEndPointConstant.Product.RECAL_PRODUCT)]
+        public IActionResult ReCalProduct(string productCode)
+        {
+            return Ok(_productService.ReCalProduct(productCode));
+        }
     }
 }

@@ -173,4 +173,22 @@ public class ProductService : IProductService
         return getProductResponses;
     }
 
+    public List<GetProductResponse> GetProductsForCustomerBuyAndStoreBuy()
+    {
+        List<Product> products = _productRepository.GetProductsForCustomerBuyAndStoreBuy();
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
+
+        return getProductResponses;
+    }
+
+    public GetProductResponse ReCalProduct(string productCode)
+    {
+        Product product = _productRepository.ReCalProduct(productCode);          
+        return ProductConverter.toDto(product);
+    }
+
+
 }

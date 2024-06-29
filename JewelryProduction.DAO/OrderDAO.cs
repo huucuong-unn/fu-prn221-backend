@@ -185,9 +185,9 @@ namespace JewelryProduction.DAO
                 query = query.Where(o => o.CreatedDate <= endDate.Value);
             }
 
-            return query.Skip((page - 1) * size)
+            return query.OrderByDescending(o => o.CreatedDate)
+                        .Skip((page - 1) * size)
                         .Take(size)
-                        .OrderByDescending(o => o.CreatedDate)
                         .ToList();
         }
 

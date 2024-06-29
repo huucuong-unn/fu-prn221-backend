@@ -104,6 +104,14 @@ public class ProductRepository : IProductRepository
     }
 
 
+    public List<Product> GetProductsForCustomerBuyAndStoreBuy()
+    {
+        return _productDao.GetProductsForCustomerBuyAndStoreBuy();
+    }
 
+    public Product ReCalProduct(string productCode)
+    {
+        return _productDao.ReCalProduct(productCode);
+    }
 }
 
