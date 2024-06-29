@@ -121,7 +121,7 @@ namespace JewelryProduction.DAO
                 {
                     Month = month,
                     TotalAmount = monthlyRevenue.ContainsKey(month) ? monthlyRevenue[month] : 0m
-                }).ToDictionary(x => $"{x.Month}/{currentYear}", x => x.TotalAmount);
+                }).ToDictionary(x => $"{x.Month}", x => x.TotalAmount);
 
                 return allMonths;
             }
