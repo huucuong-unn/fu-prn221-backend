@@ -31,6 +31,13 @@ namespace JewelryProductTypeion.API.Controllers
             return Ok(result);
         }
 
+        [HttpGet(ApiEndPointConstant.ProductType.GET_PRODUCT_TYPE_WITHOUT_PAGING)]
+        public IActionResult GetProductTypeWithoutPaging()
+        {
+            List<GetProductTypeResponse> result = _productTypeService.GetProductTypeWithoutPaging();
+            return Ok(result);
+        }
+
         [HttpGet(ApiEndPointConstant.ProductType.GET_PRODUCT_TYPE_BY_ID + "{id}")]
         public IActionResult GetProductTypeById(Guid id)
         {

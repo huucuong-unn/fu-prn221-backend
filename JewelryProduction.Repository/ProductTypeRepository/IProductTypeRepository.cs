@@ -13,7 +13,9 @@ public interface IProductTypeRepository
 
     List<ProductType> GetProductTypes(FilterModel filterModel);
 
-    public List<ProductType> GetAllProductTypes();
+    List<ProductType> GetProductTypeWithoutPaging();
+
+    List<ProductType> GetAllProductTypes();
 
     bool Update(Guid id, ProductType productType);
 

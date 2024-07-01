@@ -23,6 +23,14 @@ namespace JewelryProduction.DAO
             }
         }
 
+        public List<Counter> GetCountersWithoutPaging()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Counters.Where(c => c.Status.Equals("ACTIVE")).ToList();
+            }
+        }
+
         public Counter? GetCounterById(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -91,5 +99,6 @@ namespace JewelryProduction.DAO
                 return context.Counters.Count();
             }
         }
+
     }
 }

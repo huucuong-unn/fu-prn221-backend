@@ -12,5 +12,7 @@ namespace JewelryProduction.Service.Service.MaterialImpl
     {
         public bool UpdateByName(BaseMaterialRequest request);
 
+        public List<GetMaterialResponse> GetMaterialWithoutPaging();
+
     }
 }

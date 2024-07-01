@@ -64,5 +64,17 @@ namespace JewelryProduction.Service.Service.ProductTypeImpl
             ProductType productType = ProductTypeConverter.ToEntityForCreate(updateProductTypeRequest);
             return _productTypeRepository.Update(id, productType);
         }
+
+        public List<GetProductTypeResponse> GetProductTypeWithoutPaging()
+        {
+            List<ProductType> productTypes = _productTypeRepository.GetProductTypeWithoutPaging();
+
+            List<GetProductTypeResponse> getProductTypeResponses = productTypes.Select(productType =>
+            {
+                return ProductTypeConverter.ToDto(productType);
+            }).ToList();
+
+            return getProductTypeResponses;
+        }
     }
 }

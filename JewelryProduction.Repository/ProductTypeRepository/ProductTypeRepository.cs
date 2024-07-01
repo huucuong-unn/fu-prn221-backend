@@ -50,5 +50,10 @@ namespace JewelryProduction.Repository.ProductTypeRepository
         {
             return _productTypeDao.TotalItem();
         }
+
+        public List<ProductType> GetProductTypeWithoutPaging()
+        {
+            return _productTypeDao.GetProductTypeWithoutPaging();
+        }
     }
 }

@@ -23,6 +23,14 @@ namespace JewelryProduction.DAO
             }
         }
 
+        public List<ProductType> GetProductTypeWithoutPaging()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.ProductTypes.Where(c => c.Status.Equals("ACTIVE")).ToList();
+            }
+        }
+
         public List<ProductType> GetAllProductTypes()
         {
             using (var context = new JewelryProductionContext())

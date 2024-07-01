@@ -132,13 +132,15 @@ namespace JewelryProduction.API.Controllers
         }
 
         [HttpGet(ApiEndPointConstant.Product.SEARCH_SORT_PRODUCT)]
-        public IActionResult SearchSort(string? counter_name, string? product_code, string? product_type, string? material)
+        public IActionResult SearchSort([FromQuery] string? productCode, [FromQuery] Guid? productTypeId, [FromQuery] Guid? materialId, [FromQuery] Guid? counterId, [FromQuery] int page, [FromQuery] int size)
         {
-            if (string.IsNullOrEmpty(counter_name) && string.IsNullOrEmpty(product_code) && string.IsNullOrEmpty(product_type) && string.IsNullOrEmpty(material))
+            FilterModel filterModel = new FilterModel
             {
-                return BadRequest("Bạn phải nhập ít nhất một giá trị.");
-            }
-            var products = _productService.SearchSort(counter_name, product_code, product_type, material);           
+                PageSize = size,
+                PageIndex = page
+            };
+
+            var products = _productService.SearchSort(productCode, productTypeId, materialId, counterId, filterModel);           
 
             return Ok(products);
         }

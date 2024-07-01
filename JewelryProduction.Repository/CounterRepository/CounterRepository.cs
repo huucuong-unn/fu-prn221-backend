@@ -48,5 +48,10 @@ namespace JewelryProduction.Repository.CounterRepository
         {
             return counterDAO.TotalCounter();
         }
+
+        public List<Counter> GetCountersWithoutPaging()
+        {
+            return counterDAO.GetCountersWithoutPaging();
+        }
     }
 }

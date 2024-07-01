@@ -316,6 +316,43 @@ namespace JewelryProduction.DAO
                 return newProduct;
             }
         }
+
+        public List<Product> SearchProduct(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var query = context.Products.Include(p => p.ProductType)
+                                            .Include(p => p.Material)
+                                            .Include(p => p.Counter)
+                                            .AsQueryable();
+
+                if (!string.IsNullOrEmpty(productCode))
+                {
+                    query = query.Where(p => p.ProductCode.Equals(productCode));
+                }
+
+                if (productTypeId.HasValue)
+                {
+                    query = query.Where(p => p.ProductTypeId.Equals(productTypeId));
+                }
+
+                if (materialId.HasValue)
+                {
+                    query = query.Where(p => p.MaterialId.Equals(materialId));
+                }
+
+                if (counterId.HasValue)
+                {
+                    query = query.Where(p => p.CounterId.Equals(counterId));
+                }
+
+                return query.OrderByDescending(p => p.CreateDate)
+                            .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
+                            .Take(filterModel.PageSize)
+                            .ToList();
+            }
+        }
+
     }
 }
 

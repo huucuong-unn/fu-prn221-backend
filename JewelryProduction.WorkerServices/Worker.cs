@@ -5,7 +5,6 @@ using JewelryProduction.Service.Service.MaterialImpl;
 using JewelryProduction.Service.Service.ProductsImpl;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using static JewelryProduction.Service.Constant.ApiEndPointConstant;
 using static System.Formats.Asn1.AsnWriter;
 
 namespace JewelryProduction.WorkerServices
