@@ -27,7 +27,7 @@ public interface IProductService
     List<GetProductResponse> SearchProductByMaterialName(string material_name);
     List<GetProductResponse> SearchProductByCounterName(string counter_name);
     List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
-    List<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel);
+    PagingModel<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel);
     List<GetProductResponse> GetProductsForCustomerBuyAndStoreBuy();
     public GetProductResponse ReCalProduct(string productCode);
 
