@@ -57,6 +57,23 @@ public class ProductService : IProductService
         return result;
     }
 
+    public PagingModel<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
+    {
+        PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
+        result.Page = filterModel.PageIndex;
+        List<Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, filterModel);
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
+
+        result.ListResult = getProductResponses;
+        result.TotalPages = (int)Math.Ceiling((double)_productRepository.TotalProducts() / filterModel.PageSize);
+        result.Size = filterModel.PageSize;
+
+        return result;
+    }
+
     public int GetTotalProducts()
     {
         return _productRepository.TotalProducts();
@@ -157,23 +174,6 @@ public class ProductService : IProductService
         {
             return ProductConverter.toDto(product);
         }).ToList();
-
-        return getProductResponses;
-    }
-
-    public List<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
-    {
-        PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
-        result.Page = filterModel.PageIndex;
-        List<Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, filterModel);
-        List<GetProductResponse> getProductResponses = products.Select(product =>
-        {
-            return ProductConverter.toDto(product);
-        }).ToList();
-
-        result.ListResult = getProductResponses;
-        result.TotalPages = (int)Math.Ceiling((double)_productRepository.TotalProducts() / filterModel.PageSize);
-        result.Size = filterModel.PageSize;
 
         return getProductResponses;
     }

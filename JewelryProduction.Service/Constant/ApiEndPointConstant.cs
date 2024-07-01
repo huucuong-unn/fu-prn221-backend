@@ -118,7 +118,7 @@
             public const string SEARCH_PRODUCTS_BY_MATERIAL_NAME = "api/v1/product/search/material-name/";
             public const string SEARCH_PRODUCTS_BY_COUNTER_NAME = "api/v1/product/search/counter-name/";
             public const string SEARCH_PRODUCTS_BY_PRODUCT_PRICE = "api/v1/product/search/product-price/";
-            public const string SEARCH_SORT_PRODUCT= "api/v1/product/searchsort/product/";
+            public const string SEARCH_SORT_PRODUCT= "api/v1/product/searchsort";
             public const string GET_PRODUCTS_FOR_MAKE_ORDER = "api/v1/product/product-for-order";
             public const string RECAL_PRODUCT = "api/v1/product/recal";
 
