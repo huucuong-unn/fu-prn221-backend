@@ -16,6 +16,8 @@ namespace JewelryProduction.Service.Service.Counter
 
         PagingModel<GetCounterResponse> GetAll(FilterModel filterModel);
 
+        List<GetCounterResponse> GetCountersWithoutPaging();
+
         int TotalCounter();
 
         bool Update(Guid id, GetCounterRequest updateCounterRequest);

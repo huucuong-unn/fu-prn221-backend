@@ -98,9 +98,9 @@ public class ProductRepository : IProductRepository
         return _productDao.SearchProductsByPrice(priceFrom, priceTo);
     }
 
-    public List<Product> SearchSort(string counter_name, string product_code, string product_type, string material)
+    public List<Product> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
     {
-        return _productDao.SearchSort(counter_name, product_code, product_type, material);
+        return _productDao.SearchProduct(productCode, productTypeId, materialId, counterId, filterModel);
     }
 
 

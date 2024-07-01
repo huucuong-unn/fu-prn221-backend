@@ -53,11 +53,17 @@
         public static class Counter
         {
             public const string GET_COUNTER = "api/v1/counter";
+            public const string GET_COUNTER_WITHOUT_PAGING = "api/v1/counter-without-paging";
             public const string GET_COUNTER_BY_ID = "api/v1/counter/";
             public const string CREATE_COUNTER = "api/v1/counter/create";
             public const string UPDATE_COUNTER = "api/v1/counter/update/";
             public const string CHANGE_STATUS_COUNTER = "api/v1/counter/change-status/";
 
+        }
+
+        public static class Material
+        {
+            public const string GET_MATERIAL_WITHOUT_PAGING = "api/v1/material-without-paging";
         }
 
 
@@ -131,6 +137,7 @@
         public static class ProductType
         {
             public const string GET_PRODUCT_TYPE = "api/v1/product-type";
+            public const string GET_PRODUCT_TYPE_WITHOUT_PAGING = "api/v1/product-type-without-paging";
             public const string GET_PRODUCT_TYPE_BY_ID = "api/v1/product-type/";
             public const string CREATE_PRODUCT_TYPE = "api/v1/product-type/create";
             public const string UPDATE_PRODUCT_TYPE = "api/v1/product-type/update/";

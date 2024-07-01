@@ -18,6 +18,14 @@ namespace JewelryProduction.DAO
             return material;
         }
 
+        public List<Material> GetMaterialWithoutPaging()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Materials.ToList();
+            }
+        }
+
         public Material GetById(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();

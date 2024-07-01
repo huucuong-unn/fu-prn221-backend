@@ -11,6 +11,7 @@ namespace JewelryProduction.Service.Service.ProductTypeImpl
         bool ChangeProductTypeStatus(Guid id);
         GetProductTypeResponse GetProductTypeById(Guid id);
         PagingModel<GetProductTypeResponse> GetProductTypes(FilterModel filterModel);
+        List<GetProductTypeResponse> GetProductTypeWithoutPaging();
         bool UpdateProductType(Guid id, GetProductTypeRequest request);
         int GetTotalProductTypes();
     }

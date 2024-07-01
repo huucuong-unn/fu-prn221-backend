@@ -9,6 +9,8 @@ namespace JewelryProduction.Repository.CounterRepository
     {
         List<Counter> GetCounters(FilterModel filterModel);
 
+        List<Counter> GetCountersWithoutPaging();
+
         Counter GetCounterById(Guid id);
 
         Counter Create(Counter counter);

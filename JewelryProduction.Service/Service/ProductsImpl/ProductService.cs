@@ -45,7 +45,7 @@ public class ProductService : IProductService
     {
         PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
         result.Page = filterModel.PageIndex;
-        List<BusinessObject.Models.Product> products = _productRepository.GetProducts(filterModel);
+        List<Product> products = _productRepository.GetProducts(filterModel);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -161,14 +161,19 @@ public class ProductService : IProductService
         return getProductResponses;
     }
 
-    public List<GetProductResponse> SearchSort(string counter_name, string product_code, string product_type, string material)
+    public List<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
     {
-
-        List<Product> products = _productRepository.SearchSort(counter_name, product_code, product_type, material);
+        PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
+        result.Page = filterModel.PageIndex;
+        List<Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, filterModel);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
         }).ToList();
+
+        result.ListResult = getProductResponses;
+        result.TotalPages = (int)Math.Ceiling((double)_productRepository.TotalProducts() / filterModel.PageSize);
+        result.Size = filterModel.PageSize;
 
         return getProductResponses;
     }

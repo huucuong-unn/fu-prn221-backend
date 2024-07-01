@@ -67,5 +67,17 @@ namespace JewelryProduction.Service.Service.Counter
             BusinessObject.Models.Counter counter = CounterConverter.toEntityForUpdate(updateCounterRequest);
             return counterRepository.Update(id, counter);
         }
+
+        public List<GetCounterResponse> GetCountersWithoutPaging()
+        {
+            List<BusinessObject.Models.Counter> counters = counterRepository.GetCountersWithoutPaging();
+
+            List<GetCounterResponse> getCounterResponses = counters.Select(counter =>
+            {
+                return CounterConverter.toDto(counter);
+            }).ToList();
+
+            return getCounterResponses;
+        }
     }
 }

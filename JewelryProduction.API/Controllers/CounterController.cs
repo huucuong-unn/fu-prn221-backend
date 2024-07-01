@@ -28,6 +28,12 @@ namespace JewelryProduction.API.Controllers
             return _counterService.GetAll(filterModel);
         }
 
+        [HttpGet(ApiEndPointConstant.Counter.GET_COUNTER_WITHOUT_PAGING)]
+        public List<GetCounterResponse> GetAllWithoutPaging()
+        {
+            return _counterService.GetCountersWithoutPaging();
+        }
+
         [HttpGet(ApiEndPointConstant.Counter.GET_COUNTER_BY_ID + "{id}")]
         public GetCounterResponse GetById(Guid id)
         {

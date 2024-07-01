@@ -5,6 +5,7 @@ using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.MaterialRepository;
 using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Material;
+using JewelryProduction.Service.Response.Counter;
 using JewelryProduction.Service.Response.Material;
 using System;
 using System.Collections.Generic;
@@ -41,6 +42,18 @@ namespace JewelryProduction.Service.Service.MaterialImpl
             Material material = materialRepository.GetById(id);
 
             return MaterialConverter.toDto(material);
+        }
+
+        public List<GetMaterialResponse> GetMaterialWithoutPaging()
+        {
+            List<Material> materials = materialRepository.GetMaterialWithoutPaging();
+
+            List<GetMaterialResponse> getMaterialResponses = materials.Select(material =>
+            {
+                return MaterialConverter.toDto(material);
+            }).ToList();
+
+            return getMaterialResponses;
         }
 
         public int TotalItem()
