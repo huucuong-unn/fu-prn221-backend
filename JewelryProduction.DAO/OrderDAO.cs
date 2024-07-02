@@ -182,7 +182,7 @@ namespace JewelryProduction.DAO
 
             if (endDate.HasValue)
             {
-                query = query.Where(o => o.CreatedDate <= endDate.Value);
+                query = query.Where(o => o.CreatedDate <= endDate.Value.AddDays(1));
             }
 
             return query.OrderByDescending(o => o.CreatedDate)
