@@ -113,5 +113,10 @@ public class ProductRepository : IProductRepository
     {
         return _productDao.ReCalProduct(productCode);
     }
+
+    public bool UpdateStatus(Guid id, string status)
+    {
+        return _productDao.UpdateStatus(id, status);
+    }
 }
 

@@ -37,5 +37,6 @@ public interface IProductRepository
     public List<Product> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel);
     public List<Product> GetProductsForCustomerBuyAndStoreBuy();
     public Product ReCalProduct(string productCode);
+    public bool UpdateStatus(Guid id, string status);
 
 }

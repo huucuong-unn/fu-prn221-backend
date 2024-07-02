@@ -146,6 +146,7 @@ namespace JewelryProduction.Service.CustomerImpl
                         product.Status = "SALED";
                         var updatedProduct = product;
                         productRepository.Update(updatedProduct.Id, updatedProduct);
+                        productRepository.UpdateStatus(updatedProduct.Id, updatedProduct.Status);
                     }
                 }
 
@@ -196,6 +197,7 @@ namespace JewelryProduction.Service.CustomerImpl
                         reCalProduct.Status = "BUYBACK";
                         var updatedProduct = reCalProduct;
                         productRepository.Update(updatedProduct.Id, updatedProduct);
+                        productRepository.UpdateStatus(updatedProduct.Id, updatedProduct.Status);
                     }
                     newOrder.CounterId = counterId;
                     orderRepository.Update(newOrder.Id, newOrder);

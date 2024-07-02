@@ -146,8 +146,28 @@ namespace JewelryProduction.DAO
                 product.Price = updatedProduct.Price;
                 product.CreateDate = updatedProduct.CreateDate;
                 product.UpdateDate = updatedProduct.UpdateDate;
-                product.Status = updatedProduct.Status;
+                //product.Status = updatedProduct.Status;
                 // Other properties...
+
+                context.Products.Update(product);
+                context.SaveChanges();
+                return true;
+            }
+        }
+
+        public bool UpdateStatus(Guid id, string status)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var product = context.Products.FirstOrDefault(p => p.Id.Equals(id));
+                if (product == null)
+                {
+                    return false;
+                }
+
+
+                product.UpdateDate = DateTime.Now;
+                product.Status = status;
 
                 context.Products.Update(product);
                 context.SaveChanges();
