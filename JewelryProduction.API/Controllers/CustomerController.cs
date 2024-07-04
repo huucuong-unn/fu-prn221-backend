@@ -50,5 +50,11 @@ namespace JewelryProduction.API.Controllers
         {
             return customerService.ChangeStatus(id);
         }
+
+        [HttpGet(ApiEndPointConstant.Customer.GET_CUSTOMER_BY_PHONE)]
+        public GetCustomerResponse GetByPhone(string phone)
+        {
+            return customerService.GetByPhone(phone);
+        }
     }
 }

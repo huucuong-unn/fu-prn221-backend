@@ -22,6 +22,8 @@
             public const string CREATE_CUSTOMER = "api/v1/customer/create";
             public const string UPDATE_CUSTOMER = "api/v1/customer/update";
             public const string CHANGE_STATUS_CUSTOMER = "api/v1/customer/change-status";
+            public const string GET_CUSTOMER_BY_PHONE = "api/v1/customer/phone";
+
         }
 
 

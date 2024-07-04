@@ -20,5 +20,6 @@ namespace JewelryProduction.Service.CustomerImpl
 
         public bool Update(Guid id, UpdateCustomerRequest updateCustomerRequest);
 
+        public GetCustomerResponse GetByPhone(string phone);
     }
 }

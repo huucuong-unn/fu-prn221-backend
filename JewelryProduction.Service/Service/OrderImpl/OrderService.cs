@@ -96,6 +96,8 @@ namespace JewelryProduction.Service.CustomerImpl
                     Status = "ACTIVE",
                     CreateDate = DateTime.Now,
                     CreateBy = createOrderRequest.CreateBy,
+                    UpdateDate = DateTime.Now,
+                    UpdateBy = createOrderRequest.UpdateBy,
                 });
             } 
 
@@ -151,6 +153,12 @@ namespace JewelryProduction.Service.CustomerImpl
                 }
 
                 newOrder.CounterId = counterId;
+                if ((bool)createOrderRequest.IsUsePoint)
+                {
+                    newOrder.TotalAmount -= customer.Point;
+                    customer.Point = 0;
+                    customerRepository.Update(customer.Id, customer);   
+                }
                 orderRepository.Update(newOrder.Id, newOrder);
                 customer.Point += (int?)(newOrder.TotalAmount / 100);
                 var updatedCustomer = customer;

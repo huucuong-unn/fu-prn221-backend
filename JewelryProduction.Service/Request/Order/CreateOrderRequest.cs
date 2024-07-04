@@ -15,5 +15,7 @@ namespace JewelryProduction.Service.Request.Customer
 
         public List<string>? ListProductCode { get; set; }
 
+        public bool? IsUsePoint { get; set; }  
+
     }
 }

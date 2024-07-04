@@ -73,5 +73,14 @@ namespace JewelryProduction.Service.CustomerImpl
             Customer customer = CustomerConverter.toEntityForUpdate(updateCustomerRequest);
             return customerRepository.Update(id, customer);
         }
+
+        public GetCustomerResponse GetByPhone(string phone)
+        {
+            Customer customerEntity = customerRepository.GetByPhone(phone);
+            if (customerEntity == null) return null;
+            GetCustomerResponse customer = CustomerConverter.toDto(customerEntity);
+            return customer;
+        }
+
     }
 }
