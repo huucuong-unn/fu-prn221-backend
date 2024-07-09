@@ -19,5 +19,9 @@ namespace JewelryProduction.Service.Service.Account
         public bool Update(Guid id, UpdateUserRequest user);
 
         public User GetByEmail(string email);
+        
+        public PagingModel<GetUsersReponse> GetStaff(FilterModel filterModel);
+        
+        
     }
 }

@@ -76,5 +76,22 @@ namespace JewelryProduction.Service.Service.Account
         {
             return userRepository.GetByEmail(email);
         }
+
+        public PagingModel<GetUsersReponse> GetStaff(FilterModel filterModel)
+        {
+            PagingModel<GetUsersReponse> result = new PagingModel<GetUsersReponse>();
+            result.Page = filterModel.PageIndex;
+
+            List<User> users = userRepository.GetStaff(filterModel);
+            List<GetUsersReponse> getUsersReponses = users.Select(user =>
+            {
+                return UserConverter.toDto(user);
+            }).ToList();
+
+            result.ListResult = getUsersReponses;
+            result.TotalPages = ((int)Math.Ceiling((double)(TotalItem()) / filterModel.PageSize));
+            result.Size = filterModel.PageSize;
+            return result;
+        }
     }
 }

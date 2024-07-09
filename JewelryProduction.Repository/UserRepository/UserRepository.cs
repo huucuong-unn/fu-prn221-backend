@@ -54,5 +54,11 @@ namespace JewelryProduction.Repository.UserRepository
         {
             return userDAO.GetByEmail(email);
         }
+
+        public List<User> GetStaff(FilterModel filterModel)
+        {
+            return userDAO.GetStaff(filterModel);
+        }
+
     }
 }

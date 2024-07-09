@@ -93,5 +93,6 @@ namespace JewelryProduction.DAO
                 return counterUser.CounterId;
             }
         }
+        
     }
 }

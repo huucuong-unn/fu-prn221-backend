@@ -23,5 +23,8 @@ namespace JewelryProduction.Repository.UserRepository
         public int TotalItem();
 
         public User GetByEmail(string email);
+        
+        public List<User> GetStaff(FilterModel filterModel);
+
     }
 }

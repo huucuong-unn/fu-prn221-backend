@@ -11,6 +11,20 @@ namespace JewelryProduction.DAO
     public class UserDAO
     {
         public UserDAO() { }
+        
+        public List<User> GetStaff(FilterModel filterModel)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Users
+                    .Where(u =>  u.Role == "STAFF")
+                    .OrderByDescending(u => u.CreatedDate)
+                    .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
+                    .Take(filterModel.PageSize)
+                    .ToList();
+            }
+        }
+
 
         public List<User> GetUsers(FilterModel filterModel)
         {
