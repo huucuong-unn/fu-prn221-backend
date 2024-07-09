@@ -50,5 +50,14 @@ namespace JewelryProduction.API.Controllers
         {
             return _accountService.ChangeStatus(id);
         }
+        
+        [HttpGet(ApiEndPointConstant.User.GET_STAFF)]
+        public PagingModel<GetUsersReponse> GetStaff(int page, int size)
+        {
+            FilterModel filterModel = new FilterModel();
+            filterModel.PageSize = size;
+            filterModel.PageIndex = page;
+            return _accountService.GetStaff(filterModel);
+        }
     }
 }
