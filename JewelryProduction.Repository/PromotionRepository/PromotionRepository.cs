@@ -1,15 +1,10 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.DAO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.Repository.PromotionRepository
 {
-    public class PromotionRepository:IPromotionRepository
+    public class PromotionRepository : IPromotionRepository
     {
         private readonly PromotionDAO promotionDAO;
 
@@ -31,7 +26,6 @@ namespace JewelryProduction.Repository.PromotionRepository
             return promotionDAO.ChangeStatus(id);
         }
 
-
         public Promotion GetPromotionById(Guid id)
         {
             return promotionDAO.GetPromotionById(id);
@@ -50,6 +44,11 @@ namespace JewelryProduction.Repository.PromotionRepository
         public int TotalCounter()
         {
             return promotionDAO.TotalCounter();
+        }
+
+        public List<Promotion> GetPromotionsForAdmin(string? promotionName, string? status, DateOnly? startDate, DateOnly? endDate, int page, int limit)
+        {
+            return promotionDAO.GetPromotionsForAdmin(promotionName, status, startDate, endDate, page, limit);
         }
     }
 }

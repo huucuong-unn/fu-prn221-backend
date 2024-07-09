@@ -1,21 +1,13 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.Repository.PromotionRepository;
-using JewelryProduction.Repository.WarrantyRepository;
 using JewelryProduction.Service.Converters;
-using JewelryProduction.Service.Request.Promotion;
-using JewelryProduction.Service.Request.Warranty;
+using JewelryProduction.Service.Request.Promotions;
 using JewelryProduction.Service.Response.Promotion;
-using JewelryProduction.Service.Response.Warranty;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.Service.Service.PromotionImpl
 {
-    public class PromotionService:IPromotionService
+    public class PromotionService : IPromotionService
     {
         private readonly IPromotionRepository promotionRepository;
 
@@ -70,6 +62,22 @@ namespace JewelryProduction.Service.Service.PromotionImpl
         {
             BusinessObject.Models.Promotion promotion = PromotionConverter.toEntityForUpdate(updatePromotionRequest);
             return promotionRepository.Update(id, promotion);
+        }
+
+        public PagingModel<GetPromotionResponse> GetAllForAdmin(string? promotionName, string? status, DateOnly? startDate, DateOnly? endDate, int page, int limit)
+        {
+            PagingModel<GetPromotionResponse> result = new PagingModel<GetPromotionResponse>();
+            result.Page = page;
+            List<BusinessObject.Models.Promotion> promotions = promotionRepository.GetPromotionsForAdmin(promotionName, status, startDate, endDate, page, limit);
+            List<GetPromotionResponse> getPromotionResponses = promotions.Select(promotions =>
+            {
+                return PromotionConverter.toDto(promotions);
+            }).ToList();
+
+            result.ListResult = getPromotionResponses;
+            result.TotalPages = ((int)Math.Ceiling((double)(TotalCounter()) / limit));
+            result.Size = promotions.Count;
+            return result;
         }
     }
 }

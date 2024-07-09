@@ -1,10 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace JewelryProduction.DAO
 {
@@ -25,6 +21,42 @@ namespace JewelryProduction.DAO
             }
         }
 
+        public List<Promotion> GetPromotionsForAdmin(string? promotionName, string? status, DateOnly? startDate, DateOnly? endDate, int page, int limit)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                // Ensure AsNoTracking for read-only query optimization
+                var query = context.Promotions.AsNoTracking().AsQueryable();
+
+                if (!string.IsNullOrEmpty(promotionName))
+                {
+                    query = query.Where(p => p.Name.Contains(promotionName));
+                }
+
+                if (!string.IsNullOrEmpty(status))
+                {
+                    query = query.Where(p => p.Status == status);
+                }
+
+                if (startDate.HasValue)
+                {
+                    query = query.Where(p => p.StartDate >= startDate.Value);
+                }
+
+                if (endDate.HasValue)
+                {
+                    query = query.Where(p => p.EndDate <= endDate.Value);
+                }
+
+                return query
+                    .OrderByDescending(p => p.CreateDate)
+                    .Skip((page - 1) * limit)
+                    .Take(limit)
+                    .ToList();
+            }
+        }
+
+
         public Promotion? GetPromotionById(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -39,6 +71,10 @@ namespace JewelryProduction.DAO
             {
                 promotion.Id = Guid.NewGuid();
                 promotion.Status = "ACTIVE";
+                promotion.CreateDate = DateTime.Now;
+                promotion.UpdateDate = DateTime.Now;
+                promotion.UpdateBy = promotion.UpdateBy;
+                promotion.CreateBy = "hello";
                 context.Promotions.Add(promotion);
                 context.SaveChanges();
                 return promotion;
@@ -49,16 +85,44 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
+                var result = false;
                 var promotion = context.Promotions.FirstOrDefault(c => c.Id == id);
+                var promotionActive = FindByStatusTrue();
                 if (promotion == null)
                 {
-                    return false;
+                    result = false;
+                }
+                if (promotionActive == null)
+                {
+                    promotion.Status = "ACTIVE";
+                    result = true;
+
+                }
+                else if (promotion.Id == promotionActive.Id)
+                {
+                    promotion.Status = "INACTIVE";
+                    result = true;
+                }
+                if (result == true)
+                {
+                    context.Promotions.Update(promotion);
+                    context.SaveChanges();
                 }
 
-                promotion.Status = promotion.Status == "ACTIVE" ? "INACTIVE" : "ACTIVE";
-                context.Promotions.Update(promotion);
-                context.SaveChanges();
-                return true;
+                return result;
+            }
+        }
+
+        public Promotion FindByStatusTrue()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                var promotion = context.Promotions.FirstOrDefault(c => c.Status == "ACTIVE");
+                if (promotion == null)
+                {
+                    return null;
+                }
+                return promotion;
             }
         }
 
