@@ -1,20 +1,14 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.Service.Constant;
-using JewelryProduction.Service.Request.Counter;
-using JewelryProduction.Service.Request.Promotion;
-using JewelryProduction.Service.Request.Warranty;
-using JewelryProduction.Service.Response.Counter;
+using JewelryProduction.Service.Request.Promotions;
 using JewelryProduction.Service.Response.Promotion;
-using JewelryProduction.Service.Response.Warranty;
-using JewelryProduction.Service.Service.Counter;
 using JewelryProduction.Service.Service.PromotionImpl;
-using JewelryProduction.Service.Service.WarrantyImpl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JewelryProduction.API.Controllers
 {
-    public class PromotionController:ControllerBase
+    public class PromotionController : ControllerBase
     {
         private readonly IPromotionService _promotionService;
 
@@ -39,7 +33,7 @@ namespace JewelryProduction.API.Controllers
         }
 
         [HttpPost(ApiEndPointConstant.Promotion.CREATE_PROMOTION)]
-        public GetPromotionResponse Create(BasePromotionRequest createPromotionRequest)
+        public GetPromotionResponse Create([FromBody] BasePromotionRequest createPromotionRequest)
         {
             return _promotionService.Create(createPromotionRequest);
         }
@@ -55,5 +49,12 @@ namespace JewelryProduction.API.Controllers
         {
             return _promotionService.ChangeStatus(id);
         }
+
+        [HttpGet(ApiEndPointConstant.Promotion.GET_PROMOTION_SEARCH)]
+        public PagingModel<GetPromotionResponse> GetAllForAdmin(string? promotionName, string? status, DateOnly? startDate, DateOnly? endDate, int page, int limit)
+        {
+            return _promotionService.GetAllForAdmin(promotionName, status, startDate, endDate, page, limit);
+        }
+
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace JewelryProduction.Service.Response.Promotion
+﻿namespace JewelryProduction.Service.Response.Promotion
 {
     public class GetPromotionResponse
     {
@@ -27,6 +21,8 @@ namespace JewelryProduction.Service.Response.Promotion
         public DateTime UpdateDate { get; set; }
 
         public string UpdateBy { get; set; }
+
+        public decimal Value { get; set; }
 
     }
 }

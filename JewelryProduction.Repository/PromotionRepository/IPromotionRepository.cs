@@ -1,14 +1,9 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.Repository.PromotionRepository
 {
-    public interface  IPromotionRepository
+    public interface IPromotionRepository
     {
         public List<Promotion> GetPromotions(FilterModel filterModel);
 
@@ -21,6 +16,7 @@ namespace JewelryProduction.Repository.PromotionRepository
 
         public bool ChangeStatus(Guid id);
 
+        public List<Promotion> GetPromotionsForAdmin(string? promotionName, string? status, DateOnly? startDate, DateOnly? endDate, int page, int limit);
 
         public bool Update(Guid id, Promotion promotion);
 
