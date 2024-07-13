@@ -22,5 +22,7 @@ namespace JewelryProduction.Repository.PromotionRepository
 
 
         public int TotalCounter();
+
+        public Promotion GetPromotionStatusTrue();
     }
 }

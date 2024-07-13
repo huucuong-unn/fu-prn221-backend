@@ -50,6 +50,11 @@ namespace JewelryProduction.Repository.PromotionRepository
         {
             return promotionDAO.GetPromotionsForAdmin(promotionName, status, startDate, endDate, page, limit);
         }
+
+        public Promotion GetPromotionStatusTrue()
+        {
+            return promotionDAO.FindByStatusTrue(); 
+        }
     }
 }
 

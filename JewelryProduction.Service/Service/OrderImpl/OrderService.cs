@@ -7,6 +7,7 @@ using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.OrderRepository;
 using JewelryProduction.Repository.ProductsRepository;
 using JewelryProduction.Repository.ProductTypeRepository;
+using JewelryProduction.Repository.PromotionRepository;
 using JewelryProduction.Repository.UserCounterRepository;
 using JewelryProduction.Repository.UserRepository;
 using JewelryProduction.Repository.WarrantyRepository;
@@ -35,6 +36,10 @@ namespace JewelryProduction.Service.CustomerImpl
         private readonly ICounterRepository counterRepository;
 
         private readonly IProductTypeRepository productTypeRepository;
+
+        private readonly IPromotionRepository promotionRepository; 
+        
+        private readonly IUserRepository userRepository;
 
         public OrderService()
         {
@@ -76,6 +81,16 @@ namespace JewelryProduction.Service.CustomerImpl
             if (productTypeRepository == null)
             {
                 productTypeRepository = new ProductTypeRepository();    
+            }
+
+            if (promotionRepository == null)
+            {
+                promotionRepository = new PromotionRepository();
+            }
+
+            if (userRepository == null)
+            {
+                userRepository = new UserRepository(); 
             }
         }
 
@@ -159,6 +174,16 @@ namespace JewelryProduction.Service.CustomerImpl
                     customer.Point = 0;
                     customerRepository.Update(customer.Id, customer);   
                 }
+
+                var promotion = promotionRepository.GetPromotionStatusTrue();
+                if(promotion != null) {
+                  newOrder.TotalAmount -= newOrder.TotalAmount * promotion.Value;
+                }
+
+                var staff = userRepository.GetUserById(Guid.Parse(newOrder.CreateBy));
+                staff.Income = newOrder.TotalAmount;
+                userRepository.Update(staff.Id, staff);
+
                 orderRepository.Update(newOrder.Id, newOrder);
                 customer.Point += (int?)(newOrder.TotalAmount / 100);
                 var updatedCustomer = customer;
