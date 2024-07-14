@@ -35,6 +35,20 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
+                var prevUserCounters = context.UserCounters.Where(uc => uc.StaffId == userCounter.StaffId).ToList();
+                foreach (var uc in prevUserCounters)
+                { 
+                    if(uc.CounterId == userCounter.CounterId)
+                    {
+                        uc.Status = "ACTIVE";
+                        Update(uc.StaffId, uc.CounterId, uc);
+                        return uc;
+                    }
+
+                    uc.Status = "INACTIVE";
+                    Update(uc.StaffId, uc.CounterId, uc);
+                }
+
                 userCounter.Status = "ACTIVE";
                 context.UserCounters.Add(userCounter);
                 context.SaveChanges();
