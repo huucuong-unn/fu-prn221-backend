@@ -51,5 +51,11 @@ namespace JewelryProduction.Repository.WarrantyRepository
         {
             return warrantyDAO.TotalCounter();
         }
+
+        public bool Delete(Guid id)
+        {
+            return warrantyDAO.Delete(id);
+        }
+
     }
 }

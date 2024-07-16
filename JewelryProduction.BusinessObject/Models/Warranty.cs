@@ -23,5 +23,5 @@ public partial class Warranty
 
     public string? UpdateBy { get; set; }
 
-    public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

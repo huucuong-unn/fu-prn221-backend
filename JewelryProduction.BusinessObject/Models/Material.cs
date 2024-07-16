@@ -16,4 +16,6 @@ public partial class Material
     public DateTime? UpdateDate { get; set; }
 
     public decimal? SalePrice { get; set; }
+
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 }

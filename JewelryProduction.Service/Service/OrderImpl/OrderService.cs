@@ -132,23 +132,30 @@ namespace JewelryProduction.Service.CustomerImpl
                 {
                     foreach (string productCode in createOrderRequest.ListProductCode)
                     {
-                        var warranty = warrantyRepository.Create(new Warranty()
-                        {
-                            StartDate = DateOnly.FromDateTime(DateTime.Now),
-                            EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
-                            Description = "Expired after 3 months",
-                            Status = "ACTIVE",
-                            CreateBy = createOrderRequest.CreateBy,
-                            CreateDate = DateTime.Now
-
-                        });
+                        Warranty warranty = null;
 
                         var product = productRepository.GetProductByProductCode(productCode);
+                        
+                        if (product.WarrantyId == null)
+                        {
+                            warranty = warrantyRepository.Create(new Warranty()
+                            {
+                                StartDate = DateOnly.FromDateTime(DateTime.Now),
+                                EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
+                                Description = "Expired after 3 months",
+                                Status = "ACTIVE",
+                                CreateBy = createOrderRequest.CreateBy,
+                                CreateDate = DateTime.Now
+
+                            });
+
+                            product.WarrantyId = warranty.Id;
+
+                        } 
 
                         var orderItem = orderItemRepository.Create(new OrderItem
                         {
                             ProductId = product.Id,
-                            WarrantyId = warranty.Id,
                             OrderId = newOrder.Id,
                             TotalAmount = product.Price,
                             Quantity = 1,
@@ -177,7 +184,8 @@ namespace JewelryProduction.Service.CustomerImpl
 
                 var promotion = promotionRepository.GetPromotionStatusTrue();
                 if(promotion != null) {
-                  newOrder.TotalAmount -= newOrder.TotalAmount * promotion.Value;
+                    newOrder.TotalAmount -= newOrder.TotalAmount * promotion.Value;
+                    newOrder.PromotionId = promotion.Id;
                 }
 
                 var staff = userRepository.GetUserById(Guid.Parse(newOrder.CreateBy));
@@ -199,23 +207,21 @@ namespace JewelryProduction.Service.CustomerImpl
                 {
                     foreach (string productCode in createOrderRequest.ListProductCode)
                     {
-                        var warranty = warrantyRepository.Create(new Warranty()
-                        {
-                            StartDate = DateOnly.FromDateTime(DateTime.Now),
-                            EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
-                            Description = "Expired after 3 months",
-                            Status = "BUYBACK",
-                            CreateBy = createOrderRequest.CreateBy,
-                            CreateDate = DateTime.Now
 
-                        });
+                        var product = productRepository.GetProductByProductCode(productCode);
+                        warrantyRepository.Delete((Guid)product.WarrantyId);
+                        product.WarrantyId = null;
+
+                        productRepository.Update(product.Id, product);
+
 
                         var reCalProduct = productRepository.ReCalProduct(productCode);
+
+
 
                         var orderItem = orderItemRepository.Create(new OrderItem
                         {
                             ProductId = reCalProduct.Id,
-                            WarrantyId = warranty.Id,
                             OrderId = newOrder.Id,
                             TotalAmount = reCalProduct.Price,
                             Quantity = 1,

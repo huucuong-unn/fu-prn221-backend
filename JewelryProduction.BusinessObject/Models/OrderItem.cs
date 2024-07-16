@@ -32,6 +32,4 @@ public partial class OrderItem
     public virtual Order? Order { get; set; }
 
     public virtual Product? Product { get; set; }
-
-    public virtual Warranty? Warranty { get; set; }
 }
