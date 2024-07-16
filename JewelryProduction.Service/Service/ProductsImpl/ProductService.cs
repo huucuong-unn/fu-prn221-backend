@@ -185,6 +185,15 @@ public class ProductService : IProductService
         Product product = _productRepository.ReCalProduct(productCode);          
         return ProductConverter.toDto(product);
     }
+    public List<GetProductResponse> SearchProductByCounterName(string counter_name)
+    {
+        List<Product> products = _productRepository.SearchProductByCounterName(counter_name);
+        List<GetProductResponse> getProductResponses = products.Select(product =>
+        {
+            return ProductConverter.toDto(product);
+        }).ToList();
 
+        return getProductResponses;
+    }
 
 }
