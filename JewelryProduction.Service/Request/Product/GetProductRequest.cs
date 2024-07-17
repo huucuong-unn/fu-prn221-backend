@@ -7,7 +7,7 @@ namespace JewelryProduction.Service.Request.Product
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Weight { get; set; }
-        public string Material { get; set; }
+        public Guid MaterialId { get; set; } //moithem
         public decimal Price { get; set; }
         public string Status { get; set; } 
         public DateTime CreateDate { get; set; } 

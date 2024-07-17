@@ -35,7 +35,7 @@ namespace JewelryProduction.Service.Converters
             product.Name = createProductRequest.Name;
             product.Description = createProductRequest.Description;
             product.Weight = createProductRequest.Weight;
-            /*product.Material = createProductRequest.Material;*/
+            product.MaterialId = (Guid)createProductRequest.MaterialId; //moithem
             product.Price = createProductRequest.Price;
             product.Status = "ACTIVE";
             product.CreateDate = DateTime.Now;
