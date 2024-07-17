@@ -31,6 +31,8 @@ public partial class Product
 
     public Guid? WarrantyId { get; set; }
 
+    public virtual Counter? Counter { get; set; }
+
     public virtual Material? Material { get; set; }
 
     public virtual ICollection<OrderItem> OrderItems { get; set; } = new List<OrderItem>();

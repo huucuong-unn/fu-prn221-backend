@@ -286,6 +286,10 @@ public partial class JewelryProductionContext : DbContext
                 .HasColumnType("decimal(10, 2)")
                 .HasColumnName("weight");
 
+            entity.HasOne(d => d.Counter).WithMany(p => p.Products)
+                .HasForeignKey(d => d.CounterId)
+                .HasConstraintName("FK_Product_Counter");
+
             entity.HasOne(d => d.Material).WithMany(p => p.Products)
                 .HasForeignKey(d => d.MaterialId)
                 .HasConstraintName("FK_Product_Material");

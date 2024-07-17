@@ -21,5 +21,7 @@ public partial class Counter
 
     public string UpdateBy { get; set; } = null!;
 
+    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+
     public virtual ICollection<UserCounter> UserCounters { get; set; } = new List<UserCounter>();
 }
