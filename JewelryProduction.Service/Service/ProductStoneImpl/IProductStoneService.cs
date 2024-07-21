@@ -18,5 +18,7 @@ namespace JewelryProduction.Service.Service.ProductStoneImpl
         int TotalItem();
 
         bool Update(GetProductStoneRequest updateCounterRequest);
+
+        decimal CalculateStonePriceByProductId(Guid productId);
     }
 }

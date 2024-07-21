@@ -44,6 +44,11 @@ namespace JewelryProduction.Service.Service.MaterialImpl
             return MaterialConverter.toDto(material);
         }
 
+        public Material GetByName(string name)
+        {
+            return materialRepository.GetByName(name);
+        }
+
         public List<GetMaterialResponse> GetMaterialWithoutPaging()
         {
             List<Material> materials = materialRepository.GetMaterialWithoutPaging();

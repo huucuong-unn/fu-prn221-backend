@@ -32,10 +32,9 @@ namespace JewelryProduction.Service.Service.ProductTypeImpl
             return _productTypeRepository.ChangeStatus(id);
         }
 
-        public GetProductTypeResponse GetProductTypeById(Guid id)
+        public ProductType GetProductTypeById(Guid id)
         {
-            BusinessObject.Models.ProductType productType = _productTypeRepository.GetProductTypeById(id);
-            return ProductTypeConverter.ToDto(productType);
+            return _productTypeRepository.GetProductTypeById(id);
         }
 
         public PagingModel<GetProductTypeResponse> GetProductTypes(FilterModel filterModel)
@@ -75,6 +74,12 @@ namespace JewelryProduction.Service.Service.ProductTypeImpl
             }).ToList();
 
             return getProductTypeResponses;
+        }
+
+        public GetProductTypeResponse GetProductTypeByIdWithDto(Guid id)
+        {
+            BusinessObject.Models.ProductType productType = _productTypeRepository.GetProductTypeById(id);
+            return ProductTypeConverter.ToDto(productType);
         }
     }
 }

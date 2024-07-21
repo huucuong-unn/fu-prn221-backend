@@ -46,7 +46,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.ProductTypes.FirstOrDefault(pt => pt.Id.Equals(id));
+                return context.ProductTypes.FirstOrDefault(pt => pt.Id == id);
             }
         }
 

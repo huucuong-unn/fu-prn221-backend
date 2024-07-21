@@ -85,15 +85,9 @@ public class ProductService : IProductService
         return _productRepository.Update(id, product);
     }
 
-    public List<GetProductResponse> GetProductsByMaterialId(Guid id)
+    public List<Product> GetProductsByMaterialId(Guid id)
     {
-        List<Product> products = _productRepository.GetProductsByMaterialId(id);
-        List<GetProductResponse> getProductResponses = products.Select(product =>
-        {
-            return ProductConverter.toDto(product);
-        }).ToList();
-
-        return getProductResponses;
+        return _productRepository.GetProductsByMaterialId(id);
     }
 
     public GetProductTypeResponse GetProductTypeById(Guid productTypeId)

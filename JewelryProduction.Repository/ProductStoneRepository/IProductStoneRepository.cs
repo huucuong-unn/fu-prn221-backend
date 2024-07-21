@@ -16,5 +16,8 @@ namespace JewelryProduction.Repository.ProductStoneRepository
         bool Delete(Guid productId, Guid stoneId);
 
         int TotalItem();
+
+        decimal CalculateStonePriceByProductId(Guid productId);
+
     }
 }

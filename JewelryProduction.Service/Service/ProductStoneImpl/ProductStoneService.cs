@@ -66,5 +66,10 @@ namespace JewelryProduction.Service.Service.ProductStoneImpl
             BusinessObject.Models.ProductStone productStone = ProductStoneConverter.toEntityForUpdate(updateProductStoneRequest);
             return productStoneRepository.Update(productStone);
         }
+
+        public decimal CalculateStonePriceByProductId(Guid productId)
+        {
+            return productStoneRepository.CalculateStonePriceByProductId(productId);
+        }
     }
 }

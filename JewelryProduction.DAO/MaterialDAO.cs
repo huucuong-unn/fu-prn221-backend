@@ -13,9 +13,11 @@ namespace JewelryProduction.DAO
 
         public Material GetByName(string name)
         {
-            JewelryProductionContext context = new JewelryProductionContext();
-            var material = context.Materials.FirstOrDefault(m => m.Name.Equals(name));
-            return material;
+            using (var context = new JewelryProductionContext())
+            {
+                var material = context.Materials.FirstOrDefault(m => m.Name.Equals(name));
+                return material;
+            }
         }
 
         public List<Material> GetMaterialWithoutPaging()

@@ -46,5 +46,10 @@ namespace JewelryProduction.Repository.ProductStoneRepository
         {
             return productStoneDAO.TotalItem();
         }
+
+        public decimal CalculateStonePriceByProductId(Guid productId)
+        {
+            return productStoneDAO.CalculateStonePriceByProductId(productId);
+        }
     }
 }

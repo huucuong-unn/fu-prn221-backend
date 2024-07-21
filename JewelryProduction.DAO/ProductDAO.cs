@@ -59,12 +59,10 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.Products
-                    .Include(p => p.Material)
-                    .Include(p => p.ProductType) // Include bảng ProductType
-                    .Include(p => p.Counter) // Include bảng Counter
-                    .Where(p => p.MaterialId == materialId)
-                    .ToList();
+                return context.Products.Include(p => p.ProductStones)
+                                        .ThenInclude(ps => ps.Stone)
+                                        .Where(p => p.MaterialId == materialId)
+                                        .ToList();
             }
         }
 
