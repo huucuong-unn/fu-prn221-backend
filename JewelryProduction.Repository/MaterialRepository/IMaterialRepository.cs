@@ -14,5 +14,7 @@ namespace JewelryProduction.Repository.MaterialRepository
         public Material GetById(Guid id);
 
         public List<Material> GetMaterialWithoutPaging();
+
+        public Material GetByName(string name);
     }
 }

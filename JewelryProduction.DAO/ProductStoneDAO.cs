@@ -1,5 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JewelryProduction.DAO
 {
@@ -92,6 +93,18 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 return context.ProductStones.Count();
+            }
+        }
+
+        public decimal CalculateStonePriceByProductId(Guid productId)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.ProductStones.Where(ps => ps.ProductId
+                                            .Equals(productId))
+                                            .Include(ps => ps.Stone)
+                                            .ToList()
+                                            .Sum(ps => ps.Stone != null ? ps.Stone.Price : 0);
             }
         }
     }

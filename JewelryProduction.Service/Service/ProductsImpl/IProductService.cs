@@ -16,7 +16,7 @@ public interface IProductService
     bool ChangeProductStatus(Guid id);
     GetProductResponse GetProductById(Guid id);
     PagingModel<GetProductResponse> GetProducts(FilterModel filterModel);
-    List<GetProductResponse> GetProductsByMaterialId (Guid id);
+    List<BusinessObject.Models.Product> GetProductsByMaterialId (Guid id);
     GetProductTypeResponse GetProductTypeById(Guid productTypeId);
     List<GetProductStoneResponse> GetProductStones(Guid productId);
     bool UpdateProduct(Guid id, GetProductRequest request);
@@ -29,7 +29,5 @@ public interface IProductService
     List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
     PagingModel<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel);
     List<GetProductResponse> GetProductsForCustomerBuyAndStoreBuy();
-    public GetProductResponse ReCalProduct(string productCode);
-
-
+    GetProductResponse ReCalProduct(string productCode);
 }

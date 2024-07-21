@@ -31,5 +31,10 @@ namespace JewelryProduction.Repository.MaterialRepository
         }
 
         public List<Material> GetMaterialWithoutPaging() { return materialDAO.GetMaterialWithoutPaging();}
+
+        public Material GetByName(string name)
+        {
+            return materialDAO.GetByName(name);
+        }
     }
 }

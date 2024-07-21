@@ -41,7 +41,7 @@ namespace JewelryProductTypeion.API.Controllers
         [HttpGet(ApiEndPointConstant.ProductType.GET_PRODUCT_TYPE_BY_ID + "{id}")]
         public IActionResult GetProductTypeById(Guid id)
         {
-            GetProductTypeResponse productType = _productTypeService.GetProductTypeById(id);
+            GetProductTypeResponse productType = _productTypeService.GetProductTypeByIdWithDto(id);
             if (productType == null)
                 return NotFound();
 

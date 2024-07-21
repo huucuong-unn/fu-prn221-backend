@@ -1,4 +1,5 @@
-﻿using JewelryProduction.Service.Request.Material;
+﻿using JewelryProduction.BusinessObject.Models;
+using JewelryProduction.Service.Request.Material;
 using JewelryProduction.Service.Response.Material;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace JewelryProduction.Service.Service.MaterialImpl
         public bool UpdateByName(BaseMaterialRequest request);
 
         public List<GetMaterialResponse> GetMaterialWithoutPaging();
+
+        public Material GetByName(string name);
 
     }
 }
