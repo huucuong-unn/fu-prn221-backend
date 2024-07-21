@@ -34,7 +34,7 @@ public interface IProductRepository
     public List<Product> SearchProductByMaterialName(string material_name);
     public List<Product> SearchProductByCounterName(string counter_name);
     public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo);
-    public List<Product> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel);
+    public List<Product> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, string status, FilterModel filterModel);
     public List<Product> GetProductsForCustomerBuyAndStoreBuy();
     public Product ReCalProduct(string productCode);
     public bool UpdateStatus(Guid id, string status);

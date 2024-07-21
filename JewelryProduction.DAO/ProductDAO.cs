@@ -335,7 +335,7 @@ namespace JewelryProduction.DAO
             }
         }
 
-        public List<Product> SearchProduct(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
+        public List<Product> SearchProduct(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, string status, FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
             {
@@ -347,6 +347,11 @@ namespace JewelryProduction.DAO
                 if (!string.IsNullOrEmpty(productCode))
                 {
                     query = query.Where(p => p.ProductCode.Equals(productCode));
+                }
+
+                if (!string.IsNullOrEmpty(status))
+                {
+                    query = query.Where(p => p.Status.Equals(status));
                 }
 
                 if (productTypeId.HasValue)
