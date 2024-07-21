@@ -57,11 +57,11 @@ public class ProductService : IProductService
         return result;
     }
 
-    public PagingModel<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, FilterModel filterModel)
+    public PagingModel<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, string status, FilterModel filterModel)
     {
         PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
         result.Page = filterModel.PageIndex;
-        List<Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, filterModel);
+        List<Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, status, filterModel);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);

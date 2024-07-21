@@ -132,7 +132,7 @@ namespace JewelryProduction.API.Controllers
         }
 
         [HttpGet(ApiEndPointConstant.Product.SEARCH_SORT_PRODUCT)]
-        public IActionResult SearchSort([FromQuery] string? productCode, [FromQuery] Guid? productTypeId, [FromQuery] Guid? materialId, [FromQuery] Guid? counterId, [FromQuery] int page, [FromQuery] int size)
+        public IActionResult SearchSort([FromQuery] string? productCode, [FromQuery] Guid? productTypeId, [FromQuery] Guid? materialId, [FromQuery] Guid? counterId, [FromQuery] string? status, [FromQuery] int page, [FromQuery] int size)
         {
             FilterModel filterModel = new FilterModel
             {
@@ -140,7 +140,7 @@ namespace JewelryProduction.API.Controllers
                 PageIndex = page
             };
 
-            var products = _productService.SearchSort(productCode, productTypeId, materialId, counterId, filterModel);           
+            var products = _productService.SearchSort(productCode, productTypeId, materialId, counterId, status, filterModel);           
 
             return Ok(products);
         }
