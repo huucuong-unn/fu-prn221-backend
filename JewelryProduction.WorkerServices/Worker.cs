@@ -73,36 +73,7 @@ namespace JewelryProduction.WorkerServices
                                             request.UpdateDate = (DateTime)material.UpdateDate;
                                             materialService.UpdateByName(request);
 
-                                            JewelryProductionContext context = new JewelryProductionContext();
-                                            var materialByname = context.Materials.FirstOrDefault(m => m.Name.Equals("BTMC"));
-                                            List<BusinessObject.Models.Product> productsByMaterialId = context.Products.Include(p => p.ProductStones)
-                                                                                                                        .ThenInclude(ps => ps.Stone)
-                                                                                                                        .Where(p => p.MaterialId == materialByname.Id)
-                                                                                                                        .ToList();
-
-                                            foreach (var product in productsByMaterialId)
-                                            {
-                                                var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-                                                /*var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).ToList().Sum(ps => ps.Stone.Price);*/
-                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId.Equals(product.Id))
-                                                                                        .Include(ps => ps.Stone)
-                                                                                        .ToList()
-                                                                                        .Sum(ps => ps.Stone != null ? ps.Stone.Price : 0);
-
-
-                                                product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
-                                                product.UpdateDate = DateTime.Now;
-
-                                                GetProductRequest productRequest = new GetProductRequest();
-                                                productRequest.Name = product.Name;
-                                                productRequest.Description = product.Description;
-                                                productRequest.Weight = product.Weight;
-                                                productRequest.Price = product.Price;
-                                                productRequest.CreateDate = product.CreateDate;
-                                                productRequest.UpdateDate = DateTime.Now;
-
-                                                productService.UpdateProduct(product.Id, productRequest);
-                                            }
+                                            UpdateProductPricesForMaterial("BTMC", material.BuyingPrice);
 
                                         }
 
@@ -124,33 +95,7 @@ namespace JewelryProduction.WorkerServices
                                             request.UpdateDate = (DateTime)material.UpdateDate;
                                             materialService.UpdateByName(request);
 
-                                            JewelryProductionContext context = new JewelryProductionContext();
-                                            var materialByname = context.Materials.FirstOrDefault(m => m.Name.Equals("HTBT"));
-                                            List<BusinessObject.Models.Product> productsByMaterialId = context.Products
-                                                                            .Where(p => p.MaterialId == materialByname.Id)
-                                                                            .ToList();
-
-                                            foreach (var product in productsByMaterialId)
-                                            {
-                                                var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id)
-                                                                                        .Include(ps => ps.Stone)
-                                                                                        .ToList()
-                                                                                        .Sum(ps => ps.Stone.Price);
-
-                                                product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
-                                                product.UpdateDate = DateTime.Now;
-
-                                                GetProductRequest productRequest = new GetProductRequest();
-                                                productRequest.Name = product.Name;
-                                                productRequest.Description = product.Description;
-                                                productRequest.Weight = product.Weight;
-                                                productRequest.Price = product.Price;
-                                                productRequest.CreateDate = product.CreateDate;
-                                                productRequest.UpdateDate = DateTime.Now;
-
-                                                productService.UpdateProduct(product.Id, productRequest);
-                                            }
+                                            UpdateProductPricesForMaterial("HTBT", material.BuyingPrice);
                                         }
 
                                         if (valueN.Contains("SJC"))
@@ -171,30 +116,7 @@ namespace JewelryProduction.WorkerServices
                                             request.UpdateDate = (DateTime)material.UpdateDate;
                                             materialService.UpdateByName(request);
 
-                                            JewelryProductionContext context = new JewelryProductionContext();
-                                            var materialByname = context.Materials.FirstOrDefault(m => m.Name.Equals("SJC"));
-                                            List<BusinessObject.Models.Product> productsByMaterialId = context.Products
-                                                                            .Where(p => p.MaterialId == materialByname.Id)
-                                                                            .ToList();
-
-                                            foreach (var product in productsByMaterialId)
-                                            {
-                                                var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
-                                                var stonePrices = context.ProductStones.Where(ps => ps.ProductId == product.Id).Include(ps => ps.Stone).ToList().Sum(ps => ps.Stone.Price);
-
-                                                product.Price = (material.BuyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
-                                                product.UpdateDate = DateTime.Now;
-
-                                                GetProductRequest productRequest = new GetProductRequest();
-                                                productRequest.Name = product.Name;
-                                                productRequest.Description = product.Description;
-                                                productRequest.Weight = product.Weight;
-                                                productRequest.Price = product.Price;
-                                                productRequest.CreateDate = product.CreateDate;
-                                                productRequest.UpdateDate = DateTime.Now;
-
-                                                productService.UpdateProduct(product.Id, productRequest);
-                                            }
+                                            UpdateProductPricesForMaterial("SJC", material.BuyingPrice);
                                         }
 
                                     }
@@ -229,6 +151,46 @@ namespace JewelryProduction.WorkerServices
             {
                 Console.WriteLine($"Không thể parse giá trị '{value}' sang decimal.");
                 return 0;
+            }
+        }
+
+        private void UpdateProductPricesForMaterial(string materialName, decimal buyingPrice)
+        {
+            using (var scope = _serviceScopeFactory.CreateScope()) {
+                var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
+
+                    using (var context = new JewelryProductionContext())
+                    {
+                        var material = context.Materials.FirstOrDefault(m => m.Name.Equals(materialName));
+                        if (material == null) return;
+
+                        var productsByMaterialId = context.Products.Include(p => p.ProductStones)
+                                                                    .ThenInclude(ps => ps.Stone)
+                                                                    .Where(p => p.MaterialId == material.Id)
+                                                                    .ToList();
+
+                        foreach (var product in productsByMaterialId)
+                        {
+                            var productType = context.ProductTypes.FirstOrDefault(pt => pt.Id == product.ProductTypeId);
+                            var stonePrices = context.ProductStones.Where(ps => ps.ProductId.Equals(product.Id))
+                                                                    .Include(ps => ps.Stone)
+                                                                    .ToList()
+                                                                    .Sum(ps => ps.Stone != null ? ps.Stone.Price : 0);
+
+                            product.Price = (buyingPrice * (product.Weight / 1000)) + productType.Wages + stonePrices;
+                            product.UpdateDate = DateTime.Now;
+
+                            GetProductRequest productRequest = new GetProductRequest();
+                            productRequest.Name = product.Name;
+                            productRequest.Description = product.Description;
+                            productRequest.Weight = product.Weight;
+                            productRequest.Price = product.Price;
+                            productRequest.CreateDate = product.CreateDate;
+                            productRequest.UpdateDate = DateTime.Now;
+
+                            productService.UpdateProduct(product.Id, productRequest);
+                        }
+                    }
             }
         }
     }
