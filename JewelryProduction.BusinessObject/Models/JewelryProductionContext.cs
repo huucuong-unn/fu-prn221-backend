@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace JewelryProduction.BusinessObject.Models;
 
@@ -46,7 +47,15 @@ public partial class JewelryProductionContext : DbContext
     
     => optionsBuilder.UseSqlServer("server =(local); database =JewelryProduction;uid=sa;pwd=12345;TrustServerCertificate=true");
 
-
+    private string GetConnectionString()
+{
+    IConfiguration config = new ConfigurationBuilder()
+        .SetBasePath(Directory.GetCurrentDirectory())
+        .AddJsonFile("appsettings.json", true, true)
+        .Build();
+    var strConn = config.GetConnectionString("DBConnect");
+    return strConn;
+}
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Counter>(entity =>
