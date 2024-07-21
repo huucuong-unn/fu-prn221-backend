@@ -26,8 +26,8 @@ namespace JewelryProduction.Repository.WarrantyRepository
 
 
         public int TotalCounter();
-       
-    
+
+        public bool Delete(Guid id);
 
 }
 }

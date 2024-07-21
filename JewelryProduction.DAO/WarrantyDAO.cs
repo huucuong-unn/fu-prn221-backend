@@ -91,6 +91,14 @@ namespace JewelryProduction.DAO
                 return context.Warranties.Count();
             }
         }
+
+        public bool Delete(Guid id)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Warranties.Remove(GetWarrantyById(id)) != null;
+            }
+        }
     }
 
 }

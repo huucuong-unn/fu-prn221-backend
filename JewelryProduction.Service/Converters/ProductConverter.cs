@@ -14,7 +14,7 @@ namespace JewelryProduction.Service.Converters
             getProductResponse.Name = product.Name;
             getProductResponse.Description = product.Description;
             getProductResponse.Weight = product.Weight;
-            getProductResponse.MaterialId = (Guid)product.MaterialId;
+            getProductResponse.MaterialId = product.MaterialId;
             getProductResponse.ProductTypeId = product.ProductTypeId;
             getProductResponse.Price = product.Price;
             getProductResponse.Status = product.Status;
@@ -35,6 +35,7 @@ namespace JewelryProduction.Service.Converters
             product.Name = createProductRequest.Name;
             product.Description = createProductRequest.Description;
             product.Weight = createProductRequest.Weight;
+
             product.MaterialId = (Guid)createProductRequest.MaterialId; //moithem
             product.Price = createProductRequest.Price;
             product.Status = "ACTIVE";
@@ -53,7 +54,7 @@ namespace JewelryProduction.Service.Converters
             product.Name = updateProductRequest.Name;
             product.Description = updateProductRequest.Description;
             product.Weight = updateProductRequest.Weight;
-            /*product.Material = updateProductRequest.Material;*/
+            product.MaterialId = updateProductRequest.MaterialId;
             product.Price = updateProductRequest.Price;
             product.Status = updateProductRequest.Status;
             product.CreateDate = updateProductRequest.CreateDate;

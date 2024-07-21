@@ -8,7 +8,7 @@ namespace JewelryProduction.Service.Response.Product
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Weight { get; set; }
-        public Guid MaterialId { get; set; }
+        public Guid? MaterialId { get; set; }
         public string? MaterialName { get; set; }
         public decimal Price { get; set; }
         public string Status { get; set; }
