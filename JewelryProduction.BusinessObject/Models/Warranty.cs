@@ -5,7 +5,7 @@ namespace JewelryProduction.BusinessObject.Models;
 
 public partial class Warranty
 {
-    public Guid Id { get; set; }
+    public Guid WarrantyProductId { get; set; }
 
     public DateOnly? StartDate { get; set; }
 
@@ -23,5 +23,5 @@ public partial class Warranty
 
     public string? UpdateBy { get; set; }
 
-    public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+    public virtual Product WarrantyProduct { get; set; } = null!;
 }

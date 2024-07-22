@@ -1,6 +1,7 @@
 ﻿using JewelryProduction.BusinessObject.Models;
-using JewelryProduction.Service.Response.Order;
 using JewelryProduction.Service.Request.Customer;
+using JewelryProduction.Service.Response.Counter;
+using JewelryProduction.Service.Response.Order;
 
 namespace JewelryProduction.Service.Converters
 {
@@ -20,7 +21,19 @@ namespace JewelryProduction.Service.Converters
             getOrdersReponse.UpdateBy = order.UpdateBy;
             getOrdersReponse.Status = order.Status;
             getOrdersReponse.CounterId = order.CounterId;
-            getOrdersReponse.OrderItems = (List<OrderItem>?)order.OrderItems;
+            if (order.OrderItems != null)
+            {
+                List<GetOrderItemResponse> listOrderItemDTO = new List<GetOrderItemResponse>();
+                foreach (var item in order.OrderItems)
+                {
+                    GetOrderItemResponse itemReponse = new GetOrderItemResponse();
+                    itemReponse = OrderItemConverter.toDto(item);
+                    listOrderItemDTO.Add(itemReponse);
+                }
+                getOrdersReponse.OrderItems = listOrderItemDTO;
+
+            }
+
             getOrdersReponse.Customer = order.Customer;
 
             return getOrdersReponse;
@@ -34,15 +47,23 @@ namespace JewelryProduction.Service.Converters
             getOrdersReponse.PromotionId = order.PromotionId;
             getOrdersReponse.TotalAmount = order.TotalAmount;
             getOrdersReponse.OrderType = order.OrderType;
-            getOrdersReponse.CreatedDate =  order.CreatedDate;
-            getOrdersReponse.UpdatedDate =  order.UpdatedDate;
+            getOrdersReponse.CreatedDate = order.CreatedDate;
+            getOrdersReponse.UpdatedDate = order.UpdatedDate;
             getOrdersReponse.CreateBy = order.CreateBy;
             getOrdersReponse.UpdateBy = order.UpdateBy;
             getOrdersReponse.Status = order.Status;
-            foreach (var item in list)
+            if (order.OrderItems != null)
             {
-                getOrdersReponse.OrderItems.Add(item);
-            };
+                List<GetOrderItemResponse> listOrderItemDTO = new List<GetOrderItemResponse>();
+                foreach (var item in order.OrderItems)
+                {
+                    GetOrderItemResponse itemReponse = new GetOrderItemResponse();
+                    itemReponse = OrderItemConverter.toDto(item);
+                    listOrderItemDTO.Add(itemReponse);
+                }
+                getOrdersReponse.OrderItems = listOrderItemDTO;
+
+            }
             getOrdersReponse.CounterId = order.CounterId;
             getOrdersReponse.Customer = order.Customer;
             return getOrdersReponse;
@@ -52,7 +73,7 @@ namespace JewelryProduction.Service.Converters
         {
             Order order = new Order();
             order.CustomerId = createOrderRequest.CustomerId;
-            order.PromotionId = createOrderRequest.PromotionId; 
+            order.PromotionId = createOrderRequest.PromotionId;
             order.TotalAmount = createOrderRequest.TotalAmount;
             order.OrderType = createOrderRequest.OrderType;
             order.CreatedDate = createOrderRequest.CreatedDate;

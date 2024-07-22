@@ -1,10 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.DAO
 {
@@ -29,7 +24,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.Warranties.FirstOrDefault(c => c.Id == id);
+                return context.Warranties.FirstOrDefault(c => c.WarrantyProductId == id);
             }
         }
 
@@ -37,7 +32,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                warranty.Id = Guid.NewGuid();
+                warranty.WarrantyProductId = warranty.WarrantyProductId;
                 warranty.Status = "ACTIVE";
                 context.Warranties.Add(warranty);
                 context.SaveChanges();
@@ -49,7 +44,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                var warranty = context.Warranties.FirstOrDefault(c => c.Id == id);
+                var warranty = context.Warranties.FirstOrDefault(c => c.WarrantyProductId == id);
                 if (warranty == null)
                 {
                     return false;
@@ -66,7 +61,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                var existingWarranty = context.Warranties.FirstOrDefault(c => c.Id == id);
+                var existingWarranty = context.Warranties.FirstOrDefault(c => c.WarrantyProductId == id);
                 if (existingWarranty == null)
                 {
                     return false;
@@ -96,7 +91,9 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.Warranties.Remove(GetWarrantyById(id)) != null;
+                bool result = context.Warranties.Remove(GetWarrantyById(id)) != null;
+                context.SaveChanges();
+                return result;
             }
         }
     }

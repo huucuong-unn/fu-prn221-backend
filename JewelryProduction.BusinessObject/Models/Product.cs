@@ -29,8 +29,6 @@ public partial class Product
 
     public Guid? MaterialId { get; set; }
 
-    public Guid? WarrantyId { get; set; }
-
     public virtual Counter? Counter { get; set; }
 
     public virtual Material? Material { get; set; }

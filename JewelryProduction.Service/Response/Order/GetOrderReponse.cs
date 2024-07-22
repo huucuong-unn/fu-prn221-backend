@@ -1,4 +1,4 @@
-﻿using JewelryProduction.BusinessObject.Models;
+﻿using JewelryProduction.Service.Response.Counter;
 
 namespace JewelryProduction.Service.Response.Order
 {
@@ -24,11 +24,11 @@ namespace JewelryProduction.Service.Response.Order
 
         public string? Status { get; set; }
 
-        public List<OrderItem>? OrderItems { get; set; }
+        public List<GetOrderItemResponse>? OrderItems { get; set; }
 
         public Guid? CounterId { get; set; }
 
         public BusinessObject.Models.Customer? Customer { get; set; }
-        
+
     }
 }

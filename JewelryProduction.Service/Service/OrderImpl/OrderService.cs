@@ -1,7 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
-using JewelryProduction.DAO;
 using JewelryProduction.Repository.CounterRepository;
 using JewelryProduction.Repository.CustomerRepository;
 using JewelryProduction.Repository.OrderRepository;
@@ -37,8 +36,8 @@ namespace JewelryProduction.Service.CustomerImpl
 
         private readonly IProductTypeRepository productTypeRepository;
 
-        private readonly IPromotionRepository promotionRepository; 
-        
+        private readonly IPromotionRepository promotionRepository;
+
         private readonly IUserRepository userRepository;
 
         public OrderService()
@@ -51,14 +50,14 @@ namespace JewelryProduction.Service.CustomerImpl
             if (orderItemRepository == null)
             {
                 orderItemRepository = new OrderItemRepository();
-            } 
+            }
 
             if (customerRepository == null)
             {
                 customerRepository = new CustomerRepository();
             }
 
-            if (warrantyRepository == null) 
+            if (warrantyRepository == null)
             {
                 warrantyRepository = new WarrantyRepository();
             }
@@ -80,7 +79,7 @@ namespace JewelryProduction.Service.CustomerImpl
 
             if (productTypeRepository == null)
             {
-                productTypeRepository = new ProductTypeRepository();    
+                productTypeRepository = new ProductTypeRepository();
             }
 
             if (promotionRepository == null)
@@ -90,7 +89,7 @@ namespace JewelryProduction.Service.CustomerImpl
 
             if (userRepository == null)
             {
-                userRepository = new UserRepository(); 
+                userRepository = new UserRepository();
             }
         }
 
@@ -102,7 +101,7 @@ namespace JewelryProduction.Service.CustomerImpl
 
             if (customer == null)
             {
-                customer = customerRepository.Create(new Customer ()
+                customer = customerRepository.Create(new Customer()
                 {
                     Name = createOrderRequest.CustomerName,
                     Phone = createOrderRequest.CustomerPhone,
@@ -114,15 +113,15 @@ namespace JewelryProduction.Service.CustomerImpl
                     UpdateDate = DateTime.Now,
                     UpdateBy = createOrderRequest.UpdateBy,
                 });
-            } 
+            }
 
             createOrderRequest.CustomerId = customer.Id;
             createOrderRequest.CreatedDate = DateTime.Now;
             createOrderRequest.UpdatedDate = DateTime.Now;
 
             Order order = OrderConverter.toEntityForCreate(createOrderRequest);
-/*            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
-*/
+            /*            order.Customer = customerRepository.GetById((Guid)order.CustomerId);
+            */
             Order newOrder = orderRepository.Create(order);
             var counterId = userCounterRepository.GetCounterIdByStaffId(Guid.Parse(createOrderRequest.CreateBy));
 
@@ -135,23 +134,19 @@ namespace JewelryProduction.Service.CustomerImpl
                         Warranty warranty = null;
 
                         var product = productRepository.GetProductByProductCode(productCode);
-                        
-                        if (product.WarrantyId == null)
+
+                        bool check = warrantyRepository.Delete(product.Id);
+                        warranty = warrantyRepository.Create(new Warranty()
                         {
-                            warranty = warrantyRepository.Create(new Warranty()
-                            {
-                                StartDate = DateOnly.FromDateTime(DateTime.Now),
-                                EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
-                                Description = "Expired after 3 months",
-                                Status = "ACTIVE",
-                                CreateBy = createOrderRequest.CreateBy,
-                                CreateDate = DateTime.Now
+                            WarrantyProductId = product.Id,
+                            StartDate = DateOnly.FromDateTime(DateTime.Now),
+                            EndDate = DateOnly.FromDateTime(DateTime.Now.AddMonths(3)),//expired default 3 months,
+                            Description = "Expired after 3 months",
+                            Status = "ACTIVE",
+                            CreateBy = createOrderRequest.CreateBy,
+                            CreateDate = DateTime.Now
 
-                            });
-
-                            product.WarrantyId = warranty.Id;
-
-                        } 
+                        });
 
                         var orderItem = orderItemRepository.Create(new OrderItem
                         {
@@ -179,11 +174,12 @@ namespace JewelryProduction.Service.CustomerImpl
                 {
                     newOrder.TotalAmount -= customer.Point;
                     customer.Point = 0;
-                    customerRepository.Update(customer.Id, customer);   
+                    customerRepository.Update(customer.Id, customer);
                 }
 
                 var promotion = promotionRepository.GetPromotionStatusTrue();
-                if(promotion != null) {
+                if (promotion != null)
+                {
                     newOrder.TotalAmount -= newOrder.TotalAmount * promotion.Value;
                     newOrder.PromotionId = promotion.Id;
                 }
@@ -200,7 +196,8 @@ namespace JewelryProduction.Service.CustomerImpl
                 var counterForUpdate = counterRepository.GetCounterById(counterId);
                 counterForUpdate.Income = (decimal)(counterForUpdate.Income + newOrder.TotalAmount);
                 counterRepository.Update(counterForUpdate.Id, counterForUpdate);
-            } else if (newOrder.OrderType.Equals("StoreBuy"))
+            }
+            else if (newOrder.OrderType.Equals("StoreBuy"))
             {
 
                 if (!createOrderRequest.ListProductCode.IsNullOrEmpty())
@@ -209,8 +206,7 @@ namespace JewelryProduction.Service.CustomerImpl
                     {
 
                         var product = productRepository.GetProductByProductCode(productCode);
-                        warrantyRepository.Delete((Guid)product.WarrantyId);
-                        product.WarrantyId = null;
+                        warrantyRepository.ChangeStatus((Guid)product.Id);
 
                         productRepository.Update(product.Id, product);
 
@@ -242,7 +238,7 @@ namespace JewelryProduction.Service.CustomerImpl
                     orderRepository.Update(newOrder.Id, newOrder);
                 }
             }
-            
+
 
             response.Add("order", newOrder);
             return response;
@@ -266,7 +262,7 @@ namespace JewelryProduction.Service.CustomerImpl
                 {
                     var appendProduct = productRepository.GetProductById((Guid)item.ProductId);
                     var productTypeId = appendProduct.ProductTypeId;
-                    if(!productTypeId.Equals(Guid.Empty))
+                    if (!productTypeId.Equals(Guid.Empty))
                     {
                         var productType = productTypeRepository.GetProductTypeById(productTypeId);
                         if (productType != null)
@@ -274,7 +270,7 @@ namespace JewelryProduction.Service.CustomerImpl
                             appendProduct.ProductType = productType;
                         }
                     }
-                   
+
 
                     item.Product = appendProduct;
                 }
@@ -400,8 +396,8 @@ namespace JewelryProduction.Service.CustomerImpl
 
             result.ListResult = getOrderResponses;
             result.Size = size;
-            var concu = orderRepository.TotalItem();
-            var concac = ((double)orderRepository.TotalItem() / size);
+            var total = orderRepository.TotalItem();
+            var totalPage = ((double)orderRepository.TotalItem() / size);
             result.TotalPages = (int)Math.Ceiling((double)orderRepository.TotalItem() / size);
             return result;
         }
@@ -410,7 +406,7 @@ namespace JewelryProduction.Service.CustomerImpl
         {
             var top5Customers = customerRepository.GetTop5CustomersWithMostOrders();
 
-            
+
             return top5Customers.Select(c => new Top5CustomerResponse
             {
                 Name = c.Name,
@@ -429,7 +425,7 @@ namespace JewelryProduction.Service.CustomerImpl
                 ProductTypeName = pt.Name,
                 TotalOrder = orderItems
                 .Where(oi => oi.Product.ProductTypeId == pt.Id)
-                .Sum(oi => (int) oi.Quantity)
+                .Sum(oi => (int)oi.Quantity)
             }).ToList();
 
             return result;
