@@ -7,6 +7,7 @@ namespace JewelryProduction.DAO
     {
         public WarrantyDAO() { }
 
+        //Get warranties list
         public List<Warranty> GetWarranties(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
@@ -20,6 +21,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //Get warranty by id
         public Warranty? GetWarrantyById(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -28,6 +30,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        // create warranty
         public Warranty? Create(Warranty? warranty)
         {
             using (var context = new JewelryProductionContext())
@@ -40,6 +43,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //change status warranty
         public bool ChangeStatus(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -57,6 +61,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        // update warranty
         public bool Update(Guid id, Warranty warranty)
         {
             using (var context = new JewelryProductionContext())
@@ -79,6 +84,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //count total counter
         public int TotalCounter()
         {
             using (var context = new JewelryProductionContext())
@@ -87,6 +93,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //Delete warranty
         public bool Delete(Guid id)
         {
             using (var context = new JewelryProductionContext())
