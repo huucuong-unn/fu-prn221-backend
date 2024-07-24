@@ -101,6 +101,7 @@
         public static class Stone
         {
             public const string GET_STONE = "api/v1/stone";
+            public const string GET_STONE_WITHOUT_PAGING = "api/v1/stone/without-paging";
             public const string GET_STONE_BY_ID = "api/v1/stone/";
             public const string CREATE_STONE = "api/v1/stone/create";
             public const string UPDATE_STONE = "api/v1/stone/update/";
@@ -114,6 +115,7 @@
             public const string GET_PRODUCT_BY_ID = "api/v1/product/";
             public const string CREATE_PRODUCT = "api/v1/product/create";
             public const string UPDATE_PRODUCT = "api/v1/product/update/";
+            public const string UPDATE_PRODUCT_PRICE = "api/v1/product/update-price";
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
             public const string GET_PRODUCTS_ACTIVE = "api/v1/product/product-active";

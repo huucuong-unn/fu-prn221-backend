@@ -104,6 +104,8 @@ namespace JewelryProduction.DAO
             {
                 product.Id = Guid.NewGuid();
                 product.Status = "AVAILABLE";
+                product.CreateDate = DateTime.Now;
+                product.UpdateDate = DateTime.Now;
                 context.Products.Add(product);
                 context.SaveChanges();
                 return product;

@@ -23,6 +23,17 @@ namespace JewelryProduction.DAO
             }
         }
 
+        public List<Stone> GetStonesWithoutPaging()
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                return context.Stones
+                    .Where(s => s.Status == "ACTIVE")
+                    .OrderByDescending(s => s.CreateDate)
+                    .ToList();
+            }
+        }
+
         public Stone GetStoneById(Guid id)
         {
             using (var context = new JewelryProductionContext())

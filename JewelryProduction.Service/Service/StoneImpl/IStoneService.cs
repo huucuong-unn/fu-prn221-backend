@@ -16,6 +16,8 @@ namespace JewelryProduction.Service.Service.Stone
 
         PagingModel<GetStoneResponse> GetAll(FilterModel filterModel);
 
+        List<GetStoneResponse> GetStonesWithoutPaging();
+
         int TotalStone();
 
         bool Update(Guid id, GetStoneRequest updateStoneRequest);

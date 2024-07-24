@@ -7,6 +7,8 @@ namespace JewelryProduction.Repository.StoneRepository
     {
         List<Stone> GetStones(FilterModel filterModel);
 
+        List<Stone> GetStonesWithoutPaging();
+
         Stone GetStoneById(Guid id);
 
         Stone Create(Stone stone);
