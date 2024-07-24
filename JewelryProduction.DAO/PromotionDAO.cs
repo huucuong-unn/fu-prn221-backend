@@ -70,11 +70,12 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 promotion.Id = Guid.NewGuid();
-                promotion.Status = "ACTIVE";
+
                 promotion.CreateDate = DateTime.Now;
+                promotion.Status = (FindByStatusTrue() == null && promotion.StartDate <= DateOnly.FromDateTime(DateTime.Now)) ? "ACTIVE" : "INACTIVE";
                 promotion.UpdateDate = DateTime.Now;
                 promotion.UpdateBy = promotion.UpdateBy;
-                promotion.CreateBy = "hello";
+                promotion.CreateBy = "admin";
                 context.Promotions.Add(promotion);
                 context.SaveChanges();
                 return promotion;
@@ -88,9 +89,14 @@ namespace JewelryProduction.DAO
                 var result = false;
                 var promotion = context.Promotions.FirstOrDefault(c => c.Id == id);
                 var promotionActive = FindByStatusTrue();
+
                 if (promotion == null)
                 {
-                    result = false;
+                    return false;
+                }
+                if (promotion.StartDate > DateOnly.FromDateTime(DateTime.Now) || promotion.EndDate < DateOnly.FromDateTime(DateTime.Now))
+                {
+                    return false;
                 }
                 if (promotionActive == null)
                 {
