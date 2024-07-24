@@ -11,7 +11,7 @@ namespace JewelryProduction.Repository.UserCounterRepository
 
         UserCounter GetUserCounterById(Guid staffId, Guid counterId);
         
-        UserCounter GetUserCounterByCounterId( Guid counterId);
+        List<UserCounter> GetUserCounterByCounterId( Guid counterId);
 
         UserCounter Create(UserCounter userCounter);
 

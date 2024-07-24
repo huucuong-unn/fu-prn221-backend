@@ -18,7 +18,7 @@ namespace JewelryProduction.Repository.UserCounterRepository
             }
         }
 
-        public UserCounter GetUserCounterByCounterId(Guid counterId)
+        public List<UserCounter> GetUserCounterByCounterId(Guid counterId)
         {
             return userCounterDAO.GetUserCounterByCounterId(counterId);
         }

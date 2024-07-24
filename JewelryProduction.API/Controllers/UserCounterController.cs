@@ -35,7 +35,7 @@ namespace JewelryProduction.API.Controllers
         }
         
         [HttpGet(ApiEndPointConstant.UserCounter.GET_USER_COUNTER_BY_COUNTER_ID + "{counterId}")]
-        public GetUserCounterResponse GetByCounterId( Guid counterId)
+        public List<GetUserCounterResponse> GetByCounterId( Guid counterId)
         {
             return _userCounterService.GetByCounterId( counterId);
         }

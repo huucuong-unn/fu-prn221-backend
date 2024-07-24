@@ -30,11 +30,11 @@ namespace JewelryProduction.DAO
                 return context.UserCounters.FirstOrDefault(uc => uc.StaffId == staffId && uc.CounterId == counterId);
             }
         }
-        public UserCounter? GetUserCounterByCounterId( Guid counterId)
+        public List<UserCounter?> GetUserCounterByCounterId( Guid counterId)
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.UserCounters.FirstOrDefault(uc =>  uc.CounterId == counterId);
+                return context.UserCounters.Where(uc =>  uc.CounterId == counterId).ToList();
             }
         }
 

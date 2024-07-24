@@ -13,7 +13,7 @@ namespace JewelryProduction.Service.Service.UserCounter
         bool ChangeStatus(Guid staffId, Guid counterId);
         GetUserCounterResponse GetById(Guid staffId, Guid counterId);
         
-        GetUserCounterResponse GetByCounterId( Guid counterId);
+        List<GetUserCounterResponse> GetByCounterId( Guid counterId);
         PagingModel<GetUserCounterResponse> GetAll(FilterModel filterModel);
         int TotalUserCounter();
         bool Update(Guid staffId, Guid counterId, GetUserCounterRequest request);
