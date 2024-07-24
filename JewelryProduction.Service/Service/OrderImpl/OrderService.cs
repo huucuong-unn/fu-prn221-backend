@@ -135,7 +135,13 @@ namespace JewelryProduction.Service.CustomerImpl
 
                         var product = productRepository.GetProductByProductCode(productCode);
 
-                        bool check = warrantyRepository.Delete(product.Id);
+                        var warrantyCheck = warrantyRepository.GetWarrantyById(product.Id);
+                        if(warrantyCheck != null)
+                        {
+                            warrantyRepository.Delete(product.Id);
+                        }
+
+                        //bool check = warrantyRepository.Delete(product.Id);
                         warranty = warrantyRepository.Create(new Warranty()
                         {
                             WarrantyProductId = product.Id,
