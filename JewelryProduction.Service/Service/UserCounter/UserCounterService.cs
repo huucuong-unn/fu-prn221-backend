@@ -38,6 +38,17 @@ namespace JewelryProduction.Service.Service.UserCounter
             return UserCounterConverter.ToDto(userCounter);
         }
 
+        public  List<GetUserCounterResponse> GetByCounterId(Guid counterId)
+        {
+            List<BusinessObject.Models.UserCounter> userCounters = _userCounterRepository.GetUserCounterByCounterId(counterId);
+
+            List<GetUserCounterResponse> getCounterRequests = userCounters.Select(usercounter =>
+            {
+                return UserCounterConverter.ToDto(usercounter);
+            }).ToList();
+            return getCounterRequests;
+        }
+
         public PagingModel<GetUserCounterResponse> GetAll(FilterModel filterModel)
         {
             var pagingModel = new PagingModel<GetUserCounterResponse>();

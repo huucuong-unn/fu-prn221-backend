@@ -10,6 +10,8 @@ namespace JewelryProduction.Repository.UserCounterRepository
         List<UserCounter> GetUserCounters(FilterModel filterModel);
 
         UserCounter GetUserCounterById(Guid staffId, Guid counterId);
+        
+        List<UserCounter> GetUserCounterByCounterId( Guid counterId);
 
         UserCounter Create(UserCounter userCounter);
 

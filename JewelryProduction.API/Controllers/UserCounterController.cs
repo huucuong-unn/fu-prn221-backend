@@ -33,6 +33,12 @@ namespace JewelryProduction.API.Controllers
         {
             return _userCounterService.GetById(staffId, counterId);
         }
+        
+        [HttpGet(ApiEndPointConstant.UserCounter.GET_USER_COUNTER_BY_COUNTER_ID + "{counterId}")]
+        public List<GetUserCounterResponse> GetByCounterId( Guid counterId)
+        {
+            return _userCounterService.GetByCounterId( counterId);
+        }
 
         [HttpPost(ApiEndPointConstant.UserCounter.CREATE_USER_COUNTER)]
         public GetUserCounterResponse Create(GetUserCounterRequest request)
@@ -45,6 +51,8 @@ namespace JewelryProduction.API.Controllers
         {
             return _userCounterService.Update(staffId, counterId, request);
         }
+        
+        
 
         [HttpPut(ApiEndPointConstant.UserCounter.CHANGE_STATUS_USER_COUNTER + "{staffId}/{counterId}")]
         public bool ChangeStatus(Guid staffId, Guid counterId)
