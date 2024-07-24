@@ -1,9 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace JewelryProduction.DAO
 {
@@ -11,20 +8,20 @@ namespace JewelryProduction.DAO
     {
         public ProductDAO() { }
 
-       /* public List<Product> GetProducts(FilterModel filterModel)
-        {
-            using (var context = new JewelryProductionContext())
-            {
-                return context.Products                      
-                    .Where(p => p.Status == "ACTIVE")
-                    .OrderByDescending(p => p.CreateDate)
-                    .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
-                    .Take(filterModel.PageSize)
-                    .ToList();
-            }
-        }
-       */
-
+        /* public List<Product> GetProducts(FilterModel filterModel)
+         {
+             using (var context = new JewelryProductionContext())
+             {
+                 return context.Products                      
+                     .Where(p => p.Status == "ACTIVE")
+                     .OrderByDescending(p => p.CreateDate)
+                     .Skip((filterModel.PageIndex - 1) * filterModel.PageSize)
+                     .Take(filterModel.PageSize)
+                     .ToList();
+             }
+         }
+        */
+        // Get list product
         public List<Product> GetProducts(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
@@ -40,6 +37,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get list product for customer buy and store by type
         public List<Product> GetProductsForCustomerBuyAndStoreBuy()
         {
             using (var context = new JewelryProductionContext())
@@ -53,8 +51,8 @@ namespace JewelryProduction.DAO
                     .ToList();
             }
         }
-      
 
+        //get products by material id
         public List<Product> GetProductsByMaterialId(Guid materialId)
         {
             using (var context = new JewelryProductionContext())
@@ -66,6 +64,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get product type by id
         public ProductType GetProductTypeById(Guid productTypeId)
         {
             using (var context = new JewelryProductionContext())
@@ -76,6 +75,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get product stones
         public List<ProductStone> GetProductStones(Guid productId)
         {
             using (var context = new JewelryProductionContext())
@@ -86,6 +86,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        // get product by id
         public Product GetProductById(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -98,6 +99,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //create
         public Product Create(Product product)
         {
             using (var context = new JewelryProductionContext())
@@ -110,6 +112,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //change to status
         public bool ChangeStatus(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -127,6 +130,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //update 
         public bool Update(Guid id, Product updatedProduct)
         {
             using (var context = new JewelryProductionContext())
@@ -153,6 +157,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //update status
         public bool UpdateStatus(Guid id, string status)
         {
             using (var context = new JewelryProductionContext())
@@ -173,6 +178,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //count total item
         public int TotalItem()
         {
             using (var context = new JewelryProductionContext())
@@ -180,6 +186,8 @@ namespace JewelryProduction.DAO
                 return context.Products.Count();
             }
         }
+
+        //get product by product code
 
         public Product GetProductByProductCode(string productCode)
         {
@@ -194,6 +202,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get product active without paging
         public List<Product> GetProductsActiveWithoutPaging()
         {
             using (var context = new JewelryProductionContext())
@@ -208,7 +217,7 @@ namespace JewelryProduction.DAO
             }
         }
 
-
+        //search product by product type name
         public List<Product> SearchProductByProductTypeName(string product_type_name)
         {
             using (var context = new JewelryProductionContext())
@@ -216,12 +225,13 @@ namespace JewelryProduction.DAO
                 return context.Products
                     .Include(p => p.Material)
                     .Include(p => p.ProductType)
-                    .Include(p => p.Counter) 
+                    .Include(p => p.Counter)
                     .Where(p => p.ProductType.Name.Contains(product_type_name))
                     .ToList();
             }
         }
 
+        //search product by product code
         public List<Product> SearchProductByProductCode(string product_code)
         {
             using (var context = new JewelryProductionContext())
@@ -235,6 +245,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        // search product by material name
         public List<Product> SearchProductByMaterialName(string material_name)
         {
             using (var context = new JewelryProductionContext())
@@ -248,6 +259,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //search product by counter name
         public List<Product> SearchProductByCounterName(string counter_name)
         {
             using (var context = new JewelryProductionContext())
@@ -261,6 +273,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //search product by price
         public List<Product> SearchProductsByPrice(decimal priceFrom, decimal priceTo)
         {
             using (var context = new JewelryProductionContext())
@@ -274,6 +287,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //search sort product
         public List<Product> SearchSort(string counter_name, string product_code, string product_type, string material)
         {
             using (var context = new JewelryProductionContext())
@@ -308,6 +322,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //recal product
         public Product ReCalProduct(string productCode)
         {
             using (var context = new JewelryProductionContext())
@@ -335,6 +350,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //search product
         public List<Product> SearchProduct(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, string status, FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
