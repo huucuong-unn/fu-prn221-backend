@@ -63,5 +63,16 @@ namespace JewelryProduction.Service.Service.Stone
             BusinessObject.Models.Stone stone = StoneConverter.toEntityForUpdate(updateStoneRequest);
             return stoneRepository.Update(id, stone);
         }
+
+        public List<GetStoneResponse> GetStonesWithoutPaging()
+        {
+            List<BusinessObject.Models.Stone> stones = stoneRepository.GetStonesWithoutPaging();
+            List<GetStoneResponse> getStoneResponses = stones.Select(stone =>
+            {
+                return StoneConverter.toDto(stone);
+            }).ToList();
+
+            return getStoneResponses;
+        }
     }
 }

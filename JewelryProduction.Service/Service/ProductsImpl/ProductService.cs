@@ -2,24 +2,35 @@
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.BusinessObject.Paginate;
 using JewelryProduction.DAO;
+using JewelryProduction.Repository.MaterialRepository;
 using JewelryProduction.Repository.ProductsRepository;
+using JewelryProduction.Repository.ProductStoneRepository;
+using JewelryProduction.Repository.ProductTypeRepository;
 using JewelryProduction.Service.Converters;
 using JewelryProduction.Service.Request.Product;
 using JewelryProduction.Service.Response.Product;
 using JewelryProduction.Service.Response.ProductStone;
 using JewelryProduction.Service.Response.ProductType;
+using JewelryProduction.Service.Service.ProductStoneImpl;
+using static JewelryProduction.Service.Constant.ApiEndPointConstant;
 
 namespace JewelryProduction.Service.Service.ProductsImpl;
 
 public class ProductService : IProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IMaterialRepository _materialRepository;
+    private readonly IProductTypeRepository _productTypeRepository;
+    private readonly IProductStoneRepository _productStoneRepository;
 
     public ProductService()
     {
         if (_productRepository == null)
         {
             _productRepository = new ProductRepository();
+            _materialRepository = new MaterialRepository();
+            _productTypeRepository = new ProductTypeRepository();
+            _productStoneRepository = new ProductStoneRepository();
         }
     }
 
@@ -27,7 +38,25 @@ public class ProductService : IProductService
     {
         BusinessObject.Models.Product product = ProductConverter.toEntityForUpdate(createProductRequest);
         BusinessObject.Models.Product newProduct = _productRepository.Create(product);
-        return ProductConverter.toDto(newProduct);
+        BusinessObject.Models.Product productById = _productRepository.GetProductById(newProduct.Id);
+        foreach (var stoneId in createProductRequest.StoneIds)
+        {
+            _productStoneRepository.CreateForProduct(stoneId, productById.Id);
+        }
+        UpdatePriceForProduct((Guid)productById.MaterialId, productById.ProductTypeId, productById.Id);
+        return ProductConverter.toDto(productById);
+    }
+
+    private void UpdatePriceForProduct(Guid materialId, Guid productTypeId, Guid productId)
+    {
+        BusinessObject.Models.Material materialById = _materialRepository.GetById(materialId);
+        decimal buyingPrice = materialById.BuyingPrice;
+        BusinessObject.Models.ProductType productTypeById = _productTypeRepository.GetProductTypeById(productTypeId);
+        var stonePrices = _productStoneRepository.CalculateStonePriceByProductId(productId);
+        BusinessObject.Models.Product productById = _productRepository.GetProductById(productId);
+        productById.Price = (buyingPrice * (productById.Weight / 1000)) + productTypeById.Wages + stonePrices;
+
+        _productRepository.Update(productById.Id, productById);
     }
 
     public bool ChangeProductStatus(Guid id)
@@ -45,7 +74,7 @@ public class ProductService : IProductService
     {
         PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
         result.Page = filterModel.PageIndex;
-        List<Product> products = _productRepository.GetProducts(filterModel);
+        List<BusinessObject.Models.Product> products = _productRepository.GetProducts(filterModel);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -61,7 +90,7 @@ public class ProductService : IProductService
     {
         PagingModel<GetProductResponse> result = new PagingModel<GetProductResponse>();
         result.Page = filterModel.PageIndex;
-        List<Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, status, filterModel);
+        List<BusinessObject.Models.Product> products = _productRepository.SearchSort(productCode, productTypeId, materialId, counterId, status, filterModel);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -85,20 +114,20 @@ public class ProductService : IProductService
         return _productRepository.Update(id, product);
     }
 
-    public List<Product> GetProductsByMaterialId(Guid id)
+    public List<BusinessObject.Models.Product> GetProductsByMaterialId(Guid id)
     {
         return _productRepository.GetProductsByMaterialId(id);
     }
 
     public GetProductTypeResponse GetProductTypeById(Guid productTypeId)
     {
-        ProductType productType = _productRepository.GetProductTypeById(productTypeId);
+        BusinessObject.Models.ProductType productType = _productRepository.GetProductTypeById(productTypeId);
         return ProductTypeConverter.ToDto(productType);
     }
 
     public List<GetProductStoneResponse> GetProductStones(Guid productId)
     {
-        List<ProductStone> productStones = _productRepository.GetProductStones(productId);
+        List<BusinessObject.Models.ProductStone> productStones = _productRepository.GetProductStones(productId);
         List<GetProductStoneResponse> getProductStoneResponses = productStones.Select(product =>
         {
             return ProductStoneConverter.toDto(product);
@@ -119,7 +148,7 @@ public class ProductService : IProductService
 
     public List<GetProductResponse> SearchProductByProductTypeName(string product_type_name)
     {
-        List<Product> products = _productRepository.SearchProductByProductTypeName(product_type_name);
+        List<BusinessObject.Models.Product> products = _productRepository.SearchProductByProductTypeName(product_type_name);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -130,7 +159,7 @@ public class ProductService : IProductService
 
     public List<GetProductResponse> SearchProductByProductCode(string product_code)
     {
-        List<Product> products = _productRepository.SearchProductByProductCode(product_code);
+        List<BusinessObject.Models.Product> products = _productRepository.SearchProductByProductCode(product_code);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -141,7 +170,7 @@ public class ProductService : IProductService
 
     public List<GetProductResponse> SearchProductByMaterialName(string material_name)
     {
-        List<Product> products = _productRepository.SearchProductByMaterialName(material_name);
+        List<BusinessObject.Models.Product> products = _productRepository.SearchProductByMaterialName(material_name);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -154,7 +183,7 @@ public class ProductService : IProductService
     public List<GetProductResponse> SearchProductsByPrice(decimal priceFrom, decimal priceTo)
     {
 
-        List<Product> products = _productRepository.SearchProductsByPrice(priceFrom, priceTo);
+        List<BusinessObject.Models.Product> products = _productRepository.SearchProductsByPrice(priceFrom, priceTo);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -165,7 +194,7 @@ public class ProductService : IProductService
 
     public List<GetProductResponse> GetProductsForCustomerBuyAndStoreBuy()
     {
-        List<Product> products = _productRepository.GetProductsForCustomerBuyAndStoreBuy();
+        List<BusinessObject.Models.Product> products = _productRepository.GetProductsForCustomerBuyAndStoreBuy();
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);
@@ -176,12 +205,12 @@ public class ProductService : IProductService
 
     public GetProductResponse ReCalProduct(string productCode)
     {
-        Product product = _productRepository.ReCalProduct(productCode);          
+        BusinessObject.Models.Product product = _productRepository.ReCalProduct(productCode);          
         return ProductConverter.toDto(product);
     }
     public List<GetProductResponse> SearchProductByCounterName(string counter_name)
     {
-        List<Product> products = _productRepository.SearchProductByCounterName(counter_name);
+        List<BusinessObject.Models.Product> products = _productRepository.SearchProductByCounterName(counter_name);
         List<GetProductResponse> getProductResponses = products.Select(product =>
         {
             return ProductConverter.toDto(product);

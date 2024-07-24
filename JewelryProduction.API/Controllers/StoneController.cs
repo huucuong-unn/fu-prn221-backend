@@ -27,6 +27,12 @@ namespace JewelryProduction.API.Controllers
             return _stoneService.GetAll(filterModel);
         }
 
+        [HttpGet(ApiEndPointConstant.Stone.GET_STONE_WITHOUT_PAGING)]
+        public List<GetStoneResponse> GetAllWithoutPaging()
+        {
+            return _stoneService.GetStonesWithoutPaging();
+        }
+
         [HttpGet(ApiEndPointConstant.Stone.GET_STONE_BY_ID + "{id}")]
         public GetStoneResponse GetById(Guid id)
         {

@@ -49,6 +49,29 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
+                productStone.CreateDate = DateTime.Now;
+                productStone.UpdateDate = DateTime.Now;
+                productStone.CreateBy = "admin";
+                productStone.UpdateBy = "admin";
+                productStone.Status = "ACTIVE";
+                context.ProductStones.Add(productStone);
+                context.SaveChanges();
+                return productStone;
+            }
+        }
+
+        public ProductStone CreateForProduct(Guid stoneId, Guid productId)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                ProductStone productStone = new ProductStone();
+                productStone.ProductId = productId;
+                productStone.StoneId = stoneId;
+                productStone.CreateDate = DateTime.Now;
+                productStone.UpdateDate = DateTime.Now;
+                productStone.CreateBy = "admin";
+                productStone.UpdateBy = "admin";
+                productStone.Status = "ACTIVE";
                 context.ProductStones.Add(productStone);
                 context.SaveChanges();
                 return productStone;

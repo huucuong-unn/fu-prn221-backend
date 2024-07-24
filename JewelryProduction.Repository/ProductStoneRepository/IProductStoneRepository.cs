@@ -10,6 +10,7 @@ namespace JewelryProduction.Repository.ProductStoneRepository
         ProductStone GetById(Guid productId, Guid stoneId);
 
         ProductStone Create(ProductStone productStone);
+        ProductStone CreateForProduct(Guid stoneId, Guid productId);
 
         bool Update(ProductStone productStone);
 

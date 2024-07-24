@@ -48,5 +48,10 @@ namespace JewelryProduction.Repository.StoneRepository
         {
             return stoneDAO.TotalItem();
         }
+
+        public List<Stone> GetStonesWithoutPaging()
+        {
+            return stoneDAO.GetStonesWithoutPaging();
+        }
     }
 }
