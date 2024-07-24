@@ -38,6 +38,12 @@ namespace JewelryProduction.Service.Service.UserCounter
             return UserCounterConverter.ToDto(userCounter);
         }
 
+        public GetUserCounterResponse GetByCounterId(Guid counterId)
+        {
+            var userCounter = _userCounterRepository.GetUserCounterByCounterId( counterId);
+            return UserCounterConverter.ToDto(userCounter);
+        }
+
         public PagingModel<GetUserCounterResponse> GetAll(FilterModel filterModel)
         {
             var pagingModel = new PagingModel<GetUserCounterResponse>();
