@@ -23,6 +23,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //GET LIST WITHOUT PAGING
         public List<Counter> GetCountersWithoutPaging()
         {
             using (var context = new JewelryProductionContext())
@@ -31,6 +32,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //GET COUNTER BY ID
         public Counter? GetCounterById(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -39,6 +41,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //ADD NEW COUNTER
         public Counter? Create(Counter? counter)
         {
             using (var context = new JewelryProductionContext())
@@ -51,6 +54,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        // REMOVE COUNTER
         public bool ChangeStatus(Guid id)
         {
             using (var context = new JewelryProductionContext())
@@ -68,6 +72,8 @@ namespace JewelryProduction.DAO
             }
         }
 
+        
+        //EDIT COUNTER
         public bool Update(Guid id, Counter counter)
         {
             using (var context = new JewelryProductionContext())
@@ -92,6 +98,8 @@ namespace JewelryProduction.DAO
             }
         }
 
+        
+        //SUM COUNTER
         public int TotalCounter()
         {
             using (var context = new JewelryProductionContext())
