@@ -1,10 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.DAO
 {
@@ -12,7 +7,9 @@ namespace JewelryProduction.DAO
     {
         public CustomerDAO() { }
 
-        public List<Customer> GetCustomers(FilterModel filterModel) {
+        //Get customers
+        public List<Customer> GetCustomers(FilterModel filterModel)
+        {
             using (var context = new JewelryProductionContext())
             {
                 return context.Customers
@@ -24,6 +21,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get by id
         public Customer GetById(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -31,6 +29,7 @@ namespace JewelryProduction.DAO
             return customer;
         }
 
+        //create customer
         public Customer Create(Customer customer)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -41,6 +40,7 @@ namespace JewelryProduction.DAO
             return customer;
         }
 
+        //change status
         public bool ChangeStatus(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -54,7 +54,8 @@ namespace JewelryProduction.DAO
             if (customerById.Status.Equals("Active"))
             {
                 customerById.Status = "Inactive";
-            } else
+            }
+            else
             {
                 customerById.Status = "Active";
             }
@@ -64,6 +65,7 @@ namespace JewelryProduction.DAO
             return true;
         }
 
+        //Update customer
         public bool Update(Guid id, Customer customer)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -88,12 +90,14 @@ namespace JewelryProduction.DAO
             return true;
         }
 
+        //count total item
         public int TotalItem()
         {
             JewelryProductionContext context = new JewelryProductionContext();
             return context.Customers.Count();
         }
 
+        //get customer by phone
         public Customer GetByPhone(string phone)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -103,6 +107,7 @@ namespace JewelryProduction.DAO
 
         }
 
+        //get top 5 customer with most orders
         public List<Customer> GetTop5CustomersWithMostOrders()
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -113,7 +118,7 @@ namespace JewelryProduction.DAO
                 .Select(g => g.Key)
                 .ToList();
 
-            List<Customer> customers =  context.Customers
+            List<Customer> customers = context.Customers
             .Where(c => top5CustomerIds.Contains(c.Id))
             .ToList();
 
