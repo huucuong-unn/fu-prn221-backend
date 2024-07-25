@@ -8,12 +8,16 @@ using JewelryProduction.Service.Response.UserCounter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using JewelryProduction.Repository.CounterRepository;
+using JewelryProduction.Repository.UserRepository;
 
 namespace JewelryProduction.Service.Service.UserCounter
 {
     public class UserCounterService : IUserCounterService
     {
         private readonly IUserCounterRepository _userCounterRepository;
+        private readonly ICounterRepository _counterRepository;
+        private readonly IUserRepository _userRepository;
 
         public UserCounterService()
         {
@@ -22,7 +26,9 @@ namespace JewelryProduction.Service.Service.UserCounter
 
         public GetUserCounterResponse Create(GetUserCounterRequest request)
         {
+           
             var userCounter = UserCounterConverter.ToEntity(request);
+          
             var createdUserCounter = _userCounterRepository.Create(userCounter);
             return UserCounterConverter.ToDto(createdUserCounter);
         }
