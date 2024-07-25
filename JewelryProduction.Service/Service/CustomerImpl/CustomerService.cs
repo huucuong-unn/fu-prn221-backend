@@ -27,7 +27,7 @@ namespace JewelryProduction.Service.CustomerImpl
             }
         }
 
-        public GetCustomerResponse Create(CreateCustomerRequest createCustomerRequest)
+        public GetCustomerResponse Create(BaseCustomerRequest createCustomerRequest)
         {
             Customer customer = CustomerConverter.toEntityForCreate(createCustomerRequest);
 
@@ -68,7 +68,7 @@ namespace JewelryProduction.Service.CustomerImpl
             return customerRepository.TotalItem();
         }
 
-        public bool Update(Guid id, UpdateCustomerRequest updateCustomerRequest)
+        public bool Update(Guid id, BaseCustomerRequest updateCustomerRequest)
         {
             Customer customer = CustomerConverter.toEntityForUpdate(updateCustomerRequest);
             return customerRepository.Update(id, customer);

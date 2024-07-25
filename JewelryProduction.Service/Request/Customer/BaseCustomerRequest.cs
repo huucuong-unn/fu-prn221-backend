@@ -23,5 +23,8 @@ namespace JewelryProduction.Service.Request.Customer
         public DateTime UpdateDate { get; set; }
 
         public string UpdateBy { get; set; }
+
+        public string Status { get; set; }
+
     }
 }

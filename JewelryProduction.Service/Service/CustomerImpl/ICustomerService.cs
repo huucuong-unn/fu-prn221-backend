@@ -16,9 +16,9 @@ namespace JewelryProduction.Service.CustomerImpl
     public interface ICustomerService : IGenericSevice<GetCustomerResponse>
     {
 
-        public GetCustomerResponse Create(CreateCustomerRequest createCustomerRequest);
+        public GetCustomerResponse Create(BaseCustomerRequest createCustomerRequest);
 
-        public bool Update(Guid id, UpdateCustomerRequest updateCustomerRequest);
+        public bool Update(Guid id, BaseCustomerRequest updateCustomerRequest);
 
         public GetCustomerResponse GetByPhone(string phone);
     }

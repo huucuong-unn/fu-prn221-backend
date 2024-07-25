@@ -28,7 +28,7 @@ namespace JewelryProduction.Service.Converters
             return response;
         }
 
-        public static Customer toEntityForCreate(CreateCustomerRequest createCustomerRequest)
+        public static Customer toEntityForCreate(BaseCustomerRequest createCustomerRequest)
         {
             Customer customer = new Customer();
             customer.Name = createCustomerRequest.Name;
@@ -43,7 +43,7 @@ namespace JewelryProduction.Service.Converters
             return customer;
         }
 
-        public static Customer toEntityForUpdate(UpdateCustomerRequest updateCustomerRequest)
+        public static Customer toEntityForUpdate(BaseCustomerRequest updateCustomerRequest)
         {
             Customer customer = new Customer();
             customer.Name = updateCustomerRequest.Name;

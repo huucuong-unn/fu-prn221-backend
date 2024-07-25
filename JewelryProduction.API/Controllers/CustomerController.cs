@@ -34,13 +34,13 @@ namespace JewelryProduction.API.Controllers
         }
 
         [HttpPost(ApiEndPointConstant.Customer.CREATE_CUSTOMER)]
-        public GetCustomerResponse Create(CreateCustomerRequest createCustomerRequest)
+        public GetCustomerResponse Create(BaseCustomerRequest createCustomerRequest)
         {
             return customerService.Create(createCustomerRequest);
         }
 
         [HttpPut(ApiEndPointConstant.Customer.UPDATE_CUSTOMER + "{id}")]
-        public bool Update(Guid id, UpdateCustomerRequest updateCustomerRequest)
+        public bool Update(Guid id, BaseCustomerRequest updateCustomerRequest)
         {
             return customerService.Update(id, updateCustomerRequest);
         }
