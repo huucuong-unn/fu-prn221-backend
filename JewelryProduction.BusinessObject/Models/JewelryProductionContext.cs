@@ -33,7 +33,7 @@ public partial class JewelryProductionContext : DbContext
 
     public virtual DbSet<Promotion> Promotions { get; set; }
 
-    public virtual DbSet<Request> Requests { get; set; }
+    public virtual DbSet<RequestPromotion> RequestPromotions { get; set; }
 
     public virtual DbSet<Stone> Stones { get; set; }
 
@@ -414,20 +414,34 @@ public partial class JewelryProductionContext : DbContext
                 .HasColumnName("value");
         });
 
-        modelBuilder.Entity<Request>(entity =>
+        modelBuilder.Entity<RequestPromotion>(entity =>
         {
-            entity.ToTable("Request");
+            entity.HasKey(e => e.Id).HasName("PK_Request");
+
+            entity.ToTable("RequestPromotion");
 
             entity.Property(e => e.Id)
                 .ValueGeneratedNever()
                 .HasColumnName("id");
             entity.Property(e => e.CounterId).HasColumnName("counter_id");
+            entity.Property(e => e.CreateBy)
+                .IsUnicode(false)
+                .HasColumnName("createBy");
+            entity.Property(e => e.CreatedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("createdDate");
             entity.Property(e => e.CustomerId).HasColumnName("customer_id");
             entity.Property(e => e.StaffId).HasColumnName("staff_id");
             entity.Property(e => e.Status)
-                .HasMaxLength(10)
-                .IsFixedLength()
+                .HasMaxLength(50)
+                .IsUnicode(false)
                 .HasColumnName("status");
+            entity.Property(e => e.UpdateBy)
+                .IsUnicode(false)
+                .HasColumnName("updateBy");
+            entity.Property(e => e.UpdatedDate)
+                .HasColumnType("datetime")
+                .HasColumnName("updatedDate");
         });
 
         modelBuilder.Entity<Stone>(entity =>
