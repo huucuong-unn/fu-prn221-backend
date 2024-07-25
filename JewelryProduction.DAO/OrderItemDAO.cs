@@ -1,11 +1,6 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.DAO
 {
@@ -13,6 +8,7 @@ namespace JewelryProduction.DAO
     {
         public OrderItemDAO() { }
 
+        //get order items with filter
         public List<OrderItem> GetOrderItems(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
@@ -26,6 +22,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get all order items
         public List<OrderItem> GetAllOrderItems()
         {
             using (var context = new JewelryProductionContext())
@@ -37,6 +34,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get order item by id
         public OrderItem GetOrderItemById(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -44,6 +42,7 @@ namespace JewelryProduction.DAO
             return orderitem;
         }
 
+        //create orderItem
         public OrderItem Create(OrderItem orderitem)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -54,6 +53,7 @@ namespace JewelryProduction.DAO
             return orderitem;
         }
 
+        //change order item status
         public bool ChangeStatus(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -79,6 +79,7 @@ namespace JewelryProduction.DAO
             return true;
         }
 
+        //update order item
         public bool Update(Guid id, OrderItem orderitem)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -95,12 +96,14 @@ namespace JewelryProduction.DAO
             return true;
         }
 
+        //count total item
         public int TotalItem()
         {
             JewelryProductionContext context = new JewelryProductionContext();
             return context.OrderItems.Count();
         }
 
+        //get order items by orderId
         public List<OrderItem> GetOrderItemsByOrderId(Guid orderId)
         {
             JewelryProductionContext context = new JewelryProductionContext();
