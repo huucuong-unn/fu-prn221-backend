@@ -1,9 +1,4 @@
 ﻿using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.DAO
 {
@@ -11,6 +6,7 @@ namespace JewelryProduction.DAO
     {
         public MaterialDAO() { }
 
+        //Get material by name
         public Material GetByName(string name)
         {
             using (var context = new JewelryProductionContext())
@@ -20,6 +16,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get material without paging
         public List<Material> GetMaterialWithoutPaging()
         {
             using (var context = new JewelryProductionContext())
@@ -28,6 +25,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get material by id
         public Material GetById(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -35,6 +33,7 @@ namespace JewelryProduction.DAO
             return material;
         }
 
+        //update material by name
         public bool UpdateByName(string name, Material material)
         {
             JewelryProductionContext context = new JewelryProductionContext();

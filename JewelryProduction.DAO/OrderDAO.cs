@@ -1,11 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace JewelryProduction.DAO
 {
@@ -13,6 +7,7 @@ namespace JewelryProduction.DAO
     {
         public OrderDAO() { }
 
+        //Get all order
         public List<Order> GetOrders(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
@@ -25,6 +20,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //Get order by id
         public Order GetById(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -32,6 +28,7 @@ namespace JewelryProduction.DAO
             return order;
         }
 
+        //Create order
         public Order Create(Order order)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -40,9 +37,9 @@ namespace JewelryProduction.DAO
             context.Add(order);
             context.SaveChanges();
             return order;
-        }      
+        }
 
-        
+        //change status order
         public bool Delete(Guid id)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -60,6 +57,7 @@ namespace JewelryProduction.DAO
             return true;
         }
 
+        //update order
         public bool Update(Guid id, Order order)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -77,7 +75,7 @@ namespace JewelryProduction.DAO
             orderById.UpdatedDate = order.UpdatedDate;
             orderById.CreateBy = order.CreateBy;
             orderById.UpdateBy = order.UpdateBy;
-            orderById.Status = order.Status;    
+            orderById.Status = order.Status;
             orderById.CounterId = order.CounterId;
 
             context.Orders.Update(orderById);
@@ -85,12 +83,14 @@ namespace JewelryProduction.DAO
             return true;
         }
 
+        //count total order
         public int TotalItem()
         {
             JewelryProductionContext context = new JewelryProductionContext();
             return context.Orders.Count();
         }
 
+        //get total revenue
         public decimal GetTotalRevenue()
         {
             using (var context = new JewelryProductionContext())
@@ -101,6 +101,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get monthly revenue
         public Dictionary<string, decimal> GetMonthlyRevenue()
         {
             using (var context = new JewelryProductionContext())
@@ -127,6 +128,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get monthly order count
         public Dictionary<string, int> GetMonthlyOrderCount()
         {
             var monthlyOrderCount = new Dictionary<string, int>();
@@ -146,7 +148,7 @@ namespace JewelryProduction.DAO
                 // Duyệt qua từng tháng trong năm
                 for (int month = 1; month <= 12; month++)
                 {
-                    var monthName = monthNames[month - 1]; 
+                    var monthName = monthNames[month - 1];
 
                     var orderData = orders.FirstOrDefault(o => o.Month == month);
 
@@ -164,6 +166,7 @@ namespace JewelryProduction.DAO
             return monthlyOrderCount;
         }
 
+        //get order with parameter
         public List<Order> SearchOrders(int page, int size, string? orderCode, DateTime? startDate, DateTime? endDate)
         {
             JewelryProductionContext context = new JewelryProductionContext();
@@ -191,6 +194,7 @@ namespace JewelryProduction.DAO
                         .ToList();
         }
 
+        //get orders by customer id
         public List<Order> GetOrdersByCustomerId(Guid customerID)
         {
             JewelryProductionContext context = new JewelryProductionContext();
