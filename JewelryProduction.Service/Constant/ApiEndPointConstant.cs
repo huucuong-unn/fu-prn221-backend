@@ -12,7 +12,7 @@
             public const string GET_USER_BY_ID = "api/v1/user/";
             public const string CREATE_USER = "api/v1/user/create";
             public const string UPDATE_USER = "api/v1/user/update/";
-            public const string CHANGE_STATUS_USER = "api/v1/user/change-status";
+            public const string CHANGE_STATUS_USER = "api/v1/user/change-status/";
             public const string GET_STAFF = "api/v1/staff";
         }
 
