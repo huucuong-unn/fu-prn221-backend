@@ -8,6 +8,7 @@ namespace JewelryProduction.DAO
     {
         public ProductStoneDAO() { }
 
+        //get all product stone
         public List<ProductStone> GetAll(FilterModel filterModel)
         {
             using (var context = new JewelryProductionContext())
@@ -21,6 +22,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get product stone by id
         public ProductStone GetProductStoneById(Guid productId, Guid stoneId)
         {
             using (var context = new JewelryProductionContext())
@@ -29,6 +31,7 @@ namespace JewelryProduction.DAO
             }
         }
 
+        //get product stone by
         public List<ProductStone> GetProductStoneByProductId(Guid productId)
         {
             using (var context = new JewelryProductionContext())
