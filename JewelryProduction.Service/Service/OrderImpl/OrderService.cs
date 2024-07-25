@@ -136,7 +136,7 @@ namespace JewelryProduction.Service.CustomerImpl
                         var product = productRepository.GetProductByProductCode(productCode);
 
                         var warrantyCheck = warrantyRepository.GetWarrantyById(product.Id);
-                        if(warrantyCheck != null)
+                        if (warrantyCheck != null)
                         {
                             warrantyRepository.Delete(product.Id);
                         }
@@ -200,6 +200,9 @@ namespace JewelryProduction.Service.CustomerImpl
                 customerRepository.Update(updatedCustomer.Id, updatedCustomer);
 
                 var counterForUpdate = counterRepository.GetCounterById(counterId);
+                var user_counterForUpdate = userCounterRepository.GetUserCounterById(staff.Id, counterId);
+                user_counterForUpdate.Income += newOrder.TotalAmount;
+                userCounterRepository.Update(user_counterForUpdate.StaffId, user_counterForUpdate.CounterId, user_counterForUpdate);
                 counterForUpdate.Income = (decimal)(counterForUpdate.Income + newOrder.TotalAmount);
                 counterRepository.Update(counterForUpdate.Id, counterForUpdate);
             }

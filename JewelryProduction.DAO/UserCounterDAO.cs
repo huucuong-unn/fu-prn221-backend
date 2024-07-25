@@ -1,9 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Filter;
 using JewelryProduction.BusinessObject.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.Linq;
 
 namespace JewelryProduction.DAO
 {
@@ -30,11 +26,12 @@ namespace JewelryProduction.DAO
                 return context.UserCounters.FirstOrDefault(uc => uc.StaffId == staffId && uc.CounterId == counterId);
             }
         }
-        public List<UserCounter?> GetUserCounterByCounterId( Guid counterId)
+
+        public List<UserCounter?> GetUserCounterByCounterId(Guid counterId)
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.UserCounters.Where(uc =>  uc.CounterId == counterId).ToList();
+                return context.UserCounters.Where(uc => uc.CounterId == counterId).ToList();
             }
         }
 
@@ -44,8 +41,8 @@ namespace JewelryProduction.DAO
             {
                 var prevUserCounters = context.UserCounters.Where(uc => uc.StaffId == userCounter.StaffId).ToList();
                 foreach (var uc in prevUserCounters)
-                { 
-                    if(uc.CounterId == userCounter.CounterId)
+                {
+                    if (uc.CounterId == userCounter.CounterId)
                     {
                         uc.Status = "ACTIVE";
                         Update(uc.StaffId, uc.CounterId, uc);
@@ -114,6 +111,6 @@ namespace JewelryProduction.DAO
                 return counterUser.CounterId;
             }
         }
-        
+
     }
 }

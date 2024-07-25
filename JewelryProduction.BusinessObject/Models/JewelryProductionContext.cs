@@ -33,6 +33,8 @@ public partial class JewelryProductionContext : DbContext
 
     public virtual DbSet<Promotion> Promotions { get; set; }
 
+    public virtual DbSet<Request> Requests { get; set; }
+
     public virtual DbSet<Stone> Stones { get; set; }
 
     public virtual DbSet<User> Users { get; set; }
@@ -412,6 +414,22 @@ public partial class JewelryProductionContext : DbContext
                 .HasColumnName("value");
         });
 
+        modelBuilder.Entity<Request>(entity =>
+        {
+            entity.ToTable("Request");
+
+            entity.Property(e => e.Id)
+                .ValueGeneratedNever()
+                .HasColumnName("id");
+            entity.Property(e => e.CounterId).HasColumnName("counter_id");
+            entity.Property(e => e.CustomerId).HasColumnName("customer_id");
+            entity.Property(e => e.StaffId).HasColumnName("staff_id");
+            entity.Property(e => e.Status)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("status");
+        });
+
         modelBuilder.Entity<Stone>(entity =>
         {
             entity.HasKey(e => e.Id).HasName("PK__Stone__3213E83FF1AB838D");
@@ -508,6 +526,9 @@ public partial class JewelryProductionContext : DbContext
 
             entity.Property(e => e.StaffId).HasColumnName("staff_id");
             entity.Property(e => e.CounterId).HasColumnName("counter_id");
+            entity.Property(e => e.Income)
+                .HasColumnType("decimal(10, 2)")
+                .HasColumnName("income");
             entity.Property(e => e.Status)
                 .HasMaxLength(50)
                 .IsUnicode(false)

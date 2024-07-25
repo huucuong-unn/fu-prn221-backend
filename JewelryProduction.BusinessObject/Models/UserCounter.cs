@@ -9,6 +9,8 @@ public partial class UserCounter
 
     public Guid CounterId { get; set; }
 
+    public decimal? Income { get; set; }
+
     public string? Status { get; set; }
 
     public virtual Counter Counter { get; set; } = null!;
