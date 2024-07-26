@@ -26,4 +26,6 @@ public partial class Customer
     public string? UpdateBy { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
+
+    public virtual ICollection<RequestPromotion> RequestPromotions { get; set; } = new List<RequestPromotion>();
 }

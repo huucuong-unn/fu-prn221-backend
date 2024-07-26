@@ -27,5 +27,7 @@ public partial class User
 
     public string? Status { get; set; }
 
+    public virtual ICollection<RequestPromotion> RequestPromotions { get; set; } = new List<RequestPromotion>();
+
     public virtual ICollection<UserCounter> UserCounters { get; set; } = new List<UserCounter>();
 }

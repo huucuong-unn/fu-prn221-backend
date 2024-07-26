@@ -442,6 +442,18 @@ public partial class JewelryProductionContext : DbContext
             entity.Property(e => e.UpdatedDate)
                 .HasColumnType("datetime")
                 .HasColumnName("updatedDate");
+
+            entity.HasOne(d => d.Counter).WithMany(p => p.RequestPromotions)
+                .HasForeignKey(d => d.CounterId)
+                .HasConstraintName("FK_RequestPromotion_Counter");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.RequestPromotions)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK_RequestPromotion_Customer");
+
+            entity.HasOne(d => d.Staff).WithMany(p => p.RequestPromotions)
+                .HasForeignKey(d => d.StaffId)
+                .HasConstraintName("FK_RequestPromotion_User");
         });
 
         modelBuilder.Entity<Stone>(entity =>
