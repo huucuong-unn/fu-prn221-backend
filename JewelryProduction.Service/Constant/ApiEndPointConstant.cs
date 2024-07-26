@@ -78,6 +78,8 @@
             public const string CREATE_USER_COUNTER = "api/v1/user-counter/create";
             public const string UPDATE_USER_COUNTER = "api/v1/user-counter/update/";
             public const string CHANGE_STATUS_USER_COUNTER = "api/v1/user-counter/change-status/";
+            public const string GET_USER_COUNTER_BY_STAFF_ID = "api/v1/user-counter/staff/";
+
         }
 
         public static class Warranty

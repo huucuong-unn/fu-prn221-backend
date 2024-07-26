@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using JewelryProduction.Repository.CounterRepository;
 using JewelryProduction.Repository.UserRepository;
+using static JewelryProduction.Service.Constant.ApiEndPointConstant;
 
 namespace JewelryProduction.Service.Service.UserCounter
 {
@@ -84,5 +85,17 @@ namespace JewelryProduction.Service.Service.UserCounter
             UserCounterConverter.UpdateEntity(request, existingUserCounter);
             return _userCounterRepository.Update(staffId, counterId, existingUserCounter);
         }
+
+         public GetUserCounterResponse GetByStaffId(Guid staffId)
+        {
+            var counterId = _userCounterRepository.GetCounterIdByStaffId(staffId);
+            if (counterId == Guid.Empty)
+            {
+                return null;
+            }
+            var userCounter = _userCounterRepository.GetUserCounterById(staffId, counterId);
+            return UserCounterConverter.ToDto(userCounter);
+        }
+
     }
 }

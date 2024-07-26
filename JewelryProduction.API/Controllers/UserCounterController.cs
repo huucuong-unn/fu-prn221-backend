@@ -59,5 +59,11 @@ namespace JewelryProduction.API.Controllers
         {
             return _userCounterService.ChangeStatus(staffId, counterId);
         }
+
+        [HttpGet(ApiEndPointConstant.UserCounter.GET_USER_COUNTER_BY_STAFF_ID + "{staffId}")]
+        public GetUserCounterResponse GetByStaffId(Guid staffId)
+        {
+            return _userCounterService.GetByStaffId(staffId);
+        }
     }
 }

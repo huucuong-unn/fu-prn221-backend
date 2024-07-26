@@ -17,5 +17,8 @@ namespace JewelryProduction.Service.Service.UserCounter
         PagingModel<GetUserCounterResponse> GetAll(FilterModel filterModel);
         int TotalUserCounter();
         bool Update(Guid staffId, Guid counterId, GetUserCounterRequest request);
+
+        GetUserCounterResponse GetByStaffId(Guid staffId);
+
     }
 }
