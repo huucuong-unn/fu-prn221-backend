@@ -1,4 +1,4 @@
-﻿using JewelryProduction.BusinessObject.Models;
+﻿using JewelryProduction.Service.Request.RequestPromotion;
 using JewelryProduction.Service.Response.RequestPromotion;
 
 namespace JewelryProduction.Service.Service.RequestPromotionImpl
@@ -7,7 +7,7 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
     {
         public List<GetRequestPromotionResponse> GetRequestPromotions();
         public GetRequestPromotionResponse? GetRequestPromotionById(Guid id);
-        public GetRequestPromotionResponse? Create(RequestPromotion? request);
+        public GetRequestPromotionResponse? Create(RequestPromotionRequest? request);
         public void ChangeStatus(Guid id, string status);
     }
 }

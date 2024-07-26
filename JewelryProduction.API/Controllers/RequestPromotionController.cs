@@ -1,5 +1,5 @@
-﻿using JewelryProduction.BusinessObject.Models;
-using JewelryProduction.Service.Constant;
+﻿using JewelryProduction.Service.Constant;
+using JewelryProduction.Service.Request.RequestPromotion;
 using JewelryProduction.Service.Response.RequestPromotion;
 using JewelryProduction.Service.Service.RequestPromotionImpl;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +28,9 @@ namespace JewelryProduction.API.Controllers
         }
 
         [HttpPost(ApiEndPointConstant.RequestPromotion.CREATE_REQUEST)]
-        public GetRequestPromotionResponse Create(RequestPromotion createRequestPromotionRequest)
+        public GetRequestPromotionResponse Create(RequestPromotionRequest createRequestPromotionRequest)
         {
+
             return _requestService.Create(createRequestPromotionRequest);
         }
 

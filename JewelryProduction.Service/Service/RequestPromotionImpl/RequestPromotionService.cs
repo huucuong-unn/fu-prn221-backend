@@ -1,5 +1,7 @@
-﻿using JewelryProduction.Repository.RequestPromotionRepository;
+﻿using JewelryProduction.BusinessObject.Models;
+using JewelryProduction.Repository.RequestPromotionRepository;
 using JewelryProduction.Repository.RequestRepository;
+using JewelryProduction.Service.Request.RequestPromotion;
 using JewelryProduction.Service.Response.RequestPromotion;
 
 namespace JewelryProduction.Service.Service.RequestPromotionImpl
@@ -20,13 +22,21 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
             requestPromotionRepository.ChangeStatus(id, status);
         }
 
-        public GetRequestPromotionResponse? Create(BusinessObject.Models.RequestPromotion? request)
+        public GetRequestPromotionResponse? Create(RequestPromotionRequest? request)
         {
-            BusinessObject.Models.RequestPromotion requestPromotion = requestPromotionRepository?.Create(request);
+            RequestPromotion requestPromotionRequest = new RequestPromotion();
+            requestPromotionRequest.CounterId = request.CounterId;
+            requestPromotionRequest.StaffId = request.StaffId;
+            requestPromotionRequest.Status = request.Status;
+            requestPromotionRequest.UpdatedDate = requestPromotionRequest.UpdatedDate;
+            requestPromotionRequest.CreatedDate = requestPromotionRequest.CreatedDate;
+            requestPromotionRequest.CreateBy = requestPromotionRequest.CreateBy;
+            requestPromotionRequest.UpdateBy = requestPromotionRequest.UpdateBy;
+            BusinessObject.Models.RequestPromotion requestPromotion = requestPromotionRepository?.Create(requestPromotionRequest);
             GetRequestPromotionResponse getRequestPromotionResponse = new GetRequestPromotionResponse();
             getRequestPromotionResponse.Id = requestPromotion.Id;
-            getRequestPromotionResponse.CounterName = requestPromotion.Counter.Name;
-            getRequestPromotionResponse.StaffName = requestPromotion.Staff.Name;
+
+
             return getRequestPromotionResponse;
         }
 

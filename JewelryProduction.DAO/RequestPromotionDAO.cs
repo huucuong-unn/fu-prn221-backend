@@ -27,10 +27,6 @@ namespace JewelryProduction.DAO
             using (var context = new JewelryProductionContext())
             {
                 request.Id = Guid.NewGuid();
-
-                request.CreatedDate = DateTime.Now;
-                request.UpdatedDate = DateTime.Now;
-                request.Status = "PENDING";
                 context.RequestPromotions.Add(request);
                 context.SaveChanges();
                 return request;
