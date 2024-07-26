@@ -1,4 +1,5 @@
 ﻿using JewelryProduction.BusinessObject.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace JewelryProduction.DAO
 {
@@ -9,7 +10,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                var query = context.RequestPromotions.OrderByDescending(r => r.CreatedDate).AsQueryable();
+                var query = context.RequestPromotions.Include(x => x.Counter).Include(x => x.Staff).Include(x => x.Customer).OrderByDescending(r => r.CreatedDate).AsQueryable();
                 return query.ToList();
             }
         }
@@ -18,7 +19,7 @@ namespace JewelryProduction.DAO
         {
             using (var context = new JewelryProductionContext())
             {
-                return context.RequestPromotions.FirstOrDefault(c => c.Id == id);
+                return context.RequestPromotions.Include(x => x.Counter).Include(x => x.Staff).Include(x => x.Customer).FirstOrDefault(c => c.Id == id);
             }
         }
 

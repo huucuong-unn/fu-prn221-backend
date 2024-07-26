@@ -39,6 +39,7 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
                 getRequestPromotionResponse.Id = requestPromotion.Id;
                 getRequestPromotionResponse.CounterName = requestPromotion.Counter.Name;
                 getRequestPromotionResponse.StaffName = requestPromotion.Staff.Name;
+                getRequestPromotionResponse.CustomerName = requestPromotion.Customer.Name;
                 getRequestPromotionResponse.UpdateBy = requestPromotion.UpdateBy;
                 getRequestPromotionResponse.CreateBy = requestPromotion.CreateBy;
                 getRequestPromotionResponse.Status = requestPromotion.Status;
@@ -63,6 +64,7 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
 
                 getRequestPromotionResponse.Id = item.Id;
                 getRequestPromotionResponse.CounterName = item.Counter.Name;
+                getRequestPromotionResponse.CustomerName = item.Customer.Name;
                 getRequestPromotionResponse.StaffName = item.Staff.Name;
                 getRequestPromotionResponse.UpdateBy = item.UpdateBy;
                 getRequestPromotionResponse.CreateBy = item.CreateBy;
