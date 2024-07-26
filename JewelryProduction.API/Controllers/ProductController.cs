@@ -65,6 +65,19 @@ namespace JewelryProduction.API.Controllers
             return NoContent();
         }
 
+        [HttpPut(ApiEndPointConstant.Product.UPDATE_PRODUCT_STATUS + "{id}")]
+        public IActionResult UpdateProductStatus(Guid id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            bool result = _productService.ChangeStatusDynamic(id);
+            if (!result)
+                return NotFound();
+
+            return NoContent();
+        }
+
         [HttpDelete(ApiEndPointConstant.Product.CHANGE_STATUS_PRODUCT + "{id}")]
         public IActionResult ChangeProductStatus(Guid id)
         {

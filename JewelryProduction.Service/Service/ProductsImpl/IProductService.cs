@@ -30,4 +30,5 @@ public interface IProductService
     PagingModel<GetProductResponse> SearchSort(string? productCode, Guid? productTypeId, Guid? materialId, Guid? counterId, string status, FilterModel filterModel);
     List<GetProductResponse> GetProductsForCustomerBuyAndStoreBuy();
     GetProductResponse ReCalProduct(string productCode);
+    bool ChangeStatusDynamic(Guid id);
 }
