@@ -4,9 +4,9 @@ namespace JewelryProduction.Repository.RequestRepository
 {
     public interface IRequestPromotionRepository
     {
-        public List<RequestPromotion> GetRequests();
+        public List<RequestPromotion> GetRequestPromotions();
 
-        public RequestPromotion? GetRequestById(Guid id);
+        public RequestPromotion? GetRequestPromotionById(Guid id);
 
         public RequestPromotion? Create(RequestPromotion? request);
 

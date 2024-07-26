@@ -22,4 +22,10 @@ public partial class RequestPromotion
     public string? CreateBy { get; set; }
 
     public string? UpdateBy { get; set; }
+
+    public virtual Counter? Counter { get; set; }
+
+    public virtual Customer? Customer { get; set; }
+
+    public virtual User? Staff { get; set; }
 }

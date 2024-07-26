@@ -27,12 +27,12 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
 
         public RequestPromotion? GetRequestPromotionById(Guid id)
         {
-            return requestPromotionRepository.GetRequestById(id);
+            return requestPromotionRepository.GetRequestPromotionById(id);
         }
 
         public List<RequestPromotion> GetRequestPromotions()
         {
-            return requestPromotionRepository.GetRequests();
+            return requestPromotionRepository.GetRequestPromotions();
         }
     }
 }

@@ -23,5 +23,7 @@ public partial class Counter
 
     public virtual ICollection<Product> Products { get; set; } = new List<Product>();
 
+    public virtual ICollection<RequestPromotion> RequestPromotions { get; set; } = new List<RequestPromotion>();
+
     public virtual ICollection<UserCounter> UserCounters { get; set; } = new List<UserCounter>();
 }
