@@ -24,7 +24,7 @@ namespace JewelryProduction.Repository.UserCounterRepository
         }
 
         public UserCounter Create(UserCounter userCounter)
-        {
+        { 
             return userCounterDAO.Create(userCounter);
         }
 
