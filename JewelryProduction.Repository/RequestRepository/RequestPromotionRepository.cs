@@ -8,6 +8,15 @@ namespace JewelryProduction.Repository.RequestPromotionRepository
     {
         private readonly RequestPromotionDAO requestDAO;
 
+
+        public RequestPromotionRepository()
+        {
+            if (requestDAO == null)
+            {
+                requestDAO = new RequestPromotionDAO();
+            }
+        }
+
         public void ChangeStatus(Guid id, string status)
         {
             requestDAO.ChangeStatus(id, status);

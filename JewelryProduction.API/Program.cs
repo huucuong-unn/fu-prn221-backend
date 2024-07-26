@@ -1,18 +1,19 @@
 using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.Service.CustomerImpl;
 using JewelryProduction.Service.Service.Account;
+using JewelryProduction.Service.Service.Authentication;
 using JewelryProduction.Service.Service.Counter;
+using JewelryProduction.Service.Service.MaterialImpl;
 using JewelryProduction.Service.Service.ProductsImpl;
+using JewelryProduction.Service.Service.ProductStoneImpl;
 using JewelryProduction.Service.Service.ProductTypeImpl;
 using JewelryProduction.Service.Service.PromotionImpl;
+using JewelryProduction.Service.Service.RequestPromotionImpl;
 using JewelryProduction.Service.Service.Stone;
 using JewelryProduction.Service.Service.UserCounter;
 using JewelryProduction.Service.Service.WarrantyImpl;
-using Microsoft.EntityFrameworkCore;
-using JewelryProduction.Service.Service.ProductStoneImpl;
-using JewelryProduction.Service.Service.Authentication;
 using JewelryProduction.WorkerServices;
-using JewelryProduction.Service.Service.MaterialImpl;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 /*#region Authentication
@@ -98,6 +99,7 @@ builder.Services.AddSwaggerGen(c =>
 // Sua database iu dau
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IMaterialService, MaterialService>();
+builder.Services.AddScoped<IRequestPromotionService, RequestPromotionService>();
 
 builder.Services.AddHostedService<Worker>();
 
@@ -115,7 +117,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseCors(options => options
-.WithOrigins(new[] {"https://jewellry.vercel.app", "http://localhost:3001"})
+.WithOrigins(new[] { "https://jewellry.vercel.app", "http://localhost:3001" })
 .AllowCredentials()
 .AllowAnyHeader()
 .AllowAnyMethod()

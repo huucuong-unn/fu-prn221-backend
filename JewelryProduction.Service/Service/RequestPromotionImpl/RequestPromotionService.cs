@@ -4,11 +4,11 @@ using JewelryProduction.Service.Response.RequestPromotion;
 
 namespace JewelryProduction.Service.Service.RequestPromotionImpl
 {
-    public class RequestPromotionImpl : IRequestPromotionImpl
+    public class RequestPromotionService : IRequestPromotionService
     {
         private readonly IRequestPromotionRepository requestPromotionRepository;
 
-        public RequestPromotionImpl()
+        public RequestPromotionService()
         {
             if (requestPromotionRepository == null)
             {
@@ -34,15 +34,21 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
         {
             BusinessObject.Models.RequestPromotion requestPromotion = requestPromotionRepository.GetRequestPromotionById(id);
             GetRequestPromotionResponse getRequestPromotionResponse = new GetRequestPromotionResponse();
-
-            getRequestPromotionResponse.Id = requestPromotion.Id;
-            getRequestPromotionResponse.CounterName = requestPromotion.Counter.Name;
-            getRequestPromotionResponse.StaffName = requestPromotion.Staff.Name;
-            getRequestPromotionResponse.UpdateBy = requestPromotion.UpdateBy;
-            getRequestPromotionResponse.CreateBy = requestPromotion.CreateBy;
-            getRequestPromotionResponse.Status = requestPromotion.Status;
-            getRequestPromotionResponse.CreatedDate = requestPromotion.CreatedDate;
-            getRequestPromotionResponse.UpdatedDate = requestPromotion.UpdatedDate;
+            if (requestPromotion != null)
+            {
+                getRequestPromotionResponse.Id = requestPromotion.Id;
+                getRequestPromotionResponse.CounterName = requestPromotion.Counter.Name;
+                getRequestPromotionResponse.StaffName = requestPromotion.Staff.Name;
+                getRequestPromotionResponse.UpdateBy = requestPromotion.UpdateBy;
+                getRequestPromotionResponse.CreateBy = requestPromotion.CreateBy;
+                getRequestPromotionResponse.Status = requestPromotion.Status;
+                getRequestPromotionResponse.CreatedDate = requestPromotion.CreatedDate;
+                getRequestPromotionResponse.UpdatedDate = requestPromotion.UpdatedDate;
+            }
+            else
+            {
+                return null;
+            }
 
             return getRequestPromotionResponse;
         }

@@ -3,7 +3,7 @@ using JewelryProduction.Service.Response.RequestPromotion;
 
 namespace JewelryProduction.Service.Service.RequestPromotionImpl
 {
-    public interface IRequestPromotionImpl
+    public interface IRequestPromotionService
     {
         public List<GetRequestPromotionResponse> GetRequestPromotions();
         public GetRequestPromotionResponse? GetRequestPromotionById(Guid id);

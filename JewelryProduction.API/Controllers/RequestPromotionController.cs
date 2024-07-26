@@ -1,41 +1,40 @@
 ﻿using JewelryProduction.BusinessObject.Models;
 using JewelryProduction.Service.Constant;
+using JewelryProduction.Service.Response.RequestPromotion;
 using JewelryProduction.Service.Service.RequestPromotionImpl;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JewelryProduction.API.Controllers
 {
-
-    [ApiController]
     public class RequestPromotionController : ControllerBase
     {
-        private readonly IRequestPromotionImpl _requestService;
+        private readonly IRequestPromotionService _requestService;
 
-        public RequestPromotionController(IRequestPromotionImpl counterService)
+        public RequestPromotionController(IRequestPromotionService requestService)
         {
-            _requestService = counterService;
+            _requestService = requestService;
         }
 
         [HttpGet(ApiEndPointConstant.RequestPromotion.GET_REQUEST_PROMOTIONS)]
-        public List<RequestPromotion> GetAll(int page, int size)
+        public List<GetRequestPromotionResponse> GetAll()
         {
             return _requestService.GetRequestPromotions();
         }
 
-        [HttpGet(ApiEndPointConstant.RequestPromotion.GET_REQUEST_PROMOTION + "{id}")]
-        public RequestPromotion GetById(Guid id)
+        [HttpGet(ApiEndPointConstant.RequestPromotion.GET_REQUEST_PROMOTION + "/{id}")]
+        public GetRequestPromotionResponse GetById(Guid id)
         {
             return _requestService.GetRequestPromotionById(id);
         }
 
         [HttpPost(ApiEndPointConstant.RequestPromotion.CREATE_REQUEST)]
-        public RequestPromotion Create(RequestPromotion createRequestPromotionRequest)
+        public GetRequestPromotionResponse Create(RequestPromotion createRequestPromotionRequest)
         {
             return _requestService.Create(createRequestPromotionRequest);
         }
 
-        [HttpDelete(ApiEndPointConstant.RequestPromotion.CHANGE_STATUS_REQUEST_PROMOTION + "{id}")]
-        public void ChangeStatus(Guid id, string status)
+        [HttpDelete(ApiEndPointConstant.RequestPromotion.CHANGE_STATUS_REQUEST_PROMOTION)]
+        public void ChangeStatus([FromQuery] Guid id, [FromQuery] string status)
         {
             _requestService.ChangeStatus(id, status);
         }

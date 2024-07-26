@@ -157,7 +157,7 @@
             public const string GET_REQUEST_PROMOTION = "api/v1/request-promotion";
             public const string GET_REQUEST_PROMOTIONS = "api/v1/request-promotions";
             public const string CREATE_REQUEST = "api/v1/request-promotion/create";
-            public const string CHANGE_STATUS_REQUEST_PROMOTION = "api/v1/request-promotion/change-status/";
+            public const string CHANGE_STATUS_REQUEST_PROMOTION = "api/v1/request-promotion/change-status";
         }
     }
 }
