@@ -26,12 +26,13 @@ namespace JewelryProduction.Service.Service.RequestPromotionImpl
         {
             RequestPromotion requestPromotionRequest = new RequestPromotion();
             requestPromotionRequest.CounterId = request.CounterId;
+            requestPromotionRequest.CustomerId = request.CustomerId;
             requestPromotionRequest.StaffId = request.StaffId;
             requestPromotionRequest.Status = request.Status;
-            requestPromotionRequest.UpdatedDate = requestPromotionRequest.UpdatedDate;
-            requestPromotionRequest.CreatedDate = requestPromotionRequest.CreatedDate;
-            requestPromotionRequest.CreateBy = requestPromotionRequest.CreateBy;
-            requestPromotionRequest.UpdateBy = requestPromotionRequest.UpdateBy;
+            requestPromotionRequest.UpdatedDate = request.UpdatedDate;
+            requestPromotionRequest.CreatedDate = request.CreatedDate;
+            requestPromotionRequest.CreateBy = request.CreateBy;
+            requestPromotionRequest.UpdateBy = request.UpdateBy;
             BusinessObject.Models.RequestPromotion requestPromotion = requestPromotionRepository?.Create(requestPromotionRequest);
             GetRequestPromotionResponse getRequestPromotionResponse = new GetRequestPromotionResponse();
             getRequestPromotionResponse.Id = requestPromotion.Id;
