@@ -219,4 +219,8 @@ public class ProductService : IProductService
         return getProductResponses;
     }
 
+    public bool ChangeStatusDynamic(Guid id)
+    {
+        return _productRepository.ChangeStatusDynamic(id);
+    }
 }

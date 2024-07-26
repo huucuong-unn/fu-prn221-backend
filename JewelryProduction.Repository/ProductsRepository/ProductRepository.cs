@@ -118,5 +118,10 @@ public class ProductRepository : IProductRepository
     {
         return _productDao.UpdateStatus(id, status);
     }
+
+    public bool ChangeStatusDynamic(Guid id)
+    {
+        return _productDao.ChangeStatusDynamic(id);
+    }
 }
 

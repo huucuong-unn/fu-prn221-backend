@@ -394,6 +394,38 @@ namespace JewelryProduction.DAO
             }
         }
 
+        public bool ChangeStatusDynamic(Guid id)
+        {
+            using (var context = new JewelryProductionContext())
+            {
+                Product productById = context.Products.FirstOrDefault(p => p.Id == id);
+
+                if (productById == null)
+                {
+                    return false;
+                }
+
+                switch (productById.Status)
+                {
+                    case "BUYBACK":
+                        productById.Status = "AVAILABLE";
+                        break;
+                    case "AVAILABLE":
+                        productById.Status = "INAVAILABLE";
+                        break;
+                    case "INAVAILABLE":
+                        productById.Status = "AVAILABLE";
+                        break;
+                    default:
+                        break;
+                }
+
+                context.Products.Update(productById);
+                context.SaveChanges();
+
+                return true;
+            }
+        }
     }
 }
 
