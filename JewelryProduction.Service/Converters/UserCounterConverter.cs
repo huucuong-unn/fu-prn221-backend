@@ -13,6 +13,7 @@ namespace JewelryProduction.Service.Converters
             getUserCounterResponse.StaffId = userCounter.StaffId;
             getUserCounterResponse.CounterId = userCounter.CounterId;
             getUserCounterResponse.Status = userCounter.Status;
+            getUserCounterResponse.Income = userCounter.Income;
             return getUserCounterResponse;
         }
 

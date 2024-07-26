@@ -39,4 +39,6 @@ public interface IProductRepository
     public Product ReCalProduct(string productCode);
     public bool UpdateStatus(Guid id, string status);
 
+    public bool ChangeStatusDynamic(Guid id);
+
 }

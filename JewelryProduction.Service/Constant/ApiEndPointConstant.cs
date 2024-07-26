@@ -117,6 +117,7 @@
             public const string CREATE_PRODUCT = "api/v1/product/create";
             public const string UPDATE_PRODUCT = "api/v1/product/update/";
             public const string UPDATE_PRODUCT_PRICE = "api/v1/product/update-price";
+            public const string UPDATE_PRODUCT_STATUS = "api/v1/product/update-status/";
             public const string CHANGE_STATUS_PRODUCT = "api/v1/product/change-status/";
             public const string TOTAL_PRODUCTS = "api/v1/product/total";
             public const string GET_PRODUCTS_ACTIVE = "api/v1/product/product-active";
